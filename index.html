@@ -44,7 +44,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:14px 16px 10px;border-bottom:1px solid var(--line)}
 h1{font-family:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;font-weight:800;font-size:1.55rem;letter-spacing:-.02em;margin:0 0 10px;line-height:1.1}
 h1 small{display:block;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-weight:400;font-size:.82rem;color:var(--muted);letter-spacing:0;margin-top:3px}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--chip);border-radius:12px;padding:4px}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--chip);border-radius:12px;padding:4px}
 .tabs button{appearance:none;border:0;background:transparent;color:var(--ink);font:inherit;font-size:.86rem;padding:8px 2px;border-radius:9px;cursor:pointer;line-height:1.15}
 .tabs button b{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.05rem}
 .tabs button[aria-selected="true"]{background:var(--surface);box-shadow:0 1px 0 var(--line),0 0 0 1px var(--line)}
@@ -92,6 +92,18 @@ li.open .syn{display:block;-webkit-line-clamp:unset;overflow:visible}
 .more{grid-column:1 / -1;display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted)}
 .more a{color:var(--accent)}
 li.open .more{display:block}
+.acts{display:flex;flex-direction:column;gap:8px;align-items:center}
+.wlbtn,.delbtn{appearance:none;border:1.5px solid var(--line);background:transparent;width:36px;height:36px;border-radius:50%;cursor:pointer;color:var(--muted);display:grid;place-items:center;padding:0}
+.wlbtn svg,.delbtn svg{width:17px;height:17px}
+.wlbtn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.tabs button.wl b{color:var(--accent)}
+header.listmode .chips,header.listmode #year,header.listmode #sort{display:none}
+li.addbox{list-style:none;background:var(--surface);border:1.5px dashed var(--accent);border-radius:14px;margin:8px 0;padding:12px}
+li.addbox p{margin:0 0 8px;font-size:.86rem;color:var(--muted)}
+li.addbox .row{display:flex;gap:8px}
+li.addbox input{flex:1;min-width:0;font:inherit;font-size:16px;padding:9px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+li.addbox button{flex:none;appearance:none;font:inherit;font-weight:700;font-size:.9rem;padding:9px 14px;border-radius:10px;border:0;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.extra .sub{margin-top:4px}
 .seenbtn{appearance:none;border:1.5px solid var(--line);background:transparent;width:36px;height:36px;border-radius:50%;cursor:pointer;color:var(--muted);display:grid;place-items:center;padding:0}
 .seenbtn svg{width:18px;height:18px}
 li.seen .seenbtn{background:var(--seen);border-color:var(--seen);color:var(--surface)}
@@ -127,7 +139,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,.main:focus-visibl
 <details>
 <summary>Como a nota é calculada</summary>
 <p>Entram só obras de 2016 em diante que passam em todos os cortes de IMDb, Rotten Tomatoes e Metacritic, com número mínimo de votos por ano. A nota vai de 0 a 100: 35% IMDb, 25% Rotten Tomatoes e 40% Metacritic. “Pipoca” é a nota do público verificado no Rotten Tomatoes; aparece para consulta e não entra no cálculo.</p>
-<p>Notas de 2021–2026 coletadas em 25/10/2026; de 2016–2020, em 28/10/2026. Streaming conforme o JustWatch Brasil na mesma data; catálogos mudam todo mês. “Onde assistir” abre a página da obra no JustWatch Brasil, com todos os serviços, inclusive aluguel. Toque num título para ler a sinopse inteira e ver diretor e votos. Sinopses do TMDB. A marcação de “vi” fica salva só neste aparelho.</p>
+<p>Notas de 2021–2026 coletadas em 25/10/2026; de 2016–2020, em 28/10/2026. Streaming conforme o JustWatch Brasil na mesma data; catálogos mudam todo mês. “Onde assistir” abre a página da obra no JustWatch Brasil, com todos os serviços, inclusive aluguel. Toque num título para ler a sinopse inteira e ver diretor e votos. Sinopses do TMDB. As marcações de “vi” e a lista “Ver já” ficam salvas só neste aparelho.</p>
 </details>
 <p>Selos: “Top do Adriel” marca as obras da lista de preferidos do Adriel; “Menção do Adriel”, as menções honrosas.</p>
 <p class="tmdb">Cartazes e dados de imagem fornecidos pelo <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>. Este site usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.</p>
@@ -142,24 +154,35 @@ const NOTE = {rent:"Só aluguel ou compra", none:"Ainda sem streaming no Brasil"
 let seen = new Set();
 try { seen = new Set(JSON.parse(localStorage.getItem("vistos") || "[]")); } catch(e) {}
 function saveSeen(){ try { localStorage.setItem("vistos", JSON.stringify([...seen])); } catch(e) {} }
+let wl = [], extras = [];
+try { wl = JSON.parse(localStorage.getItem("querover") || "[]"); extras = JSON.parse(localStorage.getItem("querover_extra") || "[]"); } catch(e) {}
+function saveWl(){ try { localStorage.setItem("querover", JSON.stringify(wl)); localStorage.setItem("querover_extra", JSON.stringify(extras)); } catch(e) {} }
+const BYID = {}; 
 let hideSeen = false;
 try { hideSeen = localStorage.getItem("esconder") === "1"; } catch(e) {}
 const state = { cat: "filmes", svc: "", q: "", sort: "n", year: "" };
 const h = location.hash.replace("#","");
-if (CATS.some(c => c[0] === h)) state.cat = h;
+if (CATS.some(c => c[0] === h) || h === "lista") state.cat = h;
+DATA.forEach(x => BYID[x.id] = x);
 
 const fmt = n => n.toFixed(1).replace(".", ",");
 const votes = v => v >= 1e6 ? (v/1e6).toFixed(1).replace(".",",") + " mi" : Math.round(v/1000) + " mil";
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const norm = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const star = '<svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 1.8l2.5 5.3 5.8.7-4.3 4 1.1 5.7L10 14.7l-5.1 2.8 1.1-5.7-4.3-4 5.8-.7z"/></svg>';
+const bmk = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5h9v15l-4.5-3.5-4.5 3.5z"/></svg>';
+const bmkOn = '<svg viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M5.5 2.5h9v15l-4.5-3.5-4.5 3.5z"/></svg>';
+const xIcon = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>';
 const tick = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>';
 
 function renderTabs(){
 document.getElementById("tabs").innerHTML = CATS.map(([k,l]) =>
-`<button role="tab" data-cat="${k}" aria-selected="${state.cat===k}"><b>${DATA.filter(x=>x.c===k).length}</b>${l}</button>`).join("");
+`<button role="tab" data-cat="${k}" aria-selected="${state.cat===k}"><b>${DATA.filter(x=>x.c===k).length}</b>${l}</button>`).join("")
++ `<button role="tab" class="wl" data-cat="lista" aria-selected="${state.cat==="lista"}"><b>${wl.length}</b>Ver já</button>`;
+document.querySelector("header").classList.toggle("listmode", state.cat === "lista");
 }
 function renderChips(){
+if (state.cat === "lista") { document.getElementById("chips").innerHTML = ""; return; }
 const inCat = DATA.filter(x => x.c === state.cat);
 const have = SVC_ORDER.filter(s => inCat.some(x => x.s.includes(s)));
 const none = inCat.some(x => !x.s.length);
@@ -172,11 +195,40 @@ document.getElementById("chips").innerHTML = opts.map(([v,l]) =>
 `<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':""}>${esc(l)}</button>`).join("");
 }
 function renderYears(){
+if (state.cat === "lista") return;
 const ys = [...new Set(DATA.filter(x => x.c === state.cat).map(x => x.y))].sort((a,b) => b-a);
 if (state.year && !ys.includes(+state.year)) state.year = "";
 document.getElementById("year").innerHTML = `<option value="">Todo ano</option>` + ys.map(y => `<option value="${y}"${String(y)===state.year?" selected":""}>${y}</option>`).join("");
 }
+function extraCard(x){
+const isSeen = seen.has(x.id);
+return `<li class="item extra${isSeen?" seen":""}" data-id="${x.id}">
+<div class="art"><span class="ph" aria-hidden="true">${esc(x.t.charAt(0).toUpperCase())}</span></div>
+<div class="main"><p class="ttl">${esc(x.t)}</p><div class="sub">Adicionado por você, fora do ranking</div>
+<a class="poster" href="https://www.justwatch.com/br/busca?q=${encodeURIComponent(x.t)}" target="_blank" rel="noopener">Procurar onde assistir</a></div>
+<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="delbtn" aria-label="Remover da lista">${xIcon}</button></div>
+</li>`;
+}
+function renderList(){
+let L = wl.map(id => BYID[id] || extras.find(e => e.id === id)).filter(Boolean);
+if (state.q) { const q = norm(state.q); L = L.filter(x => norm(x.t+" "+(x.o||"")+" "+(x.d||"")).includes(q)); }
+const total = L.length, seenCount = L.filter(x => seen.has(x.id)).length;
+if (hideSeen) L = L.filter(x => !seen.has(x.id));
+document.getElementById("count").textContent = `${total} para ver` + (seenCount ? `, ${seenCount} já visto${seenCount>1?"s":""}` : "");
+const add = `<li class="addbox"><p>Adicione qualquer título, mesmo fora do ranking. Para trazer uma obra do ranking, toque no marcador dela.</p><div class="row"><input id="addt" type="text" placeholder="Ex.: a série que te indicaram" autocomplete="off" enterkeyhint="done"><button id="addb">Adicionar</button></div></li>`;
+const body = L.length ? L.map(x => x.c ? card(x) : extraCard(x)).join("") : `<li class="empty">${total ? "Você já viu todos da lista. Desmarque “Esconder os que vi” para ver de novo." : "Sua lista está vazia. Toque no marcador de qualquer obra do ranking para trazê-la para cá."}</li>`;
+document.getElementById("list").innerHTML = add + body;
+}
+function addExtra(){
+const inp = document.getElementById("addt"); if (!inp) return;
+const t = inp.value.trim(); if (!t) { inp.focus(); return; }
+const hit = DATA.find(x => norm(x.t) === norm(t) || (x.o && norm(x.o) === norm(t)));
+if (hit) { if (!wl.includes(hit.id)) wl.unshift(hit.id); }
+else { const id = "x" + Date.now(); extras.push({id, t}); wl.unshift(id); }
+saveWl(); renderTabs(); renderList();
+}
 function render(){
+if (state.cat === "lista") return renderList();
 let L = DATA.filter(x => x.c === state.cat);
 if (state.year) L = L.filter(x => x.y === +state.year);
 if (state.svc === "_none") L = L.filter(x => !x.s.length);
@@ -195,7 +247,9 @@ if (!L.length) {
 list.innerHTML = `<li class="empty">${total && hideSeen ? "Você já viu todos daqui. Desmarque “Esconder os que vi” para ver a lista de novo." : "Nada com esse filtro. Tente outro ano, outra busca ou toque em Tudo."}</li>`;
 return;
 }
-list.innerHTML = L.map(x => {
+list.innerHTML = L.map(card).join("");
+}
+function card(x){
 const w = x.s.length ? x.s.map(s => `<span>${esc(s)}</span>`).join("") : `<span class="none">${NOTE[x.sn]}</span>`;
 const sub = [x.o, x.f, String(x.y)].filter(Boolean).map(esc).join(", ");
 const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
@@ -209,11 +263,10 @@ ${x.b===2 ? `<div class="seal top">${star}Top do Adriel</div><br>` : x.b===1 ? `
 <div class="where">${w}</div>
 <a class="poster" href="${x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/"}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3h6v6M17 3l-8 8M15 12v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg>${x.p ? "Onde assistir" : "Ver no IMDb"}</a>
 </div>
-<button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button>
+<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wl.includes(x.id)}" aria-label="${wl.includes(x.id)?"Tirar da lista Ver já":"Pôr na lista Ver já"}">${wl.includes(x.id)?bmkOn:bmk}</button></div>
 ${x.sy ? `<p class="syn">${esc(x.sy)}</p>` : ""}
 <div class="more">${more}</div>
 </li>`;
-}).join("");
 }
 function all(){ renderTabs(); renderYears(); renderChips(); render(); }
 
@@ -234,7 +287,18 @@ const hideBox = document.getElementById("hide");
 hideBox.checked = hideSeen;
 hideBox.addEventListener("change", e => { hideSeen = e.target.checked; try { localStorage.setItem("esconder", hideSeen?"1":"0"); } catch(err) {} render(); });
 document.getElementById("list").addEventListener("click", e => {
+if (e.target.closest("#addb")) { addExtra(); return; }
 const li = e.target.closest("li.item"); if (!li) return;
+if (e.target.closest(".wlbtn")) {
+const id = li.dataset.id;
+const i = wl.indexOf(id); i >= 0 ? wl.splice(i,1) : wl.unshift(id);
+saveWl(); renderTabs(); render(); return;
+}
+if (e.target.closest(".delbtn")) {
+const id = li.dataset.id;
+wl = wl.filter(v => v !== id); extras = extras.filter(v => v.id !== id);
+saveWl(); renderTabs(); render(); return;
+}
 if (e.target.closest(".seenbtn")) {
 const id = li.dataset.id;
 seen.has(id) ? seen.delete(id) : seen.add(id);
@@ -247,6 +311,7 @@ const m = li.querySelector(".main"); m.setAttribute("aria-expanded", li.classLis
 }
 });
 document.getElementById("list").addEventListener("keydown", e => {
+if (e.key === "Enter" && e.target.id === "addt") { e.preventDefault(); addExtra(); return; }
 if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("main")) { e.preventDefault(); e.target.click(); }
 });
 all();
