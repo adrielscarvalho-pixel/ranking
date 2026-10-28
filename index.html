@@ -65,6 +65,7 @@ li.item.seen{opacity:.55}
 .art img{width:100%;height:100%;object-fit:cover;display:block}
 .art .ph{position:absolute;inset:0;display:grid;place-items:center;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:2rem;color:var(--muted)}
 .score{position:absolute;left:0;right:0;bottom:0;background:var(--badge);color:var(--badge-ink);text-align:center;padding:3px 0 4px;font-family:"Bricolage Grotesque",system-ui,sans-serif}
+.score.out{font-size:.68rem;font-weight:700;line-height:1.15;padding:5px 4px}
 .score .rk{font-size:.72rem;font-weight:500;opacity:.8;margin-right:4px}
 .score .n{font-size:1.15rem;font-weight:800;letter-spacing:-.02em}
 .art .rkp{position:absolute;top:5px;left:5px;background:var(--badge);color:var(--badge-ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:700;font-size:.75rem;padding:1px 6px;border-radius:6px}
@@ -150,6 +151,8 @@ const CATS = [["filmes","Filmes"],["series","Séries"],["minisseries","Minis"],[
 const NOUN = {filmes:["filme","filmes"],series:["série","séries"],minisseries:["minissérie","minisséries"],documentarios:["documentário","documentários"]};
 const SVC_ORDER = ["Netflix", "HBO Max", "Disney+", "Prime Video", "Apple TV", "MUBI", "Globoplay", "Telecine", "Universal+", "Paramount+", "Diamond Films", "MGM+", "Sony One", "Adrenalina Pura", "Lionsgate+", "Crunchyroll", "Reserva Imovision", "Filmelier Plus", "Cindie", "The Great Courses Signature Collection"];
 const DATA = RAW.map(a => ({c:CATS[a[0]][0],r:a[1],id:"tt"+a[2],t:a[3],o:a[4],y:a[5],d:a[6],f:["","Filme","Série"][a[7]],i:a[8],v:a[9],rt:a[10],mc:a[11],n:a[12],s:[...a[13]].map(ch => SVC_ORDER[ch.charCodeAt(0)-97]),sn:a[14],p:a[15] ? "/br/"+a[15].replace(/^f\//,"filme/").replace(/^s\//,"serie/") : "",pp:a[16] ? "/"+a[16]+".jpg" : "",au:a[17],sy:a[18],b:a[19]}));
+const EXTRA = [{"c":"extra","id":"tt13994572","t":"Sherwood","o":"","y":2022,"d":"","f":"Minissérie","i":7.4,"v":13520,"rt":96,"mc":null,"s":[],"sn":"none","p":"/br/serie/sherwood-2022","pp":"/rxjrfxGVzLNqvi4GSi7wuAGcJWg.jpg","au":63,"sy":"Sherwood acompanha dois assassinatos que devastam os moradores de uma pequena comunidade britânica. Já fragilizada por tragédias anteriores, as emoções se intensificam entre as pessoas do vilarejo. Julie Jackson (Lesley Manville), esposa de uma das vítimas, precisa encarar o passado para tentar entender o que motivou a morte de seu marido Gary. O detetive Ian St. Clair (David Morrissey) usa todos os seus recursos para tentar desvendar esse brutal crime, mas para isso terá de voltar décadas na história da cidade."},{"c":"extra","id":"tt27867155","t":"Mr Bates vs The Post Office","o":"","y":2024,"d":"","f":"Minissérie","i":8.4,"v":16448,"rt":95,"mc":80,"s":[],"sn":"none","p":"/br/serie/mr-bates-vs-the-post-office","pp":"/sQWIaSoMbuPxDBiAcCeQIn3NLZx.jpg","au":92,"sy":"A história de um dos maiores erros judiciais da história do Reino Unido, em que centenas de agentes de agências dos correios, inocentes, foram acusados injustamente de roubo, fraude e falsificação contábil por causa de um sistema de informática com defeito."}];
+EXTRA.forEach(x => { x.r = 0; x.n = 0; x.b = 0; DATA.push(x); });
 const NOTE = {rent:"Só aluguel ou compra", none:"Ainda sem streaming no Brasil", nf:"Fora do catálogo brasileiro"};
 let seen = new Set();
 try { seen = new Set(JSON.parse(localStorage.getItem("vistos") || "[]")); } catch(e) {}
@@ -157,6 +160,7 @@ function saveSeen(){ try { localStorage.setItem("vistos", JSON.stringify([...see
 let wl = [], extras = [];
 try { wl = JSON.parse(localStorage.getItem("querover") || "[]"); extras = JSON.parse(localStorage.getItem("querover_extra") || "[]"); } catch(e) {}
 function saveWl(){ try { localStorage.setItem("querover", JSON.stringify(wl)); localStorage.setItem("querover_extra", JSON.stringify(extras)); } catch(e) {} }
+try { if (!localStorage.getItem("seed_britanicas")) { ["tt27867155","tt13994572"].forEach(id => { if (!wl.includes(id)) wl.unshift(id); }); saveWl(); localStorage.setItem("seed_britanicas","1"); } } catch(e) {}
 const BYID = {}; 
 let hideSeen = false;
 try { hideSeen = localStorage.getItem("esconder") === "1"; } catch(e) {}
@@ -255,11 +259,11 @@ const sub = [x.o, x.f, String(x.y)].filter(Boolean).map(esc).join(", ");
 const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
 const isSeen = seen.has(x.id);
 return `<li class="item${isSeen?" seen":""}${x.b===2?" top":""}" data-id="${x.id}">
-<div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="84" height="126">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div></div>
+<div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="84" height="126">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}</div>
 <div class="main" tabindex="0" role="button" aria-expanded="false">
 ${x.b===2 ? `<div class="seal top">${star}Top do Adriel</div><br>` : x.b===1 ? `<div class="seal hon">${star}Menção do Adriel</div><br>` : ""}<p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
-<div class="stats"><span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span><span>Pipoca <b>${x.au}%</b></span><span>MC <b>${x.mc}</b></span></div>
+<div class="stats"><span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span>${x.au!=null ? `<span>Pipoca <b>${x.au}%</b></span>` : ""}${x.mc!=null ? `<span>MC <b>${x.mc}</b></span>` : ""}</div>
 <div class="where">${w}</div>
 <a class="poster" href="${x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/"}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3h6v6M17 3l-8 8M15 12v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg>${x.p ? "Onde assistir" : "Ver no IMDb"}</a>
 </div>
