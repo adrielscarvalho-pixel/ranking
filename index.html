@@ -292,6 +292,17 @@ li.rail::-webkit-scrollbar{display:none}
 .tagrow button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 details.fine{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
 details.fine summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
+.seal.v{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1.5px var(--tc) inset;padding-left:3px}
+.seal.v .vk{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:5px;background:var(--tc);color:#fff;font-size:.72rem;margin-right:2px}
+.seal.v.t-S{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600;box-shadow:0 1px 0 rgba(0,0,0,.15)}
+.seal.v.t-S .vk{background:#3A2600;color:#F6D46B}
+.osc{display:inline-flex;align-items:center;gap:5px;margin-top:7px;font-size:.8rem;color:var(--muted)}
+.osc svg{width:8px;height:16px;color:#B8932E}
+.osc.won{color:var(--ink)}
+.osc.won b{color:#8A6510}
+.oscd{color:var(--ink)}
+.chips button.oscchip{border-color:#D9B44A}
+.chips button.oscchip[aria-pressed="true"]{background:#C9A13A;border-color:#C9A13A;color:#2A1D00}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -307,6 +318,7 @@ details.fine summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
 <option value="n">Nota</option>
 <option value="i">IMDb</option>
 <option value="y">Recentes</option>
+<option value="o">Oscars</option>
 </select>
 </div>
 <div class="chips" id="chips"></div>
@@ -320,7 +332,7 @@ details.fine summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
 <p>Entram só obras de 2011 em diante que passam em todos os cortes de IMDb, Rotten Tomatoes e Metacritic, com número mínimo de votos por ano. A nota vai de 0 a 100: 35% IMDb, 25% Rotten Tomatoes e 40% Metacritic. Documentários de natureza ficam de fora. Anime usa outra régua: MyAnimeList ≥ 8,0, AniList ≥ 80% e IMDb ≥ 7,5, com mínimo de avaliações no MyAnimeList por ano (2011–2022: 200 mil; 2023–2024: 100 mil; 2025: 50 mil; 2026: 25 mil). Só séries: a 1ª temporada precisa ter estreado de 2011 em diante e é ela que vale para as notas do MyAnimeList e do AniList; filmes de anime concorrem na aba Filmes, com a régua dos filmes. Nota do anime: 40% MyAnimeList, 30% AniList e 30% IMDb. Time (2021) é julgada como minissérie, pela 1ª temporada. “Pipoca” é a nota do público verificado no Rotten Tomatoes; aparece para consulta e não entra no cálculo.</p>
 <p>Notas de 2021–2026 coletadas em 25/10/2026; de 2016–2020, em 28/10/2026; de 2011–2015, em 29/10/2026. Para 2011–2015 o mínimo de votos no IMDb é 150 mil para filmes, 100 mil para séries, 50 mil para minisséries e 10 mil para documentários. Streaming conforme o JustWatch Brasil na mesma data; catálogos mudam todo mês. “Onde assistir” abre a página da obra no JustWatch Brasil, com todos os serviços, inclusive aluguel. Toque num título para ler a sinopse inteira e ver diretor e votos. Sinopses do TMDB. As marcações de “vi” e a lista “Ver já” ficam salvas só neste aparelho.</p>
 </details>
-<p>Selos: “Top do Adriel” marca as obras da lista de preferidos do Adriel; “Menção do Adriel”, as menções honrosas.</p>
+<p>Os selos S, A, B, C e D são os seus vereditos no diário. Oscars das cerimônias de 2012 a 2026, conferidos na Wikipédia.</p>
 <p class="tmdb">Cartazes e dados de imagem fornecidos pelo <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>. Este site usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.</p>
 </footer>
 <script>
@@ -332,6 +344,13 @@ const DATA = RAW.map(a => ({c:CATS[a[0]][0],r:a[1],id:"tt"+a[2],t:a[3],o:a[4],y:
 DATA.forEach(x => { if (x.c === "anime") { const o = DATA.find(y => y.id === x.id && y.c !== "anime"); if (o) x.b = o.b; } });
 const EXTRA = [{"c":"extra","id":"tt13994572","t":"Sherwood","o":"","y":2022,"d":"","f":"Minissérie","i":7.4,"v":13520,"rt":96,"mc":null,"s":[],"sn":"none","p":"/br/serie/sherwood-2022","pp":"/rxjrfxGVzLNqvi4GSi7wuAGcJWg.jpg","au":63,"sy":"Sherwood acompanha dois assassinatos que devastam os moradores de uma pequena comunidade britânica. Já fragilizada por tragédias anteriores, as emoções se intensificam entre as pessoas do vilarejo. Julie Jackson (Lesley Manville), esposa de uma das vítimas, precisa encarar o passado para tentar entender o que motivou a morte de seu marido Gary. O detetive Ian St. Clair (David Morrissey) usa todos os seus recursos para tentar desvendar esse brutal crime, mas para isso terá de voltar décadas na história da cidade."},{"c":"extra","id":"tt27867155","t":"Mr Bates vs The Post Office","o":"","y":2024,"d":"","f":"Minissérie","i":8.4,"v":16448,"rt":95,"mc":80,"s":[],"sn":"none","p":"/br/serie/mr-bates-vs-the-post-office","pp":"/sQWIaSoMbuPxDBiAcCeQIn3NLZx.jpg","au":92,"sy":"A história de um dos maiores erros judiciais da história do Reino Unido, em que centenas de agentes de agências dos correios, inocentes, foram acusados injustamente de roubo, fraude e falsificação contábil por causa de um sistema de informática com defeito."}];
 EXTRA.forEach(x => { x.r = 0; x.n = 0; x.b = 0; DATA.push(x); });
+const OSC_CATS = ["Filme", "Direção", "Ator", "Atriz coadjuvante", "Roteiro original", "Trilha sonora", "Direção de arte", "Fotografia", "Figurino", "Montagem", "Roteiro adaptado", "Edição de som", "Mixagem de som", "Efeitos visuais", "Ator coadjuvante", "Filme internacional", "Documentário", "Maquiagem", "Atriz", "Canção original", "Maquiagem e penteados", "Animação", "Som", "Elenco"];
+const OSC = {"1655442":[10,5,[0,1,2,5,8],[3,4,6,7,9]],"0970179":[11,5,[11,12,6,7,13],[0,1,10,5,8,9]],"1605783":[4,1,[4],[0,1,6]],"1210166":[6,0,[],[0,2,14,10,12,9]],"1832382":[2,1,[15],[4]],"1440266":[1,0,[],[16]],"0780504":[1,0,[],[11]],"1201607":[3,0,[],[6,17,13]],"1024648":[7,3,[0,10,9],[14,5,11,12]],"0443272":[12,2,[2,6],[0,1,14,3,10,5,12,7,8,9]],"1045658":[8,1,[18],[0,1,2,14,3,10,9]],"1790885":[5,1,[11],[0,18,4,9]],"1748122":[1,0,[],[4]],"2125608":[1,1,[16],[]],"1074638":[5,2,[19,11],[5,12,7]],"2024544":[9,3,[0,3,10],[1,2,14,6,8,9]],"1800241":[10,0,[],[0,1,2,18,14,3,4,6,8,9]],"1535109":[6,0,[],[0,14,10,11,12,9]],"0790636":[6,3,[2,14,20],[0,4,9]],"1454468":[10,7,[1,5,11,12,7,9,13],[0,18,6]],"1798709":[5,1,[4],[0,5,19,6]],"2334873":[3,1,[18],[3,4]],"2209418":[1,0,[],[10]],"2106476":[1,0,[],[15]],"2375605":[1,0,[],[16]],"2042568":[2,0,[],[12,7]],"2562232":[9,4,[0,1,4,7],[2,14,3,11,12]],"1065073":[6,1,[3],[0,1,14,4,9]],"2278388":[9,4,[5,6,20,8],[0,1,4,7,9]],"2582802":[5,3,[14,12,9],[0,10]],"2872718":[1,0,[],[4]],"1646971":[1,0,[],[21]],"3011894":[1,0,[],[15]],"4044364":[1,1,[16],[]],"2714900":[1,0,[],[16]],"3455224":[1,0,[],[16]],"1490017":[1,0,[],[19]],"2015381":[2,0,[],[20,13]],"2103281":[1,0,[],[13]],"1877832":[1,0,[],[13]],"1895587":[6,2,[0,4],[1,14,3,9]],"3682448":[6,1,[14],[0,4,5,12,6]],"2381111":[3,0,[],[0,18,10]],"1392190":[10,6,[11,12,6,20,8,9],[0,1,7,13]],"3659388":[7,0,[],[0,2,10,11,12,6,13]],"3170832":[4,1,[18],[0,1,10]],"2402927":[6,0,[],[18,3,10,5,7,8]],"3076658":[1,0,[],[14]],"0470752":[2,1,[13],[4]],"2096673":[2,1,[21],[4]],"2870648":[1,1,[16],[]],"3521134":[1,0,[],[16]],"3397884":[3,0,[],[5,11,7]],"2488496":[5,0,[],[5,11,12,9,13]],"4975722":[8,3,[0,14,10],[1,3,5,7,9]],"2543164":[8,1,[11],[0,1,10,12,6,7,9]],"2671706":[4,1,[3],[0,2,10]],"2582782":[4,0,[],[0,14,4,9]],"3783958":[14,6,[1,18,5,19,6,7],[0,2,4,19,11,12,8,9]],"4034228":[6,2,[2,4],[0,1,14,3]],"2948356":[1,1,[21],[]],"4302938":[2,0,[],[21,13]],"3521164":[2,0,[],[21,19]],"5275892":[1,1,[16],[]],"5895028":[1,0,[],[16]],"5804038":[1,0,[],[16]],"3040964":[1,1,[13],[]],"5580390":[13,4,[0,1,5,6],[18,14,3,4,11,12,7,8,9]],"5726616":[4,1,[10],[0,2,19]],"5013056":[8,3,[11,12,9],[0,1,5,6,7]],"5052448":[4,1,[4],[0,1,2]],"4925292":[5,0,[],[0,1,18,3,4]],"5776858":[6,1,[8],[0,1,2,3,5]],"5027774":[7,2,[18,14],[0,14,4,5,9]],"5580036":[3,1,[3],[18,9]],"5649144":[1,0,[],[14]],"5462602":[1,0,[],[4]],"3521126":[1,0,[],[10]],"3315342":[1,0,[],[10]],"2380307":[2,2,[21,19],[]],"5598102":[1,0,[],[16]],"3890160":[3,0,[],[11,12,9]],"3450958":[1,0,[],[13]],"1825683":[7,3,[5,6,8],[0,19,11,12]],"7349662":[6,1,[10],[0,1,14,5,9]],"5083738":[10,1,[18],[0,1,3,4,6,7,8,9]],"6155172":[10,3,[1,15,7],[0,18,3,4,11,12,6]],"1517451":[8,1,[19],[0,2,18,14,10,12,7]],"6412452":[3,0,[],[10,19,8]],"4633694":[1,1,[21],[]],"3606756":[1,0,[],[21]],"5104604":[2,0,[],[21,5]],"7775622":[1,1,[16],[]],"7476236":[1,0,[],[16]],"6644200":[1,0,[],[11]],"6751668":[6,4,[0,1,4,15],[6,9]],"1950186":[4,2,[11,9],[0,12]],"1302006":[9,0,[],[0,1,14,10,6,7,8,9,13]],"3281548":[6,1,[8],[0,18,3,10,5]],"7653254":[6,1,[3],[0,2,18,4,5]],"8946378":[2,0,[],[4,10]],"1979376":[2,1,[21],[19]],"8991268":[2,0,[],[15,16]],"9617456":[1,0,[],[16]],"7984734":[1,0,[],[7]],"4154796":[1,0,[],[13]],"9770150":[6,3,[0,1,18],[10,7,9]],"10272386":[6,2,[2,10],[0,3,6,9]],"9784798":[6,2,[14,19],[0,14,4,7]],"10633456":[6,1,[3],[0,1,2,4,5]],"5363618":[6,2,[22,9],[0,2,14,4]],"10288566":[2,1,[15],[1]],"2948372":[3,2,[21,5],[22]],"10706602":[2,0,[],[15,16]],"14039582":[4,1,[15],[0,1,10]],"9620288":[6,1,[2],[0,3,4,19,9]],"11271038":[3,0,[],[0,1,4]],"3581652":[7,1,[3],[0,1,22,6,7,8]],"10370710":[2,0,[],[4,15]],"2953050":[3,1,[21],[5,19]],"8430054":[3,0,[],[21,15,16]],"7979580":[1,0,[],[21]],"7378922":[1,1,[16],[]],"6710474":[11,7,[0,1,18,14,3,4,9],[3,5,19,8]],"1016150":[9,4,[15,5,6,7],[0,10,22,20,13]],"11813216":[9,0,[],[0,1,2,14,14,3,4,5,9]],"14208870":[7,0,[],[0,1,18,14,4,5,6]],"14444726":[6,0,[],[0,1,18,4,7,9]],"1745960":[6,1,[22],[0,10,19,9,13]],"19770238":[1,0,[],[2]],"11564570":[1,0,[],[10]],"1488589":[1,1,[21],[]],"17041964":[1,1,[16],[]],"21374850":[1,0,[],[16]],"16227014":[1,0,[],[16]],"8178634":[1,1,[19],[]],"15398776":[13,7,[0,1,2,14,5,7,9],[3,10,22,6,20,8]],"23561236":[5,1,[10],[0,2,14,5]],"17009710":[5,1,[4],[0,1,18,9]],"14849194":[5,1,[3],[0,2,4,9]],"5537002":[10,0,[],[0,1,18,14,5,19,6,7,8,9]],"13238346":[2,0,[],[0,4]],"14230458":[11,4,[18,6,20,8],[0,1,14,10,5,7,9]],"7160372":[5,2,[15,22],[0,1,10]],"9362722":[1,0,[],[21]],"27503384":[1,0,[],[15]],"24082438":[1,1,[16],[]],"9603212":[2,0,[],[22,13]],"23289160":[1,1,[13],[]],"28607951":[6,5,[0,1,18,4,9],[14]],"8999762":[10,3,[2,5,7],[0,1,14,3,4,6,9]],"20215234":[8,1,[10],[0,2,3,5,6,8,9]],"15239678":[5,2,[22,13],[0,6,7]],"14961016":[3,1,[15],[0,18]],"21823606":[2,1,[14],[4]],"4772188":[2,1,[21],[15]],"29623480":[3,0,[],[21,5,22]],"30953759":[1,1,[16],[]],"30144839":[13,6,[0,1,14,10,23,9],[2,3,5,22,6,7]],"32916440":[9,0,[],[0,1,2,4,23,6,7,8,9]],"27847051":[4,0,[],[0,2,15,23]],"27714581":[9,1,[15],[0,1,18,14,3,4,9]],"31193180":[16,4,[2,4,5,7],[0,1,14,3,19,22,23,6,20,8,9,13]],"29768334":[4,0,[],[0,10,19,7]],"26581740":[1,1,[3],[]],"36491653":[2,0,[],[4,15]],"14205554":[2,2,[21,19],[]],"32298285":[2,0,[],[15,22]],"36943034":[1,0,[],[15]],"35307139":[1,0,[],[16]],"34966013":[1,0,[],[16]]};
+DATA.forEach(x => { if (x.c === "filmes" || x.c === "documentarios") { const o = OSC[x.id.slice(2)]; if (o) x.os = o; } });
+const statue = '<svg viewBox="0 0 12 24" fill="currentColor" aria-hidden="true"><circle cx="6" cy="2.6" r="2.1"/><path d="M4.3 5.2h3.4l.5 3.2-.7 1.1.4 7.3H4.1l.4-7.3-.7-1.1zM3 18.4h6l.6 2.1H2.4zM1.6 21.3h8.8V23H1.6z"/></svg>';
+const TIER_ORDER = {S:0,A:1,B:2,C:3,D:4};
+function verdictOf(id){ return ME ? (ENT.get(id) || {}).verdict || null : null; }
+
 const NOTE = {rent:"Só aluguel ou compra", none:"Ainda sem streaming no Brasil", nf:"Fora do catálogo brasileiro"};
 let seen = new Set();
 try { seen = new Set(JSON.parse(localStorage.getItem("vistos") || "[]")); } catch(e) {}
@@ -371,13 +390,15 @@ if (state.cat === "lista" || state.cat === "perfil") { document.getElementById("
 const inCat = DATA.filter(x => x.c === state.cat);
 const have = SVC_ORDER.filter(s => inCat.some(x => x.s.includes(s)));
 const none = inCat.some(x => !x.s.length);
-if (state.svc && state.svc !== "_none" && state.svc !== "_mine" && !have.includes(state.svc)) state.svc = "";
+if (state.svc && state.svc !== "_none" && state.svc !== "_mine" && state.svc !== "_osc" && !have.includes(state.svc)) state.svc = "";
 if (state.svc === "_none" && !none) state.svc = "";
-const mine = inCat.some(x => x.b);
+const mine = !!ME && inCat.some(x => verdictOf(x.id));
+const hasOsc = inCat.some(x => x.os);
+if (state.svc === "_osc" && !hasOsc) state.svc = "";
 if (state.svc === "_mine" && !mine) state.svc = "";
-const opts = [["","Tudo"], ...(mine ? [["_mine","★ Meus selos"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
+const opts = [["","Tudo"], ...(mine ? [["_mine","★ Meus vereditos"]] : []), ...(hasOsc ? [["_osc","Oscar"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
 document.getElementById("chips").innerHTML = opts.map(([v,l]) =>
-`<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':""}>${esc(l)}</button>`).join("");
+`<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':v==="_osc"?' class="oscchip"':""}>${esc(l)}</button>`).join("");
 }
 function renderYears(){
 if (state.cat === "lista" || state.cat === "perfil") return;
@@ -419,7 +440,8 @@ if (state.cat === "lista") return ME ? renderDiary() : renderList();
 let L = DATA.filter(x => x.c === state.cat);
 if (state.year) L = L.filter(x => x.y === +state.year);
 if (state.svc === "_none") L = L.filter(x => !x.s.length);
-else if (state.svc === "_mine") L = L.filter(x => x.b).sort((a,b) => b.b-a.b || a.r-b.r);
+else if (state.svc === "_mine") L = L.filter(x => verdictOf(x.id)).sort((a,b) => TIER_ORDER[verdictOf(a.id)]-TIER_ORDER[verdictOf(b.id)] || a.r-b.r);
+else if (state.svc === "_osc") L = L.filter(x => x.os).sort((a,b) => b.os[1]-a.os[1] || b.os[0]-a.os[0] || a.r-b.r);
 else if (state.svc) L = L.filter(x => x.s.includes(state.svc));
 if (state.q) { const q = norm(state.q); L = L.filter(x => norm(x.t+" "+x.o+" "+x.d).includes(q)); }
 const total = L.length;
@@ -427,6 +449,7 @@ const seenCount = L.filter(x => isSeenId(x.id)).length;
 if (hideSeen) L = L.filter(x => !isSeenId(x.id));
 if (state.sort === "i") L = [...L].sort((a,b) => b.i-a.i || b.v-a.v);
 else if (state.sort === "y") L = [...L].sort((a,b) => b.y-a.y || a.r-b.r);
+else if (state.sort === "o") L = [...L].sort((a,b) => ((b.os||[0,0])[1]-(a.os||[0,0])[1]) || ((b.os||[0,0])[0]-(a.os||[0,0])[0]) || a.r-b.r);
 const [one,many] = NOUN[state.cat];
 document.getElementById("count").textContent = `${total} ${total===1?one:many}` + (seenCount ? `, ${seenCount} já vist${state.cat==="filmes"||state.cat==="documentarios"?"o":"a"}${seenCount>1?"s":""}` : "");
 const list = document.getElementById("list");
@@ -440,15 +463,16 @@ function card(x){
 const w = x.s.length ? x.s.map(s => `<span>${esc(s)}</span>`).join("") : `<span class="none">${NOTE[x.sn]}</span>`;
 const ST = {fin:"finalizada", and:"em andamento", can:"cancelada"};
 const sub = [x.o, x.f, String(x.y), x.ns ? `${x.ns} temporada${x.ns>1?"s":""}` : "", ST[x.st] || ""].filter(Boolean).map(esc).join(", ");
-const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
+const oc = a => [...new Set(a)].map(i => OSC_CATS[i]).join(", ");
+const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + (x.os ? `<span class="oscd">${x.os[2].length ? `Oscar, venceu: ${oc(x.os[2])}.` : ""}${x.os[2].length && x.os[3].length ? " " : ""}${x.os[3].length ? `Indicado: ${oc(x.os[3])}.` : ""}</span><br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
 const isSeen = isSeenId(x.id);
-return `<li class="item${isSeen?" seen":""}${x.b===2?" top":""}" data-id="${x.id}">
+return `<li class="item${isSeen?" seen":""}${verdictOf(x.id)==="S"?" top":""}" data-id="${x.id}">
 <div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="84" height="126">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}</div>
 <div class="main" tabindex="0" role="button" aria-expanded="false">
-${x.b===2 ? `<div class="seal top">${star}Top do Adriel</div><br>` : x.b===1 ? `<div class="seal hon">${star}Menção do Adriel</div><br>` : ""}<p class="ttl">${esc(x.t)}</p>
+${verdictOf(x.id) ? `<div class="seal v t-${verdictOf(x.id)}"><span class="vk">${verdictOf(x.id)}</span>${TIER_LABEL[verdictOf(x.id)]}</div><br>` : ""}<p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
 ${x.c==="anime" ? `<div class="stats"><span>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span>AniList <b>${x.al}%</b></span><span>IMDb <b>${fmt(x.i)}</b></span></div>` : `<div class="stats"><span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span>${x.au!=null ? `<span>Pipoca <b>${x.au}%</b></span>` : ""}${x.mc!=null ? `<span>MC <b>${x.mc}</b></span>` : ""}</div>`}
-${myLine(x.id)}<div class="where">${w}</div>
+${x.os ? `<div class="osc${x.os[1] ? " won" : ""}">${statue}${x.os[1] ? `<b>${x.os[1]} Oscar${x.os[1] > 1 ? "s" : ""}</b> · ` : ""}${x.os[0]} indicaç${x.os[0] > 1 ? "ões" : "ão"}</div>` : ""}${myLine(x.id)}<div class="where">${w}</div>
 <a class="poster" href="${x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/"}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3h6v6M17 3l-8 8M15 12v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg>${x.p ? "Onde assistir" : "Ver no IMDb"}</a>
 </div>
 <div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${inWl(x.id)}" aria-label="${inWl(x.id)?"Tirar de Quero ver":"Pôr em Quero ver"}">${inWl(x.id)?bmkOn:bmk}</button>${x.c!=="extra" || ME ? `<button class="editbtn" aria-label="Minha nota e status">${pencil}</button>` : ""}</div>
@@ -565,8 +589,7 @@ function toggleWl(id){
 function myLine(id){
   const e = ME && ENT.get(id); if (!e) return "";
   const bits = [STATUS_LABEL[e.status]];
-  if (e.verdict) bits.push(`${e.verdict} · ${TIER_LABEL[e.verdict]}`);
-  else if (e.rating != null) bits.push(`nota ${nota(e.rating)}`);
+  if (!e.verdict && e.rating != null) bits.push(`nota ${nota(e.rating)}`);
   if (e.seasons_total > 1 && e.seasons_watched != null) bits.push(`${e.seasons_watched} de ${e.seasons_total} temp.`);
   return `<div class="myline s-${e.status}">${esc(bits.join(" · "))}</div>`;
 }
@@ -805,7 +828,7 @@ async function pickResult(i){
 }
 
 /* ---------- aba Diário ---------- */
-const TIERS = [["S","Obra-prima","Indico pra todo mundo e reveria"],["A","Excelente","Valeu cada minuto"],["B","Boa","Gostei, mas não marcou"],["C","Ok","Passatempo, esqueci rápido"],["D","Não vale","Não recomendo"]];
+const TIERS = [["S","Obra-prima","Indico pra todo mundo e reveria"],["A","Excelente","Valeu cada minuto"],["B","Muito boa","Gostei muito, mas não é top"],["C","Ok","Passatempo, esqueci rápido"],["D","Não vale","Não recomendo"]];
 const TIER_LABEL = Object.fromEntries(TIERS.map(t => [t[0], t[1]]));
 const TAGS = ["Maratonei","Reveria","Indico","Começo lento","Melhora depois","Final fraco"];
 const SHELVES = [["vendo","Assistindo"],["vi","Vistos"],["quero","Na fila"],["abandonei","Largados"]];
