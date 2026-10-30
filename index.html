@@ -303,6 +303,42 @@ details.fine summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
 .oscd{color:var(--ink)}
 .chips button.oscchip{border-color:#D9B44A}
 .chips button.oscchip[aria-pressed="true"]{background:#C9A13A;border-color:#C9A13A;color:#2A1D00}
+
+/* cartão compacto */
+li.item{grid-template-columns:76px minmax(0,1fr);gap:0 12px;padding:10px 12px 10px 10px;border-radius:16px;margin:0 0 10px}
+li.item.seen{opacity:1}
+li.item.seen .art img{filter:saturate(.85)}
+.art{width:76px;border-radius:9px}
+.art .rkp{top:4px;left:4px;font-size:.7rem;padding:1px 5px;border-radius:5px}
+.score{padding:2px 0 3px}
+.score .n{font-size:1.02rem}
+.vb{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:6px;display:grid;place-items:center;background:var(--tc);color:#fff;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.8rem;box-shadow:0 1px 3px rgba(0,0,0,.35)}
+.vb.t-S{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
+.main{align-self:center;padding:1px 0}
+.ttl{font-size:1.02rem;line-height:1.18;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sub{font-size:.78rem;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stats{gap:2px 10px;margin-top:6px;font-size:.78rem}
+.osc{margin-top:5px;font-size:.76rem;gap:4px}
+.osc svg{width:7px;height:14px}
+.osep{color:var(--muted);margin:0 1px}
+.vline{display:flex;align-items:center;gap:5px;margin-top:5px;font-size:.76rem;font-weight:700;color:var(--ink)}
+.vline::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--tc)}
+.vline.t-S{color:#8A6510}
+.bar{grid-column:1 / -1;display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:9px;border-top:1px solid var(--line)}
+.bar .where{flex:1;min-width:0;display:flex;align-items:center;gap:7px;margin:0;font-size:.8rem;color:var(--ink);text-decoration:none;padding:4px 0}
+.bar .where svg{width:16px;height:16px;flex:none;color:var(--accent)}
+.bar .where span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:none;padding:0;border-radius:0}
+.bar .where i{font-style:normal;color:var(--muted);font-size:.76rem}
+.bar .where em{font-style:normal;color:var(--muted)}
+.bar .acts{flex-direction:row;gap:6px;flex:none}
+.bar .seenbtn,.bar .wlbtn,.bar .editbtn{width:34px;height:34px;border:0;background:var(--chip);color:var(--muted)}
+.bar .seenbtn svg{width:16px;height:16px}.bar .wlbtn svg{width:15px;height:15px}.bar .editbtn svg{width:15px;height:15px}
+li.seen .bar .seenbtn{background:var(--seen);color:#fff}
+.bar .wlbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.syn{margin:8px 0 0;font-size:.82rem;line-height:1.42;color:var(--muted);-webkit-line-clamp:2}
+li.item.open .syn{-webkit-line-clamp:unset;color:var(--ink)}
+li.item.top{border-color:#E0A526;box-shadow:0 0 0 1px #E0A526 inset,0 6px 18px rgba(201,139,18,.12)}
+#list{padding-left:12px;padding-right:12px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -460,22 +496,27 @@ return;
 list.innerHTML = L.map(card).join("");
 }
 function card(x){
-const w = x.s.length ? x.s.map(s => `<span>${esc(s)}</span>`).join("") : `<span class="none">${NOTE[x.sn]}</span>`;
 const ST = {fin:"finalizada", and:"em andamento", can:"cancelada"};
-const sub = [x.o, x.f, String(x.y), x.ns ? `${x.ns} temporada${x.ns>1?"s":""}` : "", ST[x.st] || ""].filter(Boolean).map(esc).join(", ");
+const sub = [x.o && x.o !== x.t ? x.o : "", x.f, String(x.y), x.ns ? `${x.ns} temp.` : "", ST[x.st] || ""].filter(Boolean).map(esc).join(", ");
 const oc = a => [...new Set(a)].map(i => OSC_CATS[i]).join(", ");
 const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + (x.os ? `<span class="oscd">${x.os[2].length ? `Oscar, venceu: ${oc(x.os[2])}.` : ""}${x.os[2].length && x.os[3].length ? " " : ""}${x.os[3].length ? `Indicado: ${oc(x.os[3])}.` : ""}</span><br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
-const isSeen = isSeenId(x.id);
-return `<li class="item${isSeen?" seen":""}${verdictOf(x.id)==="S"?" top":""}" data-id="${x.id}">
-<div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="84" height="126">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}</div>
+const isSeen = isSeenId(x.id), wlOn = inWl(x.id), v = verdictOf(x.id);
+const svc = x.s.length ? x.s.slice(0,2).map(esc).join(", ") + (x.s.length > 2 ? ` <i>+${x.s.length-2}</i>` : "") : `<em>${NOTE[x.sn]}</em>`;
+const href = x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/";
+const stats = x.c==="anime"
+  ? `<span>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span>AniList <b>${x.al}%</b></span><span>IMDb <b>${fmt(x.i)}</b></span>`
+  : `<span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span>${x.mc!=null ? `<span>MC <b>${x.mc}</b></span>` : ""}${x.au!=null ? `<span>Pipoca <b>${x.au}%</b></span>` : ""}`;
+return `<li class="item${isSeen?" seen":""}${v==="S"?" top":""}" data-id="${x.id}">
+<div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${v ? `<span class="vb t-${v}" title="Seu veredito: ${TIER_LABEL[v]}">${v}</span>` : ""}</div>
 <div class="main" tabindex="0" role="button" aria-expanded="false">
-${verdictOf(x.id) ? `<div class="seal v t-${verdictOf(x.id)}"><span class="vk">${verdictOf(x.id)}</span>${TIER_LABEL[verdictOf(x.id)]}</div><br>` : ""}<p class="ttl">${esc(x.t)}</p>
+<p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
-${x.c==="anime" ? `<div class="stats"><span>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span>AniList <b>${x.al}%</b></span><span>IMDb <b>${fmt(x.i)}</b></span></div>` : `<div class="stats"><span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span>${x.au!=null ? `<span>Pipoca <b>${x.au}%</b></span>` : ""}${x.mc!=null ? `<span>MC <b>${x.mc}</b></span>` : ""}</div>`}
-${x.os ? `<div class="osc${x.os[1] ? " won" : ""}">${statue}${x.os[1] ? `<b>${x.os[1]} Oscar${x.os[1] > 1 ? "s" : ""}</b> · ` : ""}${x.os[0]} indicaç${x.os[0] > 1 ? "ões" : "ão"}</div>` : ""}${myLine(x.id)}<div class="where">${w}</div>
-<a class="poster" href="${x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/"}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3h6v6M17 3l-8 8M15 12v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg>${x.p ? "Onde assistir" : "Ver no IMDb"}</a>
+<div class="stats">${stats}</div>
+${x.os ? `<div class="osc${x.os[1] ? " won" : ""}">${statue}${x.os[1] ? `<b>${x.os[1]} Oscar${x.os[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.os[0]} indicaç${x.os[0] > 1 ? "ões" : "ão"}</div>` : ""}
+${v ? `<div class="vline t-${v}">${TIER_LABEL[v]}</div>` : ""}
 </div>
-<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${inWl(x.id)}" aria-label="${inWl(x.id)?"Tirar de Quero ver":"Pôr em Quero ver"}">${inWl(x.id)?bmkOn:bmk}</button>${x.c!=="extra" || ME ? `<button class="editbtn" aria-label="Minha nota e status">${pencil}</button>` : ""}</div>
+<div class="bar"><a class="where" href="${href}" target="_blank" rel="noopener" aria-label="Onde assistir ${esc(x.t)}"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h14v9H3zM7.5 3.5l2.5 3 2.5-3"/></svg><span>${svc}</span></a>
+<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wlOn}" aria-label="${wlOn?"Tirar de Quero ver":"Pôr em Quero ver"}">${wlOn?bmkOn:bmk}</button>${x.c!=="extra" || ME ? `<button class="editbtn" aria-label="Veredito e status">${pencil}</button>` : ""}</div></div>
 ${x.sy ? `<p class="syn">${esc(x.sy)}</p>` : ""}
 <div class="more">${more}</div>
 </li>`;
