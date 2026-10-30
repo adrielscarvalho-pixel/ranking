@@ -443,7 +443,7 @@ li.also i{font-style:normal;opacity:.75}
 <details>
 <summary>Como a nota é calculada</summary>
 <p>Entram só obras de 2001 em diante que passam em todos os cortes de IMDb, Rotten Tomatoes e Metacritic, com número mínimo de votos por ano. A nota vai de 0 a 100: 35% IMDb, 25% Rotten Tomatoes e 40% Metacritic. Documentários de natureza ficam de fora. Anime usa outra régua: MyAnimeList ≥ 8,0, AniList ≥ 80% e IMDb ≥ 7,5, com mínimo de avaliações no MyAnimeList por ano (2001–2022: 200 mil; 2023–2024: 100 mil; 2025: 50 mil; 2026: 25 mil). Só séries: a 1ª temporada precisa ter estreado de 2001 em diante e é ela que vale para as notas do MyAnimeList e do AniList; filmes de anime concorrem na aba Filmes, com a régua dos filmes. Nota do anime: 40% MyAnimeList, 30% AniList e 30% IMDb. Time (2021) é julgada como minissérie, pela 1ª temporada. “Pipoca” é a nota do público verificado no Rotten Tomatoes; aparece para consulta e não entra no cálculo.</p>
-<p>Notas de 2021–2026 coletadas em 25/10/2026; de 2016–2020, em 28/10/2026; de 2011–2015, em 29/10/2026; de 2001–2010, em 30/10/2026. Para 2001–2015 o mínimo de votos no IMDb é 150 mil para filmes, 100 mil para séries, 50 mil para minisséries e 10 mil para documentários. Streaming conforme o JustWatch Brasil na mesma data; catálogos mudam todo mês. “Onde assistir” abre a página da obra no JustWatch Brasil, com todos os serviços, inclusive aluguel. Toque num título para ler a sinopse inteira e ver diretor e votos. Sinopses do TMDB. As marcações de “vi” e a lista “Ver já” ficam salvas só neste aparelho.</p>
+<p>Notas de 2021–2026 coletadas em 25/10/2026; de 2016–2020, em 28/10/2026; de 2011–2015, em 29/10/2026; de 2001–2010, em 30/10/2026. Para 2001–2015 o mínimo de votos no IMDb é 150 mil para filmes, 100 mil para séries, 50 mil para minisséries e 10 mil para documentários. Onde assistir é conferido automaticamente várias vezes por dia, com dados do JustWatch via TMDB (última verificação: <span id="catAt">carregando</span>). As notas seguem as datas de coleta acima. “Onde assistir” abre a página da obra no JustWatch Brasil, com todos os serviços, inclusive aluguel. Toque num título para ler a sinopse inteira e ver diretor e votos. Sinopses do TMDB. As marcações de “vi” e a lista “Ver já” ficam salvas só neste aparelho.</p>
 </details>
 <p>Os selos S, A, B, C e D são os seus vereditos no diário. Oscars das cerimônias de 2002 a 2026 e Emmys de 2001 a 2026 (cerimônia principal e Creative Arts, somando todas as temporadas), contados na Wikipédia (Band of Brothers e Deadwood conferidos no site oficial da Television Academy); podem variar uma ou duas indicações do total oficial.</p>
 <p class="tmdb">Cartazes e dados de imagem fornecidos pelo <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>. Este site usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.</p>
@@ -1483,6 +1483,33 @@ if (sb) {
     loadMe(u);
   });
 }
+/* ---------- catálogo atualizado automaticamente ---------- */
+function applyCatalog(rows){
+  let last = "";
+  rows.forEach(r => {
+    const x = BYID[r.imdb]; if (!x || x.c === "extra" || !r.checked_at) return;
+    x.s = r.prov || []; x.sn = x.s.length ? "" : (r.rent ? "rent" : "none");
+    x.s.forEach(s => { if (!SVC_ORDER.includes(s)) SVC_ORDER.push(s); });
+    if (r.checked_at > last) last = r.checked_at;
+  });
+  const el = document.getElementById("catAt");
+  if (el && last) el.textContent = new Date(last).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+async function loadCatalog(){
+  try { const c = JSON.parse(localStorage.getItem("catalog_v1") || "null"); if (c && c.rows) { applyCatalog(c.rows); all(); } } catch(e) {}
+  if (!sb) return;
+  try {
+    const rows = [];
+    for (let from = 0; from < 2000; from += 1000) {
+      const { data, error } = await sb.from("catalog").select("imdb,prov,rent,checked_at").range(from, from + 999);
+      if (error || !data) break; rows.push(...data); if (data.length < 1000) break;
+    }
+    if (!rows.length) return;
+    applyCatalog(rows); all();
+    try { localStorage.setItem("catalog_v1", JSON.stringify({ rows })); } catch(e) {}
+  } catch(e) {}
+}
+loadCatalog();
 routeHash();
 
 all();
