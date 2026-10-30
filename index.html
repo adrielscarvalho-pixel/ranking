@@ -115,12 +115,98 @@ footer p{margin:.5em 0}
 footer .tmdb{margin-top:14px}
 footer a{color:var(--accent)}
 button:focus-visible,input:focus-visible,select:focus-visible,.main:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.acct{flex:none;appearance:none;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-weight:700;font-size:.85rem;padding:7px 12px;border-radius:999px;cursor:pointer;margin-top:2px}
+.acct.logged{width:36px;height:36px;padding:0;border-radius:50%;background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1rem}
+header.perfil .tools{display:none}
+.editbtn{appearance:none;border:1.5px solid var(--line);background:transparent;width:36px;height:36px;border-radius:50%;cursor:pointer;color:var(--muted);display:grid;place-items:center;padding:0}
+.editbtn svg{width:17px;height:17px}
+.myline{display:inline-block;margin-top:7px;font-size:.78rem;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--chip);color:var(--ink)}
+.myline.s-vi,.pill.s-vi{background:color-mix(in srgb,var(--seen) 18%,transparent);color:var(--seen)}
+.myline.s-vendo,.pill.s-vendo{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.myline.s-quero,.pill.s-quero{background:color-mix(in srgb,#E0A526 22%,transparent);color:#9A6A00}
+.myline.s-abandonei,.pill.s-abandonei{background:var(--chip);color:var(--muted)}
+.pill{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-bottom:5px}
+.score.mine{background:var(--accent);color:var(--accent-ink)}
+li.cta,li.dhead,li.psec{list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:8px 0;padding:14px}
+li.cta b,.dhead b{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.1rem}
+li.cta p{margin:6px 0 10px;color:var(--muted);font-size:.9rem}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btns button,.sharebtn{appearance:none;font:inherit;font-weight:700;font-size:.92rem;padding:10px 16px;border-radius:10px;cursor:pointer;border:1px solid var(--line)}
+.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)!important}
+.sec{background:var(--surface);color:var(--ink)}
+.danger{color:#C0392B}
+.sharebtn{background:var(--chip);color:var(--ink);padding:8px 12px;font-size:.85rem;flex:none}
+.drow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.drow small{display:block;color:var(--muted);font-size:.84rem;margin-top:2px}
+.adder{position:relative;margin-top:12px}
+.adder input{width:100%;font:inherit;font-size:16px;padding:10px 12px;border-radius:10px;border:1.5px solid var(--accent);background:var(--bg);color:var(--ink)}
+.sres{list-style:none;margin:6px 0 0;padding:0;max-height:340px;overflow:auto}
+.sres li button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;appearance:none;border:0;background:transparent;color:var(--ink);font:inherit;padding:6px 4px;border-radius:8px;cursor:pointer}
+.sres li button:active{background:var(--chip)}
+.sres img,.ph.s{width:34px;height:51px;border-radius:4px;object-fit:cover;flex:none;background:var(--chip);display:inline-block}
+.sres small{display:block;color:var(--muted);font-size:.8rem}
+.sres .muted{color:var(--muted);font-size:.85rem;padding:6px 4px}
+.dchips{display:flex;gap:6px;overflow-x:auto;margin:12px -14px 0;padding:0 14px 2px;scrollbar-width:none}
+.dchips::-webkit-scrollbar{display:none}
+.dchips button{flex:none;appearance:none;font:inherit;font-size:.85rem;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.dchips button i{font-style:normal;color:var(--muted);margin-left:2px}
+.dchips button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.dchips button[aria-pressed="true"] i{color:inherit;opacity:.8}
+.dsort{margin-top:10px;font-size:.85rem;color:var(--muted)}
+.dsort select{font:inherit;font-size:.85rem;padding:5px 6px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);margin-left:4px}
+.step{display:inline-flex;align-items:center;gap:10px;margin-top:4px}
+.step button{appearance:none;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-size:1.2rem;line-height:1;cursor:pointer}
+.step span{font-weight:700;min-width:22px;text-align:center}
+.step .of{font-weight:400;color:var(--muted)}
+.step.small{margin-top:8px;gap:8px}
+.step.small button{width:30px;height:30px;font-size:1.05rem}
+.step.small span{font-size:.86rem}
+.note{margin:7px 0 0;font-size:.85rem;color:var(--ink);font-style:italic}
+.rk-ref{margin-top:6px;font-size:.78rem;color:var(--muted)}
+.overlay{position:fixed;inset:0;z-index:50;background:rgba(10,15,20,.5);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);color:var(--ink);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px))}
+@media (min-width:700px){.overlay{align-items:center}.sheet{border-radius:18px}}
+.sheet h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.25rem;margin:0 0 4px;line-height:1.2}
+.sheet .hint,.dhead .hint{color:var(--muted);font-size:.86rem;margin:0 0 12px}
+.sheet label{display:block;font-size:.85rem;color:var(--muted);margin-top:12px}
+.sheet input[type=text],.sheet input[type=email],.sheet input[type=password],.sheet textarea{display:block;width:100%;margin-top:4px;font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sheet label.check{display:flex;gap:8px;align-items:center;color:var(--ink);font-size:.88rem}
+.sheet input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
+.sheet input[type=range]{width:100%;accent-color:var(--accent);margin-top:8px}
+.sheet .err{color:#C0392B;font-size:.86rem;min-height:1em;margin:8px 0 0}
+.sheet .alt{font-size:.86rem;color:var(--muted);margin:12px 0 0}
+.sheet .alt a,.dhead a,li.empty a{color:var(--accent)}
+.ed-head{display:flex;gap:12px;align-items:center;margin-bottom:6px}
+.ed-head img{border-radius:6px;object-fit:cover;flex:none}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:var(--chip);border-radius:12px;padding:4px;margin-top:10px}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink);font:inherit;font-size:.84rem;padding:9px 2px;border-radius:9px;cursor:pointer}
+.seg button[aria-checked="true"]{background:var(--accent);color:var(--accent-ink);font-weight:700}
+.field{margin-top:14px}
+.lbl{font-size:.85rem;color:var(--muted);display:flex;justify-content:space-between}
+.lbl b{color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.1rem}
+.menu{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.menu button{appearance:none;text-align:left;font:inherit;font-size:.95rem;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+body.noscroll{overflow:hidden}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:10px;font-size:.88rem;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.psec h3{margin:0 0 10px;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.05rem}
+.psec h3 i{font-style:normal;color:var(--muted);font-weight:500}
+.pgrid{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.pcard{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:start}
+.pcard b{display:block;line-height:1.25}
+.pcard small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px}
+.pa{position:relative;width:64px}
+.pa img,.pa .ph.s{width:64px;height:96px;border-radius:6px;object-fit:cover;display:grid;place-items:center;color:var(--muted)}
+.pn{position:absolute;left:4px;bottom:4px;background:var(--accent);color:var(--accent-ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.85rem;padding:1px 6px;border-radius:6px}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
 <body>
 <div class="wrap">
 <header>
-<h1>Ranking 2011–2026<small>Só o que agradou público e crítica ao mesmo tempo</small></h1>
+<div class="topbar"><h1>Ranking 2011–2026<small>Só o que agradou público e crítica ao mesmo tempo</small></h1><button id="acct" class="acct">Entrar</button></div>
 <div class="tabs" role="tablist" id="tabs"></div>
 <div class="tools">
 <input id="q" type="search" placeholder="Buscar" autocomplete="off">
@@ -183,11 +269,13 @@ const tick = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-
 function renderTabs(){
 document.getElementById("tabs").innerHTML = CATS.map(([k,l]) =>
 `<button role="tab" data-cat="${k}" aria-selected="${state.cat===k}"><b>${DATA.filter(x=>x.c===k).length}</b>${l}</button>`).join("")
-+ `<button role="tab" class="wl" data-cat="lista" aria-selected="${state.cat==="lista"}"><b>${wl.length}</b>Ver já</button>`;
-document.querySelector("header").classList.toggle("listmode", state.cat === "lista");
++ `<button role="tab" class="wl" data-cat="lista" aria-selected="${state.cat==="lista"}"><b>${ME ? ENT.size : wl.length}</b>Diário</button>`;
+document.querySelector("header").classList.toggle("listmode", state.cat === "lista" || state.cat === "perfil");
+document.querySelector("header").classList.toggle("perfil", state.cat === "perfil");
+const hl = document.querySelector(".status label"); if (hl) hl.style.display = (state.cat === "perfil" || (state.cat === "lista" && ME)) ? "none" : "";
 }
 function renderChips(){
-if (state.cat === "lista") { document.getElementById("chips").innerHTML = ""; return; }
+if (state.cat === "lista" || state.cat === "perfil") { document.getElementById("chips").innerHTML = ""; return; }
 const inCat = DATA.filter(x => x.c === state.cat);
 const have = SVC_ORDER.filter(s => inCat.some(x => x.s.includes(s)));
 const none = inCat.some(x => !x.s.length);
@@ -200,13 +288,13 @@ document.getElementById("chips").innerHTML = opts.map(([v,l]) =>
 `<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':""}>${esc(l)}</button>`).join("");
 }
 function renderYears(){
-if (state.cat === "lista") return;
+if (state.cat === "lista" || state.cat === "perfil") return;
 const ys = [...new Set(DATA.filter(x => x.c === state.cat).map(x => x.y))].sort((a,b) => b-a);
 if (state.year && !ys.includes(+state.year)) state.year = "";
 document.getElementById("year").innerHTML = `<option value="">Todo ano</option>` + ys.map(y => `<option value="${y}"${String(y)===state.year?" selected":""}>${y}</option>`).join("");
 }
 function extraCard(x){
-const isSeen = seen.has(x.id);
+const isSeen = isSeenId(x.id);
 return `<li class="item extra${isSeen?" seen":""}" data-id="${x.id}">
 <div class="art"><span class="ph" aria-hidden="true">${esc(x.t.charAt(0).toUpperCase())}</span></div>
 <div class="main"><p class="ttl">${esc(x.t)}</p><div class="sub">Adicionado por você, fora do ranking</div>
@@ -217,12 +305,13 @@ return `<li class="item extra${isSeen?" seen":""}" data-id="${x.id}">
 function renderList(){
 let L = wl.map(id => BYID[id] || extras.find(e => e.id === id)).filter(Boolean);
 if (state.q) { const q = norm(state.q); L = L.filter(x => norm(x.t+" "+(x.o||"")+" "+(x.d||"")).includes(q)); }
-const total = L.length, seenCount = L.filter(x => seen.has(x.id)).length;
-if (hideSeen) L = L.filter(x => !seen.has(x.id));
+const total = L.length, seenCount = L.filter(x => isSeenId(x.id)).length;
+if (hideSeen) L = L.filter(x => !isSeenId(x.id));
 document.getElementById("count").textContent = `${total} para ver` + (seenCount ? `, ${seenCount} já visto${seenCount>1?"s":""}` : "");
 const add = `<li class="addbox"><p>Adicione qualquer título, mesmo fora do ranking. Para trazer uma obra do ranking, toque no marcador dela.</p><div class="row"><input id="addt" type="text" placeholder="Ex.: a série que te indicaram" autocomplete="off" enterkeyhint="done"><button id="addb">Adicionar</button></div></li>`;
 const body = L.length ? L.map(x => x.c ? card(x) : extraCard(x)).join("") : `<li class="empty">${total ? "Você já viu todos da lista. Desmarque “Esconder os que vi” para ver de novo." : "Sua lista está vazia. Toque no marcador de qualquer obra do ranking para trazê-la para cá."}</li>`;
-document.getElementById("list").innerHTML = add + body;
+const cta = `<li class="cta"><b>Monte o seu diário</b><p>Crie uma conta para dar nota, marcar temporadas, anotar onde parou e compartilhar o que você já viu. Funciona em qualquer aparelho.</p><div class="btns"><button class="pri" data-act="signup">Criar conta</button><button class="sec" data-act="login">Já tenho conta</button></div></li>`;
+document.getElementById("list").innerHTML = cta + add + body;
 }
 function addExtra(){
 const inp = document.getElementById("addt"); if (!inp) return;
@@ -233,7 +322,8 @@ else { const id = "x" + Date.now(); extras.push({id, t}); wl.unshift(id); }
 saveWl(); renderTabs(); renderList();
 }
 function render(){
-if (state.cat === "lista") return renderList();
+if (state.cat === "perfil") return renderProfile();
+if (state.cat === "lista") return ME ? renderDiary() : renderList();
 let L = DATA.filter(x => x.c === state.cat);
 if (state.year) L = L.filter(x => x.y === +state.year);
 if (state.svc === "_none") L = L.filter(x => !x.s.length);
@@ -241,8 +331,8 @@ else if (state.svc === "_mine") L = L.filter(x => x.b).sort((a,b) => b.b-a.b || 
 else if (state.svc) L = L.filter(x => x.s.includes(state.svc));
 if (state.q) { const q = norm(state.q); L = L.filter(x => norm(x.t+" "+x.o+" "+x.d).includes(q)); }
 const total = L.length;
-const seenCount = L.filter(x => seen.has(x.id)).length;
-if (hideSeen) L = L.filter(x => !seen.has(x.id));
+const seenCount = L.filter(x => isSeenId(x.id)).length;
+if (hideSeen) L = L.filter(x => !isSeenId(x.id));
 if (state.sort === "i") L = [...L].sort((a,b) => b.i-a.i || b.v-a.v);
 else if (state.sort === "y") L = [...L].sort((a,b) => b.y-a.y || a.r-b.r);
 const [one,many] = NOUN[state.cat];
@@ -259,17 +349,17 @@ const w = x.s.length ? x.s.map(s => `<span>${esc(s)}</span>`).join("") : `<span 
 const ST = {fin:"finalizada", and:"em andamento", can:"cancelada"};
 const sub = [x.o, x.f, String(x.y), x.ns ? `${x.ns} temporada${x.ns>1?"s":""}` : "", ST[x.st] || ""].filter(Boolean).map(esc).join(", ");
 const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
-const isSeen = seen.has(x.id);
+const isSeen = isSeenId(x.id);
 return `<li class="item${isSeen?" seen":""}${x.b===2?" top":""}" data-id="${x.id}">
 <div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="84" height="126">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}</div>
 <div class="main" tabindex="0" role="button" aria-expanded="false">
 ${x.b===2 ? `<div class="seal top">${star}Top do Adriel</div><br>` : x.b===1 ? `<div class="seal hon">${star}Menção do Adriel</div><br>` : ""}<p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
 ${x.c==="anime" ? `<div class="stats"><span>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span>AniList <b>${x.al}%</b></span><span>IMDb <b>${fmt(x.i)}</b></span></div>` : `<div class="stats"><span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span>${x.au!=null ? `<span>Pipoca <b>${x.au}%</b></span>` : ""}${x.mc!=null ? `<span>MC <b>${x.mc}</b></span>` : ""}</div>`}
-<div class="where">${w}</div>
+${myLine(x.id)}<div class="where">${w}</div>
 <a class="poster" href="${x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/"}" target="_blank" rel="noopener"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 3h6v6M17 3l-8 8M15 12v4a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4"/></svg>${x.p ? "Onde assistir" : "Ver no IMDb"}</a>
 </div>
-<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wl.includes(x.id)}" aria-label="${wl.includes(x.id)?"Tirar da lista Ver já":"Pôr na lista Ver já"}">${wl.includes(x.id)?bmkOn:bmk}</button></div>
+<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${inWl(x.id)}" aria-label="${inWl(x.id)?"Tirar de Quero ver":"Pôr em Quero ver"}">${inWl(x.id)?bmkOn:bmk}</button>${x.c!=="extra" || ME ? `<button class="editbtn" aria-label="Minha nota e status">${pencil}</button>` : ""}</div>
 ${x.sy ? `<p class="syn">${esc(x.sy)}</p>` : ""}
 <div class="more">${more}</div>
 </li>`;
@@ -296,9 +386,7 @@ document.getElementById("list").addEventListener("click", e => {
 if (e.target.closest("#addb")) { addExtra(); return; }
 const li = e.target.closest("li.item"); if (!li) return;
 if (e.target.closest(".wlbtn")) {
-const id = li.dataset.id;
-const i = wl.indexOf(id); i >= 0 ? wl.splice(i,1) : wl.unshift(id);
-saveWl(); renderTabs(); render(); return;
+toggleWl(li.dataset.id); return;
 }
 if (e.target.closest(".delbtn")) {
 const id = li.dataset.id;
@@ -306,9 +394,7 @@ wl = wl.filter(v => v !== id); extras = extras.filter(v => v.id !== id);
 saveWl(); renderTabs(); render(); return;
 }
 if (e.target.closest(".seenbtn")) {
-const id = li.dataset.id;
-seen.has(id) ? seen.delete(id) : seen.add(id);
-saveSeen(); render(); return;
+toggleSeen(li.dataset.id); return;
 }
 if (e.target.closest("a")) return;
 if (e.target.closest(".main") || e.target.closest(".more") || e.target.closest(".syn")) {
@@ -320,6 +406,423 @@ document.getElementById("list").addEventListener("keydown", e => {
 if (e.key === "Enter" && e.target.id === "addt") { e.preventDefault(); addExtra(); return; }
 if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("main")) { e.preventDefault(); e.target.click(); }
 });
+/* ===== Diário: conta, notas e perfil (Supabase) ===== */
+const SB_URL = "https://yrsdlyogrkuvnmtopjmc.supabase.co";
+const SB_KEY = "sb_publishable__A2ZFKI9Fks3lHGmn-fWJg_P0R1zcEY";
+const FN = SB_URL + "/functions/v1/tmdb";
+let sb = null;
+try { sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, autoRefreshToken: true } }); } catch(e) { sb = null; }
+let ME = null, PROFILE = null;
+const ENT = new Map();
+const KIND = {filmes:"filme", series:"serie", minisseries:"minisserie", documentarios:"doc", anime:"anime", extra:"minisserie"};
+const KIND_LABEL = {filme:"Filme", serie:"Série", minisserie:"Minissérie", doc:"Documentário", anime:"Anime", outro:"Outro"};
+const STATUS = [["vendo","Vendo"],["quero","Quero ver"],["vi","Vi"],["abandonei","Abandonei"]];
+const STATUS_LABEL = Object.fromEntries(STATUS);
+const dstate = { filter: "vendo", sort: "rec", results: [] };
+const nota = r => r == null ? "" : Number(r).toFixed(1).replace(".", ",").replace(",0", "");
+const posterUrl = p => p ? `https://image.tmdb.org/t/p/w185${p}` : "";
+const pencil = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 3.5l3 3L7 16H4v-3z"/></svg>';
+
+function toast(msg){
+  let t = document.getElementById("toast");
+  if (!t) { t = document.createElement("div"); t.id = "toast"; t.setAttribute("role","status"); document.body.appendChild(t); }
+  t.textContent = msg; t.classList.add("on");
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("on"), 2600);
+}
+function isSeenId(id){ return ME ? (ENT.get(id) || {}).status === "vi" : seen.has(id); }
+function inWl(id){ return ME ? (ENT.get(id) || {}).status === "quero" : wl.includes(id); }
+function rowFromItem(x){
+  return { key: x.id, kind: KIND[x.c] || "outro", title: x.t, orig: x.o || null, year: x.y || null, poster: x.pp || null, seasons_total: x.ns || null };
+}
+async function saveEntry(row){
+  if (!ME) return null;
+  const r = { ...row, user_id: ME.id };
+  delete r.id; delete r.created_at; delete r.updated_at;
+  const { data, error } = await sb.from("entries").upsert(r, { onConflict: "user_id,key" }).select().single();
+  if (error) { toast("Não consegui salvar: " + error.message); return null; }
+  ENT.set(data.key, data); return data;
+}
+async function removeEntry(key){
+  const e = ENT.get(key); if (!e) return;
+  const { error } = await sb.from("entries").delete().eq("id", e.id);
+  if (error) { toast("Não consegui remover: " + error.message); return; }
+  ENT.delete(key);
+}
+async function setStatus(id, status){
+  const cur = ENT.get(id);
+  const x = BYID[id];
+  if (cur && cur.status === status) {
+    if (cur.rating == null && !cur.note) await removeEntry(id);
+    else await saveEntry({ ...cur, status: status === "vi" ? "quero" : "vi" });
+  } else {
+    const base = cur || (x ? rowFromItem(x) : null);
+    if (!base) return;
+    const extra = status === "vi" && base.seasons_total ? { seasons_watched: base.seasons_total } : {};
+    await saveEntry({ ...base, status, ...extra });
+  }
+  all();
+}
+function toggleSeen(id){
+  if (!ME) { seen.has(id) ? seen.delete(id) : seen.add(id); saveSeen(); render(); return; }
+  setStatus(id, "vi");
+}
+function toggleWl(id){
+  if (!ME) { const i = wl.indexOf(id); i >= 0 ? wl.splice(i,1) : wl.unshift(id); saveWl(); renderTabs(); render(); return; }
+  setStatus(id, "quero");
+}
+function myLine(id){
+  const e = ME && ENT.get(id); if (!e) return "";
+  const bits = [STATUS_LABEL[e.status]];
+  if (e.rating != null) bits.push(`sua nota ${nota(e.rating)}`);
+  if (e.seasons_total > 1 && e.seasons_watched != null) bits.push(`${e.seasons_watched} de ${e.seasons_total} temp.`);
+  return `<div class="myline s-${e.status}">${esc(bits.join(" · "))}</div>`;
+}
+
+/* ---------- carregar dados do usuário ---------- */
+async function loadMe(user){
+  ME = user || null; PROFILE = null; ENT.clear();
+  if (ME) {
+    const [{ data: p }, { data: es }] = await Promise.all([
+      sb.from("profiles").select("*").eq("id", ME.id).maybeSingle(),
+      sb.from("entries").select("*").eq("user_id", ME.id).order("updated_at", { ascending: false })
+    ]);
+    PROFILE = p || null;
+    (es || []).forEach(e => ENT.set(e.key, e));
+    await migrateLocal();
+  }
+  renderAcct(); all();
+  if (ME && !PROFILE) openAccount("perfil");
+}
+async function migrateLocal(){
+  const flag = "migrado_" + ME.id;
+  try { if (localStorage.getItem(flag)) return; } catch(e) { return; }
+  const rows = [];
+  const add = (id, status) => { const x = BYID[id]; if (x && !rows.some(r => r.key === id)) rows.push({ ...rowFromItem(x), status, user_id: ME.id }); };
+  [...seen].forEach(id => add(id, "vi"));
+  wl.forEach(id => { if (BYID[id]) add(id, "quero"); });
+  extras.forEach(x => rows.push({ key: "x:" + norm(x.t), kind: "outro", title: x.t, status: seen.has(x.id) ? "vi" : "quero", user_id: ME.id }));
+  if (rows.length) {
+    const { data, error } = await sb.from("entries").upsert(rows, { onConflict: "user_id,key", ignoreDuplicates: true }).select();
+    if (!error) (data || []).forEach(e => ENT.set(e.key, e));
+  }
+  try { localStorage.setItem(flag, "1"); } catch(e) {}
+}
+
+/* ---------- botão de conta ---------- */
+function renderAcct(){
+  const b = document.getElementById("acct"); if (!b) return;
+  b.textContent = ME ? ((PROFILE && (PROFILE.display_name || PROFILE.username)) || "Conta").charAt(0).toUpperCase() : "Entrar";
+  b.classList.toggle("logged", !!ME);
+  b.setAttribute("aria-label", ME ? "Minha conta" : "Entrar ou criar conta");
+}
+
+/* ---------- janelas (sheet) ---------- */
+function sheet(html){
+  closeSheet();
+  const o = document.createElement("div"); o.className = "overlay"; o.id = "overlay";
+  o.innerHTML = `<div class="sheet" role="dialog" aria-modal="true">${html}</div>`;
+  o.addEventListener("click", e => { if (e.target === o) closeSheet(); });
+  document.body.appendChild(o); document.body.classList.add("noscroll");
+  const f = o.querySelector("[autofocus]"); if (f) setTimeout(() => f.focus(), 50);
+  return o;
+}
+function closeSheet(){ const o = document.getElementById("overlay"); if (o) o.remove(); document.body.classList.remove("noscroll"); }
+
+function openAccount(mode){
+  if (!sb) { toast("Não consegui conectar ao servidor agora."); return; }
+  if (!ME) {
+    const signup = mode === "signup";
+    const o = sheet(`<h2>${signup ? "Criar conta" : "Entrar"}</h2>
+      <p class="hint">${signup ? "Com uma conta, seu diário fica salvo e aparece em qualquer aparelho." : "Entre para ver e editar o seu diário."}</p>
+      <label>E-mail<input id="em" type="email" autocomplete="email" autofocus></label>
+      <label>Senha<input id="pw" type="password" autocomplete="${signup ? "new-password" : "current-password"}" minlength="6"></label>
+      <p class="err" id="err"></p>
+      <div class="btns"><button class="pri" id="go">${signup ? "Criar conta" : "Entrar"}</button><button class="sec" id="cancel">Cancelar</button></div>
+      <p class="alt">${signup ? "Já tem conta? <a href='#' id='sw'>Entrar</a>" : "Ainda não tem conta? <a href='#' id='sw'>Criar conta</a>"}</p>`);
+    o.querySelector("#cancel").onclick = closeSheet;
+    o.querySelector("#sw").onclick = e => { e.preventDefault(); openAccount(signup ? "login" : "signup"); };
+    const go = async () => {
+      const email = o.querySelector("#em").value.trim(), password = o.querySelector("#pw").value;
+      const err = o.querySelector("#err");
+      if (!email || password.length < 6) { err.textContent = "Preencha o e-mail e uma senha de pelo menos 6 caracteres."; return; }
+      o.querySelector("#go").disabled = true; err.textContent = "";
+      const { error } = signup ? await sb.auth.signUp({ email, password }) : await sb.auth.signInWithPassword({ email, password });
+      if (error) {
+        o.querySelector("#go").disabled = false;
+        err.textContent = /Invalid login/i.test(error.message) ? "E-mail ou senha incorretos." : /registered/i.test(error.message) ? "Esse e-mail já tem conta. Toque em Entrar." : error.message;
+        return;
+      }
+      closeSheet(); toast(signup ? "Conta criada." : "Bem-vindo de volta.");
+    };
+    o.querySelector("#go").onclick = go;
+    o.querySelector("#pw").addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+    return;
+  }
+  if (!PROFILE || mode === "perfil") {
+    const o = sheet(`<h2>${PROFILE ? "Seu perfil" : "Crie seu perfil"}</h2>
+      <p class="hint">O nome de usuário vira o endereço do seu diário para compartilhar.</p>
+      <label>Seu nome<input id="dn" type="text" value="${esc((PROFILE && PROFILE.display_name) || "")}" autofocus></label>
+      <label>Nome de usuário<input id="un" type="text" value="${esc((PROFILE && PROFILE.username) || "")}" placeholder="ex.: adriel" autocapitalize="none" autocomplete="off"></label>
+      <label class="check"><input id="pub" type="checkbox" ${!PROFILE || PROFILE.is_public ? "checked" : ""}> Deixar meu diário visível para quem tiver o link</label>
+      <p class="err" id="err"></p>
+      <div class="btns"><button class="pri" id="go">Salvar</button>${PROFILE ? '<button class="sec" id="cancel">Cancelar</button>' : ""}</div>`);
+    if (PROFILE) o.querySelector("#cancel").onclick = closeSheet;
+    o.querySelector("#go").onclick = async () => {
+      const username = norm(o.querySelector("#un").value.trim()).replace(/[^a-z0-9_-]/g, "");
+      const display_name = o.querySelector("#dn").value.trim() || null;
+      const is_public = o.querySelector("#pub").checked;
+      const err = o.querySelector("#err");
+      if (!/^[a-z0-9_-]{3,24}$/.test(username)) { err.textContent = "Use de 3 a 24 letras minúsculas, números, - ou _."; return; }
+      const row = { id: ME.id, username, display_name, is_public };
+      const { data, error } = PROFILE ? await sb.from("profiles").update(row).eq("id", ME.id).select().single() : await sb.from("profiles").insert(row).select().single();
+      if (error) { err.textContent = /duplicate|unique/i.test(error.message) ? "Esse nome de usuário já está em uso." : error.message; return; }
+      PROFILE = data; closeSheet(); renderAcct(); all(); toast("Perfil salvo.");
+    };
+    return;
+  }
+  const o = sheet(`<h2>${esc(PROFILE.display_name || PROFILE.username)}</h2>
+    <p class="hint">${esc(ME.email || "")}</p>
+    <div class="menu">
+      <button id="m-diario">Abrir meu diário</button>
+      <button id="m-share">Compartilhar meu diário</button>
+      <button id="m-perfil">Editar perfil</button>
+      <button id="m-import">Importar uma lista com código</button>
+      <button id="m-out" class="danger">Sair da conta</button>
+    </div>
+    <div class="btns"><button class="sec" id="cancel">Fechar</button></div>`);
+  o.querySelector("#cancel").onclick = closeSheet;
+  o.querySelector("#m-diario").onclick = () => { closeSheet(); go("lista"); };
+  o.querySelector("#m-share").onclick = () => { closeSheet(); share(); };
+  o.querySelector("#m-perfil").onclick = () => openAccount("perfil");
+  o.querySelector("#m-import").onclick = openImport;
+  o.querySelector("#m-out").onclick = async () => { await sb.auth.signOut(); closeSheet(); toast("Você saiu da conta."); };
+}
+function openImport(){
+  const o = sheet(`<h2>Importar lista</h2><p class="hint">Digite o código de importação que você recebeu.</p>
+    <label>Código<input id="code" type="text" autocapitalize="characters" autocomplete="off" autofocus placeholder="ADRIEL-XXXXX"></label>
+    <p class="err" id="err"></p>
+    <div class="btns"><button class="pri" id="go">Importar</button><button class="sec" id="cancel">Cancelar</button></div>`);
+  o.querySelector("#cancel").onclick = closeSheet;
+  o.querySelector("#go").onclick = async () => {
+    const code = o.querySelector("#code").value.trim();
+    const { data, error } = await sb.rpc("claim_import", { p_code: code });
+    if (error) { o.querySelector("#err").textContent = /invalido|usado/i.test(error.message) ? "Código inválido ou já usado." : error.message; return; }
+    const { data: es } = await sb.from("entries").select("*").eq("user_id", ME.id).order("updated_at", { ascending: false });
+    ENT.clear(); (es || []).forEach(e => ENT.set(e.key, e));
+    closeSheet(); toast(`${data} títulos importados para o seu diário.`); go("lista");
+  };
+}
+async function share(){
+  if (!PROFILE) { openAccount("perfil"); return; }
+  const url = location.origin + location.pathname + "#u/" + PROFILE.username;
+  if (!PROFILE.is_public) toast("Seu diário está privado. Ative “visível” em Editar perfil.");
+  try {
+    if (navigator.share) { await navigator.share({ title: "Meu diário de séries e filmes", url }); return; }
+  } catch(e) { if (e && e.name === "AbortError") return; }
+  try { await navigator.clipboard.writeText(url); toast("Link copiado: " + url); } catch(e) { prompt("Copie o link do seu diário:", url); }
+}
+
+/* ---------- editor de uma obra ---------- */
+function openEditor(base){
+  if (!ME) { openAccount("login"); return; }
+  const cur = ENT.get(base.key);
+  const e = { status: "quero", rating: null, seasons_watched: null, platform: "", note: "", ...base, ...(cur || {}) };
+  const tot = e.seasons_total || 0;
+  const o = sheet(`<div class="ed-head">${e.poster ? `<img src="${posterUrl(e.poster)}" alt="" width="56" height="84">` : ""}<div><h2>${esc(e.title)}</h2><p class="hint">${esc([e.orig, KIND_LABEL[e.kind], e.year, tot ? tot + (tot > 1 ? " temporadas" : " temporada") : ""].filter(Boolean).join(", "))}</p></div></div>
+    <div class="seg" role="radiogroup" aria-label="Status">${STATUS.map(([k,l]) => `<button data-st="${k}" role="radio" aria-checked="${e.status===k}">${l}</button>`).join("")}</div>
+    <div class="field"><div class="lbl">Minha nota <b id="rv">${e.rating == null ? "sem nota" : nota(e.rating)}</b></div>
+      <input id="rt" type="range" min="0" max="10" step="0.5" value="${e.rating == null ? 8 : e.rating}" aria-label="Minha nota">
+      <label class="check"><input id="nr" type="checkbox" ${e.rating == null ? "checked" : ""}> Ainda sem nota</label></div>
+    ${tot > 1 || e.kind === "serie" || e.kind === "anime" ? `<div class="field"><div class="lbl">Temporadas vistas</div><div class="step"><button id="sm" aria-label="Menos uma">−</button><span id="sv">${e.seasons_watched ?? 0}</span><span class="of">${tot ? "de " + tot : ""}</span><button id="sp" aria-label="Mais uma">+</button></div></div>` : ""}
+    <label>Onde estou vendo<input id="pl" type="text" list="svcs" value="${esc(e.platform || "")}" placeholder="Netflix, HBO Max…"></label>
+    <datalist id="svcs">${["Netflix","HBO Max","Disney+","Prime Video","Apple TV","Globoplay","Crunchyroll","Paramount+","MUBI","Star+","Telecine","Universal+","Cinema"].map(s => `<option value="${s}">`).join("")}</datalist>
+    <label>Anotação<textarea id="nt" rows="3" placeholder="O que achou? Onde parou?">${esc(e.note || "")}</textarea></label>
+    <div class="btns"><button class="pri" id="save">Salvar</button>${cur ? '<button class="sec danger" id="del">Tirar do diário</button>' : '<button class="sec" id="cancel">Cancelar</button>'}</div>`);
+  let status = e.status, sw = e.seasons_watched ?? 0;
+  o.querySelectorAll("[data-st]").forEach(b => b.onclick = () => {
+    status = b.dataset.st; o.querySelectorAll("[data-st]").forEach(x => x.setAttribute("aria-checked", x === b));
+    if (status === "vi" && tot && o.querySelector("#sv")) { sw = tot; o.querySelector("#sv").textContent = sw; }
+  });
+  const rt = o.querySelector("#rt"), nr = o.querySelector("#nr"), rv = o.querySelector("#rv");
+  rt.oninput = () => { nr.checked = false; rv.textContent = nota(+rt.value); };
+  nr.onchange = () => { rv.textContent = nr.checked ? "sem nota" : nota(+rt.value); };
+  if (o.querySelector("#sm")) {
+    o.querySelector("#sm").onclick = () => { sw = Math.max(0, sw - 1); o.querySelector("#sv").textContent = sw; };
+    o.querySelector("#sp").onclick = () => { sw = tot ? Math.min(tot, sw + 1) : sw + 1; o.querySelector("#sv").textContent = sw; };
+  }
+  if (o.querySelector("#cancel")) o.querySelector("#cancel").onclick = closeSheet;
+  if (o.querySelector("#del")) o.querySelector("#del").onclick = async () => { await removeEntry(e.key); closeSheet(); all(); toast("Tirado do diário."); };
+  o.querySelector("#save").onclick = async () => {
+    const row = { key: e.key, kind: e.kind, title: e.title, orig: e.orig || null, year: e.year || null, poster: e.poster || null, seasons_total: e.seasons_total || null,
+      status, rating: nr.checked ? null : +rt.value, seasons_watched: o.querySelector("#sv") ? sw : null,
+      platform: o.querySelector("#pl").value.trim() || null, note: o.querySelector("#nt").value.trim() || null };
+    o.querySelector("#save").disabled = true;
+    const ok = await saveEntry(row);
+    if (ok) { closeSheet(); all(); toast("Salvo no seu diário."); } else o.querySelector("#save").disabled = false;
+  };
+}
+function openEditorForId(id){
+  const x = BYID[id]; const cur = ENT.get(id);
+  if (cur) return openEditor(cur);
+  if (x) return openEditor(rowFromItem(x));
+}
+
+/* ---------- busca no TMDB para adicionar ---------- */
+let searchTimer = null, searchSeq = 0;
+function kindOf(d){
+  const g = d.genres || [];
+  if (d.type === "movie") return g.includes(99) ? "doc" : "filme";
+  if (g.includes(99)) return "doc";
+  if (g.includes(16) && (d.lang === "ja" || d.lang === "ko" || d.lang === "zh")) return "anime";
+  return "serie";
+}
+async function searchTmdb(q){
+  const seq = ++searchSeq;
+  const box = document.getElementById("sres"); if (!box) return;
+  if (q.length < 2) { box.innerHTML = ""; return; }
+  box.innerHTML = `<li class="muted">Buscando…</li>`;
+  try {
+    const r = await fetch(FN + "?q=" + encodeURIComponent(q)).then(r => r.json());
+    if (seq !== searchSeq) return;
+    dstate.results = Array.isArray(r) ? r : [];
+    box.innerHTML = dstate.results.length ? dstate.results.map((d,i) => `<li><button data-res="${i}">${d.poster ? `<img src="https://image.tmdb.org/t/p/w92${d.poster}" alt="" width="34" height="51" loading="lazy">` : '<span class="ph s"></span>'}<span><b>${esc(d.title || "")}</b><small>${esc([d.type === "tv" ? "Série" : "Filme", d.year].filter(Boolean).join(", "))}${d.orig && d.orig !== d.title ? " · " + esc(d.orig) : ""}</small></span></button></li>`).join("") : `<li class="muted">Nada encontrado.</li>`;
+  } catch(e) { box.innerHTML = `<li class="muted">Não consegui buscar agora.</li>`; }
+}
+async function pickResult(i){
+  const d = dstate.results[i]; if (!d) return;
+  try {
+    const x = await fetch(`${FN}?id=${d.id}&type=${d.type}`).then(r => r.json());
+    const key = x.imdb || `tmdb:${d.type}:${d.id}`;
+    const rk = BYID[key];
+    openEditor({ key, kind: rk ? (KIND[rk.c] || kindOf(x)) : kindOf(x), title: x.title, orig: x.orig && x.orig !== x.title ? x.orig : null, year: x.year, poster: x.poster, seasons_total: x.seasons_total, status: d.type === "tv" ? "vendo" : "quero" });
+  } catch(e) { toast("Não consegui abrir esse título."); }
+}
+
+/* ---------- aba Diário ---------- */
+function diaryCard(e){
+  const rk = BYID[e.key];
+  const tot = e.seasons_total || 0;
+  const prog = tot > 1 || e.kind === "serie" || e.kind === "anime";
+  return `<li class="item dcard s-${e.status}" data-key="${esc(e.key)}">
+    <div class="art">${e.poster ? `<img src="${posterUrl(e.poster)}" alt="Cartaz de ${esc(e.title)}" loading="lazy" width="84" height="126">` : `<span class="ph" aria-hidden="true">${esc(e.title.charAt(0))}</span>`}${e.rating != null ? `<div class="score mine"><span class="n">${nota(e.rating)}</span></div>` : ""}</div>
+    <div class="main"><span class="pill s-${e.status}">${STATUS_LABEL[e.status]}</span>
+      <p class="ttl">${esc(e.title)}</p>
+      <div class="sub">${esc([e.orig, KIND_LABEL[e.kind], e.year].filter(Boolean).join(", "))}</div>
+      ${prog ? `<div class="step small"><button data-act="minus" aria-label="Menos uma temporada">−</button><span>${e.seasons_watched ?? 0}${tot ? " de " + tot : ""} temp.</span><button data-act="plus" aria-label="Mais uma temporada">+</button></div>` : ""}
+      ${e.platform ? `<div class="where"><span>${esc(e.platform)}</span></div>` : ""}
+      ${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}
+      ${rk && rk.c !== "extra" ? `<div class="rk-ref">${rk.r}º no ranking de ${CATS.find(c => c[0] === rk.c)[1]}, nota ${fmt(rk.n)}</div>` : ""}
+    </div>
+    <div class="acts"><button class="editbtn" data-act="edit" aria-label="Editar">${pencil}</button></div>
+  </li>`;
+}
+function renderDiary(){
+  const all_ = [...ENT.values()];
+  const cnt = s => all_.filter(e => e.status === s).length;
+  const rated = all_.filter(e => e.rating != null);
+  const avg = rated.length ? rated.reduce((a,e) => a + Number(e.rating), 0) / rated.length : null;
+  let L = dstate.filter === "tudo" ? all_ : all_.filter(e => e.status === dstate.filter);
+  if (state.q) { const q = norm(state.q); L = L.filter(e => norm(e.title + " " + (e.orig || "")).includes(q)); }
+  if (dstate.sort === "nota") L.sort((a,b) => (b.rating ?? -1) - (a.rating ?? -1));
+  else if (dstate.sort === "titulo") L.sort((a,b) => a.title.localeCompare(b.title, "pt"));
+  else L.sort((a,b) => (b.updated_at || "").localeCompare(a.updated_at || ""));
+  document.getElementById("count").textContent = `${all_.length} no diário` + (avg != null ? `, média ${nota(Math.round(avg*10)/10)}` : "");
+  const name = PROFILE ? (PROFILE.display_name || PROFILE.username) : "";
+  const top = `<li class="dhead"><div class="drow"><div><b>Diário${name ? " de " + esc(name) : ""}</b><small>${cnt("vendo")} vendo, ${cnt("vi")} vistos, ${cnt("quero")} para ver</small></div><button class="sharebtn" data-act="share">Compartilhar</button></div>
+    <div class="adder"><input id="sq" type="search" placeholder="Adicionar série ou filme…" autocomplete="off" enterkeyhint="search"><ul id="sres" class="sres"></ul></div>
+    <div class="dchips">${[...STATUS, ["tudo","Tudo"]].map(([k,l]) => `<button data-df="${k}" aria-pressed="${dstate.filter===k}">${l} <i>${k === "tudo" ? all_.length : cnt(k)}</i></button>`).join("")}</div>
+    <div class="dsort"><label>Ordenar <select id="dsort"><option value="rec"${dstate.sort==="rec"?" selected":""}>Mais recentes</option><option value="nota"${dstate.sort==="nota"?" selected":""}>Minha nota</option><option value="titulo"${dstate.sort==="titulo"?" selected":""}>Título</option></select></label></div></li>`;
+  const body = L.length ? L.map(diaryCard).join("") : `<li class="empty">${all_.length ? "Nada aqui com esse filtro." : "Seu diário está vazio. Busque uma série acima, ou toque no lápis de qualquer obra do ranking."}</li>`;
+  document.getElementById("list").innerHTML = top + body;
+  const sq = document.getElementById("sq");
+  sq.addEventListener("input", () => { clearTimeout(searchTimer); const v = sq.value.trim(); searchTimer = setTimeout(() => searchTmdb(v), 350); });
+}
+async function bumpSeason(key, d){
+  const e = ENT.get(key); if (!e) return;
+  const tot = e.seasons_total || 0;
+  let sw = Math.max(0, (e.seasons_watched ?? 0) + d); if (tot) sw = Math.min(tot, sw);
+  const upd = { ...e, seasons_watched: sw };
+  if (tot && sw === tot && e.status === "vendo") upd.status = "vi";
+  if (sw > 0 && (e.status === "quero")) upd.status = "vendo";
+  await saveEntry(upd); render();
+  if (upd.status !== e.status) toast(upd.status === "vi" ? "Temporadas completas: marcado como Vi." : "Marcado como Vendo.");
+}
+
+/* ---------- perfil público ---------- */
+const PUB = { user: null, prof: null, ents: null, err: "" };
+async function loadPublic(username){
+  PUB.user = username; PUB.prof = null; PUB.ents = null; PUB.err = "";
+  render();
+  const { data: p } = await sb.from("profiles").select("*").eq("username", username).maybeSingle();
+  if (!p) { PUB.err = "Diário não encontrado ou privado."; render(); return; }
+  const { data: es } = await sb.from("entries").select("*").eq("user_id", p.id);
+  PUB.prof = p; PUB.ents = es || []; render();
+}
+function pubCard(e){
+  return `<li class="pcard"><div class="pa">${e.poster ? `<img src="${posterUrl(e.poster)}" alt="" loading="lazy" width="64" height="96">` : `<span class="ph s">${esc(e.title.charAt(0))}</span>`}${e.rating != null ? `<span class="pn">${nota(e.rating)}</span>` : ""}</div>
+    <div><b>${esc(e.title)}</b><small>${esc([KIND_LABEL[e.kind], e.year, e.seasons_total > 1 && e.seasons_watched != null ? e.seasons_watched + " de " + e.seasons_total + " temp." : ""].filter(Boolean).join(", "))}</small>${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}</div></li>`;
+}
+function renderProfile(){
+  const list = document.getElementById("list");
+  document.getElementById("count").textContent = "";
+  if (PUB.err) { list.innerHTML = `<li class="empty">${esc(PUB.err)} <a href="#filmes" data-go="filmes">Ver o ranking</a></li>`; return; }
+  if (!PUB.ents) { list.innerHTML = `<li class="empty">Carregando…</li>`; return; }
+  const E = PUB.ents, name = PUB.prof.display_name || PUB.prof.username;
+  const vendo = E.filter(e => e.status === "vendo").sort((a,b) => (b.updated_at||"").localeCompare(a.updated_at||""));
+  const vi = E.filter(e => e.status === "vi").sort((a,b) => (b.rating ?? -1) - (a.rating ?? -1) || a.title.localeCompare(b.title, "pt"));
+  const quero = E.filter(e => e.status === "quero");
+  const rated = E.filter(e => e.rating != null);
+  const avg = rated.length ? Math.round(rated.reduce((a,e) => a + Number(e.rating), 0) / rated.length * 10) / 10 : null;
+  const sec = (t, A) => A.length ? `<li class="psec"><h3>${t} <i>${A.length}</i></h3><ul class="pgrid">${A.map(pubCard).join("")}</ul></li>` : "";
+  const mine = ME && PUB.prof.id === ME.id;
+  list.innerHTML = `<li class="dhead"><div class="drow"><div><b>Diário de ${esc(name)}</b><small>${vi.length} vistos, ${vendo.length} vendo${avg != null ? ", nota média " + nota(avg) : ""}</small></div>${mine ? '<button class="sharebtn" data-act="share">Compartilhar</button>' : ""}</div>
+    <p class="hint">${mine ? "É assim que os outros veem o seu diário." : "Diário pessoal, feito no Ranking 2011–2026."} <a href="#filmes" data-go="filmes">Ver o ranking</a></p></li>`
+    + sec("Vendo agora", vendo) + sec("Já vi", vi) + sec("Quero ver", quero);
+}
+
+/* ---------- navegação ---------- */
+function go(cat){
+  state.cat = cat; state.svc = "";
+  try { history.replaceState(null, "", "#" + cat); } catch(e) {}
+  all(); window.scrollTo({ top: 0 });
+}
+function routeHash(){
+  const h2 = decodeURIComponent(location.hash.replace("#", ""));
+  if (h2.startsWith("u/")) { state.cat = "perfil"; if (sb) loadPublic(h2.slice(2).toLowerCase()); else { PUB.err = "Não consegui conectar ao servidor."; } all(); return true; }
+  return false;
+}
+document.getElementById("list").addEventListener("click", e => {
+  const g = e.target.closest("[data-go]"); if (g) { e.preventDefault(); go(g.dataset.go); return; }
+  const res = e.target.closest("[data-res]"); if (res) { pickResult(+res.dataset.res); return; }
+  const df = e.target.closest("[data-df]"); if (df) { dstate.filter = df.dataset.df; render(); return; }
+  const act = e.target.closest("[data-act]");
+  if (act) {
+    const a = act.dataset.act;
+    if (a === "share") { share(); return; }
+    if (a === "signup" || a === "login") { openAccount(a); return; }
+    const li = act.closest("li.dcard");
+    if (li) { e.stopPropagation(); const k = li.dataset.key;
+      if (a === "edit") openEditor(ENT.get(k));
+      if (a === "plus") bumpSeason(k, 1);
+      if (a === "minus") bumpSeason(k, -1);
+      return; }
+  }
+  const eb = e.target.closest(".editbtn");
+  if (eb) { const li = eb.closest("li.item"); if (li && li.dataset.id) { e.stopPropagation(); openEditorForId(li.dataset.id); } }
+}, true);
+document.getElementById("list").addEventListener("change", e => { if (e.target.id === "dsort") { dstate.sort = e.target.value; render(); } });
+document.getElementById("acct").addEventListener("click", () => openAccount(ME ? "menu" : "login"));
+window.addEventListener("hashchange", () => { if (!routeHash()) { const c = location.hash.replace("#",""); if ([...CATS.map(c => c[0]), "lista"].includes(c) && c !== state.cat) { state.cat = c; all(); } } });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+if (sb) {
+  sb.auth.onAuthStateChange((ev, session) => {
+    const u = session ? session.user : null;
+    if ((u && ME && u.id === ME.id) || (!u && !ME && ev !== "SIGNED_OUT")) { if (ev === "INITIAL_SESSION") { renderAcct(); } return; }
+    loadMe(u);
+  });
+}
+routeHash();
+
 all();
 </script>
 </body>
