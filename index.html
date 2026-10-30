@@ -375,6 +375,18 @@ li.qcard{list-style:none;display:grid;grid-template-columns:72px 1fr;gap:4px 12p
 .pchips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;font-size:.85rem}
 .pchip{background:var(--chip);border-radius:8px;padding:4px 9px;font-size:.82rem}
 .dwhere a{display:inline-block;margin-top:9px;font-size:.86rem;color:var(--accent);font-weight:700}
+
+.gchips{padding-top:0;margin-top:-2px}
+.gchips button{font-size:.82rem;padding:5px 11px;background:transparent}
+.gchips button i,.dchips.gch button i{font-style:normal;color:var(--muted);font-size:.74rem;margin-left:1px}
+.gchips button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.gchips button[aria-pressed="true"] i{color:inherit;opacity:.7}
+.dchips.gch{margin-top:8px}
+.dchips.gch button{font-size:.8rem;padding:5px 10px;background:transparent}
+.dchips.gch button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.gl{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.gl span{font-size:.68rem;font-weight:700;letter-spacing:.02em;padding:2px 7px;border-radius:999px;background:var(--chip);color:var(--muted)}
+.gl span.on{background:var(--ink);color:var(--surface)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -394,6 +406,7 @@ li.qcard{list-style:none;display:grid;grid-template-columns:72px 1fr;gap:4px 12p
 </select>
 </div>
 <div class="chips" id="chips"></div>
+<div class="chips gchips" id="gchips"></div>
 </header>
 <div class="status"><span id="count"></span><label><input type="checkbox" id="hide"> Esconder os que vi</label></div>
 <ol id="list"></ol>
@@ -423,6 +436,46 @@ const EMY_CATS = ["Especial documental", "Roteiro", "Atriz coadjuvante", "Elenco
 const EMY = {"5895028":[9,4,[[0,1],[1,1]],2],"27497448":[9,1,[],1],"14218830":[37,4,[[2,1],[1,1],[3,1],[4,1]],0],"31806037":[14,9,[[5,1],[6,1],[7,1],[2,1],[8,1],[1,1],[3,1]],2],"9253284":[22,5,[[1,1]],4],"8760684":[5,3,[],3],"11126994":[9,8,[[9,3]],5],"4288182":[26,7,[[6,1],[8,1],[10,1]],4],"5348176":[55,10,[[6,2],[7,1]],7],"14403178":[29,11,[[5,1],[6,1],[4,1],[8,1],[1,1],[3,1]],5],"3032476":[56,2,[],2],"4301160":[4,2,[[7,1]],1],"13309742":[5,4,[[9,1]],3],"3398228":[3,0,[],0],"7493974":[2,0,[],0],"7366338":[19,10,[[5,1],[8,1],[1,1]],7],"4044364":[3,0,[],0],"2802850":[70,7,[[5,1],[8,1],[3,1],[7,1]],3],"5687612":[11,6,[[11,1],[4,1],[8,1],[1,1],[3,1]],1],"7772588":[2,2,[],2],"7775622":[7,7,[[8,1]],6],"4257858":[7,3,[[0,1],[8,1],[1,1]],0],"11815682":[89,14,[[4,5],[12,2],[1,2],[11,1],[2,1],[8,1]],2],"2243973":[1,0,[],0],"10801534":[3,0,[],0],"6741278":[3,0,[],0],"4229236":[7,0,[],0],"5114356":[1,0,[],0],"11337908":[3,0,[],0],"10155688":[16,4,[[4,1],[7,1],[2,1]],1],"5290382":[2,0,[],0],"7476236":[1,0,[],0],"4158110":[14,3,[[6,1]],2],"36998986":[3,1,[[13,1]],0],"36464353":[3,2,[[0,1],[8,1]],0],"9059760":[4,0,[],0],"5275892":[5,2,[[8,1]],1],"11691774":[63,7,[[10,1]],6],"2372162":[21,4,[[12,1],[3,1],[2,1]],1],"2234222":[3,1,[[4,1]],0],"3006802":[4,0,[],0],"14419140":[5,3,[[0,1],[8,1]],1],"2861424":[6,2,[[9,2]],0],"21056886":[2,1,[],1],"11280740":[41,10,[[4,1],[7,1],[12,1]],7],"2788316":[26,19,[[14,1],[6,1],[4,1],[8,1],[10,1],[3,1]],13],"2649356":[8,0,[],0],"2575988":[41,2,[],2],"14688458":[2,0,[],0],"5875444":[23,3,[[8,2],[1,1]],0],"12327578":[2,0,[],0],"36594331":[1,0,[],0],"19853258":[7,4,[[0,1],[8,1]],2],"7660850":[76,20,[[1,4],[14,3],[6,2],[8,2],[3,2],[7,2],[12,1],[4,1]],3],"27902121":[4,0,[],0],"28814949":[5,0,[],0],"35328184":[2,0,[],0],"2149175":[19,4,[[12,2],[6,1],[1,1]],0],"14452776":[57,22,[[6,2],[7,2],[2,2],[8,2],[3,2],[10,2],[11,1],[1,1],[12,1]],7],"1190634":[17,5,[],5],"6958022":[5,0,[],0],"17491088":[10,1,[[2,1]],0],"6257970":[2,0,[],0],"4955642":[14,0,[],0],"6792200":[1,0,[],0],"8420184":[3,1,[[13,1]],0],"3581920":[42,9,[[10,1],[12,1]],7],"2699128":[1,0,[],0],"5788792":[80,22,[[2,2],[11,1],[4,1],[8,1],[1,1],[3,1],[7,1],[10,1],[12,1]],12],"26453092":[1,1,[],1],"2401256":[13,5,[[6,1]],4],"31938062":[39,12,[[14,2],[6,2],[10,2],[3,2],[2,1]],3],"10048342":[18,11,[[5,1],[8,1],[3,1]],8],"10802170":[4,0,[],0],"23649128":[23,13,[[11,1],[6,1],[8,1],[1,1],[10,1],[3,1]],7],"1877514":[4,0,[],0],"13406094":[68,16,[[2,2],[3,2],[5,1],[7,1],[8,1],[1,1]],8],"5555260":[39,4,[[10,3],[6,1]],0],"7664504":[2,0,[],0],"4093826":[9,0,[],0],"7909970":[4,0,[],0],"9815454":[8,1,[[8,1]],0],"2306299":[14,1,[],1],"3455224":[2,1,[],1],"9140560":[23,3,[],3],"7049682":[26,11,[[5,1],[4,1],[7,1],[1,1],[3,1]],6],"14674086":[19,11,[[8,1]],10],"7908628":[35,1,[],1],"7137906":[16,2,[[6,1],[3,1]],0],"33332385":[19,14,[[11,1],[6,1],[7,1],[2,1],[8,1],[1,1],[12,1],[3,1]],6],"7768848":[5,1,[[13,1]],0],"16026746":[1,0,[],0],"1486217":[8,2,[[9,1]],1],"0185906":[20,7,[[5,1],[8,1]],5],"0407362":[19,3,[],3],"0979432":[57,20,[[8,2],[3,1],[7,1]],16],"0903747":[58,16,[[6,4],[7,3],[14,2],[2,2],[1,1]],4],"0348914":[28,8,[[8,1]],7],"1606375":[69,15,[[2,3],[5,1],[8,1],[1,1]],9],"1489428":[8,2,[[2,1],[10,1]],0],"0290978":[2,0,[],0],"0306414":[2,0,[],0]};
 DATA.forEach(x => { if (x.c === "series" || x.c === "minisseries" || x.c === "documentarios") { const e = EMY[x.id.slice(2)]; if (e) x.em = e; } });
 const emmyIcon = '<svg viewBox="0 0 16 24" aria-hidden="true"><circle cx="8" cy="3.2" r="2.3" fill="none" stroke="currentColor" stroke-width="1.3"/><path fill="currentColor" d="M8 6.4C5 6.4 2.2 5 1 2.6c1.3 3.6 3.6 5.8 5.6 6.9L6 17.6h4l-.6-8.1c2-1.1 4.3-3.3 5.6-6.9C13.8 5 11 6.4 8 6.4zM4.4 18.6h7.2l.8 2.2H3.6zM2.8 21.6h10.4V23H2.8z"/></svg>';
+/* motor de gêneros: pontua IMDb (2), TMDB (2, +1 se for o principal) e palavras-chave (1); fica com até 4 */
+const GENRES = ["Drama","Comédia","Suspense","Terror","Crime","Mistério","Ação","Aventura","Ficção científica","Fantasia","Romance","Animação","Guerra","História","Fatos reais","Música","Esporte","Faroeste","Família"];
+function smartGenres(imdb, tg, kw, kind){
+  imdb = imdb || []; tg = tg || []; kw = (kw || []).map(k => k.toLowerCase());
+  const noImdb = !imdb.length;
+  const S = {}; const add = (g, p) => { S[g] = (S[g] || 0) + p; };
+  const K = re => kw.some(k => re.test(k));
+  const IM = {Horror:"Terror",Thriller:"Suspense",Comedy:"Comédia",Drama:"Drama",Crime:"Crime",Mystery:"Mistério",Action:"Ação",Adventure:"Aventura","Sci-Fi":"Ficção científica",Fantasy:"Fantasia",Romance:"Romance",Animation:"Animação",War:"Guerra",History:"História",Biography:"Fatos reais",Music:"Música",Musical:"Música",Sport:"Esporte",Western:"Faroeste",Family:"Família"};
+  imdb.forEach(g => IM[g] && add(IM[g], 2));
+  const TM = {28:"Ação",12:"Aventura",16:"Animação",35:"Comédia",80:"Crime",18:"Drama",10751:"Família",14:"Fantasia",36:"História",27:"Terror",10402:"Música",9648:"Mistério",10749:"Romance",878:"Ficção científica",53:"Suspense",10752:"Guerra",37:"Faroeste"};
+  tg.forEach((id, i) => {
+    if (TM[id]) add(TM[id], 2 + (i === 0 ? 1 : 0));
+    if (id === 10759) { add("Ação", noImdb ? 2 : 1); add("Aventura", noImdb ? 1 : 0); }
+    if (id === 10762) add("Família", 2);
+    if (id === 10765) {
+      const fan = K(/(magic|dragon|witch|wizard|sword and sorcery|fairy tale|mytholog|high fantasy|dark fantasy|vampire|werewolf|elves|demon)/);
+      add(fan ? "Fantasia" : "Ficção científica", (noImdb || (!imdb.includes("Sci-Fi") && !imdb.includes("Fantasy"))) ? 2 : 1);
+    }
+    if (id === 10768 && K(/(^war$|world war|vietnam war|military|soldier|battle)/)) add("Guerra", 2);
+  });
+  const kwp = noImdb ? 2 : 1;
+  if (K(/(horror|zombie|slasher|haunted|exorcis|demonic possession|ghost story)/)) add("Terror", kwp);
+  if (K(/(thriller|suspense|cat and mouse|paranoia)/)) add("Suspense", kwp);
+  if (K(/(post-apocalyptic|dystopia|space travel|time travel|artificial intelligence|alien|cyberpunk)/)) add("Ficção científica", kwp);
+  const fantasyLike = (S["Fantasia"] || 0) + (S["Terror"] || 0) + (S["Ficção científica"] || 0) >= 2;
+  if (K(/^(based on true story|based on real events|true crime|biography|based on real person)$/) && !fantasyLike) add("Fatos reais", 2);
+  if (K(/(sports|boxing|football|basketball|baseball|soccer|tennis|car racing|wrestling|olympic|climbing)/)) add("Esporte", 1);
+  if (K(/^(musical|music band|rock band|singer|concert|hip-hop|jazz)$/)) add("Música", 1);
+  if (kind === "anime") delete S["Animação"];
+  if (S["Família"] && !(S["Animação"] || kind === "filme")) delete S["Família"];
+  let L = Object.entries(S).filter(([g, p]) => p >= 2).sort((a, b) => b[1] - a[1] || GENRES.indexOf(a[0]) - GENRES.indexOf(b[0])).map(x => x[0]);
+  // drama é quase universal: só fica se sobrar espaço
+  const hasDrama = L.includes("Drama"); L = L.filter(g => g !== "Drama").slice(0, hasDrama ? 3 : 4);
+  if (hasDrama) L.push("Drama");
+  return L;
+}
+
+
+const GEN = {"1010048":"a40","1013753":"de0","1016150":"c0","1016268":"de","1024648":"e2d0","1045658":"a10","1049413":"b17i","1065073":"10","1074638":"627","1109624":"17i","1125849":"ga0","1136608":"826","1139797":"390","1151309":"g","1155592":"e4","1157605":"fe0","1158671":"780","1179933":"2380","1183919":"fe","1185616":"bce0","1190634":"6148","1193138":"a10","1201607":"79i","1210166":"eg0","1255953":"5c0","1276104":"6820","1285016":"e0","1286537":"","1302006":"4de0","1313104":"4e","1334722":"1645","1352421":"190","1355642":"6780","1358522":"4150","1392190":"687","1399683":"540","1403865":"h70","1440266":"f","1454468":"820","1486217":"1b6","1488589":"b790","1489428":"460","1489887":"1","1490017":"b716","1504320":"de0","1517451":"fa0","1527793":"1420","1535109":"6e20","1542344":"e720","1587707":"14","1605783":"91a","1606375":"a0","1645089":"4e","1646971":"67b9","1655442":"1a0","1706620":"680","1714206":"a10","1745960":"60","1748122":"17a0","1756855":"17bi","1772925":"e","1773185":"6790","1790885":"2d0","1798709":"8a0","1800241":"40","1825683":"678","1832382":"0","1877514":"cd","1877832":"687","1878870":"1a0","1895587":"e4d0","1910272":"1850","1913273":"570","1935156":"","1935179":"70","1950186":"6ed0","1951264":"768a","1979376":"17bi","2015381":"6718","2024544":"de0","2042568":"f0","2051178":"679","2061551":"10","2096673":"b170","2098220":"678","2098308":"18","2103281":"6820","2106476":"0","2125608":"fe","2130321":"4","2149175":"450","2180883":"10","2209418":"a0","2234222":"820","2243973":"430","2249364":"450","2277860":"7b1i","2278388":"10","2306299":"67c0","2306745":"f","2309320":"867","2320220":"19","2334873":"1a0","2372162":"14e0","2375605":"4de","2379308":"468","2380307":"7bf0","2381111":"ad0","2381249":"672","2382298":"e","2401256":"450","2402927":"a0","2442560":"40","2488496":"768","2543164":"850","2545118":"20","2560140":"679","2562232":"10","2575988":"1","2582782":"4h20","2582802":"f20","2649356":"450","2671706":"0","2692904":"20","2699128":"590","2714900":"ed","2788316":"670","2802850":"420","2861424":"b187","2870648":"fe","2872718":"240","2948356":"b716","2948372":"bf10","2953050":"b1i9","3006802":"970","3011894":"120","3032476":"40","3040964":"769b","3076658":"g60","3079380":"614","3170832":"20","3281548":"a0","3315342":"680","3358020":"680","3397884":"6420","3398228":"b10","3398540":"10","3416742":"132","3450958":"8670","3455224":"c","3498820":"687","3521126":"1e0","3521134":"de","3521164":"71bi","3544112":"1fa0","3581652":"4fa0","3581920":"670","3592032":"g0","3606756":"67bi","3659388":"870","3660104":"10","3682448":"2de0","3783958":"1fa0","3890160":"640","3895150":"10","4016934":"2a0","4034228":"0","4044364":"e","4093826":"340","4154796":"786","4158110":"420","4178092":"250","4179452":"6d0","4229236":"ef","4257858":"","4263482":"3950","4279012":"50","4288182":"1f0","4301160":"4e0","4302938":"b76i","4420704":"","4468740":"71i","4508902":"168","4633694":"b678","4686844":"1de0","4698684":"710","4772188":"7bi9","4846232":"420","4912910":"672","4925292":"10","4955642":"190","4975722":"0","5013056":"6dc0","5027774":"410","5052448":"253","5083738":"1de0","5104604":"71b","5114356":"2680","5215952":"350","5249462":"450","5275892":"4ed","5278596":"","5290382":"45e0","5311514":"b9a0","5323662":"ba0","5348176":"1460","5363618":"f0","5439796":"146","5462602":"1ae0","5537002":"4de0","5555260":"1a0","5580036":"1e0","5580390":"9a0","5598102":"7","5607616":"5790","5649144":"0","5687612":"10","5726616":"a0","5727208":"240","5776858":"a0","5788792":"10","5804038":"d","5875444":"4250","5895028":"4d","5897304":"168","6074794":"10","6155172":"0","6257970":"1470","6412452":"1hf0","6587046":"b790","6644200":"380","6710474":"6718","6741278":"b680","6751668":"210","6763664":"530","6792200":"45","6958022":"4e","7049682":"4580","7078180":"9c0","7120662":"10","7137906":"e40","7160372":"cde0","7222086":"6790","7349662":"4e10","7366338":"2de0","7378922":"fd","7476236":"g","7493974":"450","7653254":"a0","7660850":"10","7664504":"e0","7681902":"ed","7767422":"1a0","7768848":"4e","7772588":"80","7775622":"7g","7784604":"3520","7790776":"6570","7836688":"170","7905466":"cd","7908628":"193","7909970":"4e0","7979580":"b17","7984734":"9320","8086718":"17","8178634":"67d0","8253044":"19","8420184":"de","8430054":"be","8503618":"de0","8515016":"6450","8610436":"1ef","8613070":"a0","8714904":"4e0","8760684":"de0","8788458":"5670","8946378":"1450","8991268":"","8993398":"190","8999762":"0","9054364":"6179","9059760":"a0","9098872":"56e0","9140342":"10","9140560":"1560","9253284":"790","9288030":"460","9304350":"180","9335498":"679","9362722":"b678","9458304":"67","9484998":"1859","9522300":"10","9603212":"627","9617456":"ce","9620288":"egd0","9679542":"6817","9770150":"0","9784798":"e4d0","9815454":"0","10048342":"0","10155688":"450","10233448":"670","10272386":"50","10288566":"10","10366206":"624","10370710":"1a0","10479420":"f0","10633456":"0","10638036":"a0","10638522":"32","10706602":"4","10801534":"1","10802170":"1","11126994":"b679","11138512":"6790","11247158":"b679","11271038":"1a0","11280740":"580","11337908":"e0","11382384":"24","11564570":"1450","11680468":"170","11691774":"1450","11813216":"10","11815682":"10","11905462":"g4","12037194":"687","12042730":"871","12063450":"780","12327578":"8670","12343534":"679","12590266":"6847","12831098":"54","13103134":"10","13138834":"40","13238346":"a0","13293588":"679","13309742":"b67","13406094":"150","13409432":"678","13616990":"69","13706018":"16","13718450":"68c0","13851958":"6870","13911284":"679","14039582":"0","14055432":"40","14115938":"6179","14134550":"145","14173636":"1a0","14205554":"b9f1","14208870":"e0","14218830":"1","14230458":"1a80","14364480":"1240","14403178":"10","14419140":"e","14444726":"f0","14452776":"10","14674086":"g","14688458":"8570","14849194":"10","14961016":"de0","15239678":"7860","15398776":"dec0","15686254":"590","15765670":"1a0","15791034":"235","16026746":"b678","16118722":"eg","16156718":"10","16227014":"e","16283804":"1a0","16755706":"16","16867040":"1","17009710":"2450","17041964":"e","17158756":"10","17491088":"20","18925334":"320","19770238":"0","19811010":"be","19853258":"e","20215234":"20","20723374":"b678","21030032":"90","21056886":"b870","21192142":"a90","21209876":"679","21374850":"ed","21423786":"10","21621494":"179","21819228":"","21823606":"10","21975436":"678","22248376":"1790","22797582":"45e","22817632":"587","22986710":"164","23289160":"6830","23561236":"10","23649128":"10","24082438":"c","25470468":"de","26446278":"760","26453092":"b679","26581740":"35","26737616":"8450","26743760":"5d0","26931594":"fe","27497448":"790","27503384":"0","27674982":"1f0","27714581":"0","27846061":"1450","27847051":"4250","27902121":"e","28607951":"1a0","28620587":"fe","28776190":"6178","28814949":"f","29623480":"i7b8","29768334":"h0","30024091":"10","30144839":"241","30217403":"6817","30953759":"","31193180":"326","31434639":"c60","31806037":"420","31938062":"0","32141377":"382","32298285":"2670","32536168":"679","32550889":"790","32612521":"6870","32639706":"1a0","32843349":"10","32916440":"g120","33028568":"3580","33044444":"d0","33095251":"1e0","33296751":"4fa0","33311069":"624","33332385":"1530","33764258":"769","34966013":"e","35003538":"fe","35307139":"","35328184":"d","35410859":"20","35538033":"378","35768911":"20","36034547":"1a","36150957":"f","36463894":"b682","36464353":"e","36491653":"4520","36592690":"10","36594331":"b678","36943034":"ecd0","36988358":"80","36998986":"e","37022512":"1a0","37287335":"329","37614297":"1a","38504111":"1590","39304754":"a0","40548519":"c0","44766123":"c","45368240":"e14","0167260":"7960","0245429":"bi79","0457430":"9c0","0910970":"bi87","0382932":"b179","0120737":"7960","0435761":"b17i","0266543":"b71i","0468569":"246","0167261":"7960","0469494":"0","0477348":"42h0","0381681":"a0","0317705":"67bi","0887912":"2c0","0405094":"250","0338013":"8a0","0375063":"1a0","0253474":"efc0","0335266":"1a0","0407887":"240","0498380":"67c0","0405159":"g0","0299977":"67d0","0440963":"6250","0353969":"4250","0312004":"71bi","0317248":"4e0","0206634":"8260","0432283":"71bi","0796366":"867","0443453":"1","0363163":"dec0","0198781":"b179","0876563":"b179","0304141":"79i","0381061":"276","0892769":"7b96","0371746":"678","0443272":"de0","0316654":"678","0395169":"dec0","0970179":"7i0","0425112":"1645","0264464":"4e0","0268126":"140","0780504":"2460","0449059":"10","0327597":"bi30","0964517":"e60","0467406":"1a0","0790636":"ed0","0470752":"820","0443706":"4520","0332379":"1fi","0465538":"4250","0365748":"31","0373074":"6194","0381849":"h460","0278504":"2450","0451279":"679","0461770":"179a","0276751":"1a0","0290978":"10","0306414":"420","0903747":"420","0407362":"6870","0348914":"4hd0","0979432":"40","0436992":"870","0185906":"6cd0","0317910":"ed","0814075":"4","0342172":"4e","0436613":"g","0923752":"eg","0334405":"12e","0434706":"450","0988818":"681","0877057":"4590","0994314":"680","0807832":"90","0810705":"10","0948103":"687","0423731":"617","0857297":"10","0409591":"679","0816397":"1a0"};
+DATA.forEach(x => { const c = GEN[x.id.slice(2)]; x.g = c ? [...c].map(ch => GENRES[parseInt(ch,36)]) : []; });
 const awardWins = x => (x.os ? x.os[1] : 0) + (x.em ? x.em[1] : 0);
 const awardNoms = x => (x.os ? x.os[0] : 0) + (x.em ? x.em[0] : 0);
 
@@ -441,7 +494,7 @@ try { if (!localStorage.getItem("seed_britanicas")) { ["tt27867155","tt13994572"
 const BYID = {}; 
 let hideSeen = false;
 try { hideSeen = localStorage.getItem("esconder") === "1"; } catch(e) {}
-const state = { cat: "filmes", svc: "", q: "", sort: "n", year: "" };
+const state = { cat: "filmes", svc: "", q: "", sort: "n", year: "", gen: "" };
 const h = location.hash.replace("#","");
 if (CATS.some(c => c[0] === h) || h === "lista") state.cat = h;
 DATA.forEach(x => BYID[x.id] = x);
@@ -480,6 +533,15 @@ if (state.svc === "_mine" && !mine) state.svc = "";
 const opts = [["","Tudo"], ...(mine ? [["_mine","★ Meus vereditos"]] : []), ...(hasOsc ? [["_osc","Oscar"]] : []), ...(hasEmy ? [["_emy","Emmy"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
 document.getElementById("chips").innerHTML = opts.map(([v,l]) =>
 `<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':(v==="_osc"||v==="_emy")?' class="oscchip"':""}>${esc(l)}</button>`).join("");
+}
+function renderGenres(){
+const el = document.getElementById("gchips");
+if (state.cat === "lista" || state.cat === "perfil") { el.innerHTML = ""; return; }
+const inCat = DATA.filter(x => x.c === state.cat && (!state.year || x.y === +state.year));
+const cnt = {}; inCat.forEach(x => x.g.forEach(g => cnt[g] = (cnt[g] || 0) + 1));
+const gs = GENRES.filter(g => cnt[g]).sort((a,b) => cnt[b] - cnt[a]);
+if (state.gen && !cnt[state.gen]) state.gen = "";
+el.innerHTML = `<button data-gen="" aria-pressed="${!state.gen}">Todos os gêneros</button>` + gs.map(g => `<button data-gen="${esc(g)}" aria-pressed="${state.gen===g}">${esc(g)} <i>${cnt[g]}</i></button>`).join("");
 }
 function renderYears(){
 if (state.cat === "lista" || state.cat === "perfil") return;
@@ -520,6 +582,7 @@ if (state.cat === "perfil") return renderProfile();
 if (state.cat === "lista") return ME ? renderDiary() : renderList();
 let L = DATA.filter(x => x.c === state.cat);
 if (state.year) L = L.filter(x => x.y === +state.year);
+if (state.gen) L = L.filter(x => x.g.includes(state.gen));
 if (state.svc === "_none") L = L.filter(x => !x.s.length);
 else if (state.svc === "_mine") L = L.filter(x => verdictOf(x.id)).sort((a,b) => TIER_ORDER[verdictOf(a.id)]-TIER_ORDER[verdictOf(b.id)] || a.r-b.r);
 else if (state.svc === "_osc") L = L.filter(x => x.os).sort((a,b) => b.os[1]-a.os[1] || b.os[0]-a.os[0] || a.r-b.r);
@@ -544,6 +607,7 @@ list.innerHTML = L.map(card).join("");
 function card(x){
 const ST = {fin:"finalizada", and:"em andamento", can:"cancelada"};
 const sub = [x.o && x.o !== x.t ? x.o : "", x.f, String(x.y), x.ns ? `${x.ns} temp.` : "", ST[x.st] || ""].filter(Boolean).map(esc).join(", ");
+const gl = x.g && x.g.length ? `<div class="gl">${x.g.slice(0,3).map(g => `<span${g===state.gen?' class="on"':""}>${esc(g)}</span>`).join("")}</div>` : "";
 const oc = a => [...new Set(a)].map(i => OSC_CATS[i]).join(", ");
 const em = x.em && x.em[1] ? `<span class="oscd">Emmy, venceu: ${x.em[2].map(([i,k]) => EMY_CATS[i] + (k > 1 ? ` (${k}×)` : "")).join(", ")}${x.em[3] ? `${x.em[2].length ? " e mais " : ""}${x.em[3]} em categorias técnicas` : ""}.</span><br>` : "";
 const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + em + (x.os ? `<span class="oscd">${x.os[2].length ? `Oscar, venceu: ${oc(x.os[2])}.` : ""}${x.os[2].length && x.os[3].length ? " " : ""}${x.os[3].length ? `Indicado: ${oc(x.os[3])}.` : ""}</span><br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
@@ -558,7 +622,7 @@ return `<li class="item${isSeen?" seen":""}${v ? ` vt t-${v}` : ""}${v==="S"?" t
 <div class="main" tabindex="0" role="button" aria-expanded="false">
 <p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
-<div class="stats">${stats}</div>
+${gl}<div class="stats">${stats}</div>
 ${x.os ? `<div class="osc${x.os[1] ? " won" : ""}">${statue}${x.os[1] ? `<b>${x.os[1]} Oscar${x.os[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.os[0]} indicaç${x.os[0] > 1 ? "ões" : "ão"}</div>` : ""}
 ${x.em ? `<div class="osc emy${x.em[1] ? " won" : ""}">${emmyIcon}${x.em[1] ? `<b>${x.em[1]} Emmy${x.em[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.em[0]} indicaç${x.em[0] > 1 ? "ões" : "ão"}</div>` : ""}
 ${v ? `<div class="vline t-${v}">${TIER_LABEL[v]}</div>` : isSeen ? `<div class="vline seenl">Visto</div>` : ""}
@@ -569,7 +633,7 @@ ${x.sy ? `<p class="syn">${esc(x.sy)}</p>` : ""}
 <div class="more">${more}</div>
 </li>`;
 }
-function all(){ renderTabs(); renderYears(); renderChips(); render(); }
+function all(){ renderTabs(); renderYears(); renderChips(); renderGenres(); render(); }
 
 document.getElementById("tabs").addEventListener("click", e => {
 const b = e.target.closest("button"); if (!b) return;
@@ -581,6 +645,11 @@ document.getElementById("chips").addEventListener("click", e => {
 const b = e.target.closest("button"); if (!b) return;
 state.svc = b.dataset.svc; renderChips(); render();
 });
+document.getElementById("gchips").addEventListener("click", e => {
+const b = e.target.closest("button"); if (!b) return;
+state.gen = b.dataset.gen; renderGenres(); render();
+});
+document.getElementById("year").addEventListener("change", () => renderGenres());
 document.getElementById("q").addEventListener("input", e => { state.q = e.target.value.trim(); render(); });
 document.getElementById("year").addEventListener("change", e => { state.year = e.target.value; render(); });
 document.getElementById("sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
@@ -623,7 +692,7 @@ const KIND = {filmes:"filme", series:"serie", minisseries:"minisserie", document
 const KIND_LABEL = {filme:"Filme", serie:"Série", minisserie:"Minissérie", doc:"Documentário", anime:"Anime", outro:"Outro"};
 const STATUS = [["vendo","Vendo"],["quero","Quero ver"],["vi","Vi"],["abandonei","Abandonei"]];
 const STATUS_LABEL = Object.fromEntries(STATUS);
-const dstate = { shelf: null, kind: "all", results: [] };
+const dstate = { shelf: null, kind: "all", gen: "", results: [] };
 const nota = r => r == null ? "" : Number(r).toFixed(1).replace(".", ",").replace(",0", "");
 const posterUrl = p => p ? `https://image.tmdb.org/t/p/w185${p}` : "";
 const pencil = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 3.5l3 3L7 16H4v-3z"/></svg>';
@@ -902,12 +971,17 @@ function awardsHtml(e){
   if (em) s += `<div class="osc emy${em[1] ? " won" : ""}">${emmyIcon}${em[1] ? `<b>${em[1]} Emmy${em[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${em[0]} indicaç${em[0] > 1 ? "ões" : "ão"}</div>`;
   return s;
 }
+function genresOf(e){
+  const x = rk(e); if (x && x.g && x.g.length) return x.g;
+  const ex = e.extra || {}; if (!ex.gid && !(ex.g || []).length) return [];
+  return smartGenres([], ex.gid || [], ex.kw || [], e.kind);
+}
 function infoOf(e){
   const x = rk(e), ex = e.extra || {};
   const prov = (ex.prov && ex.at) ? ex.prov : (x ? x.s : []);
   const link = x && x.p ? "https://www.justwatch.com" + x.p : (ex.wl || null);
   return { sy: (ex.sy && ex.syl === "pt") ? ex.sy : ((x && x.sy) || ex.sy || ""), prov: prov || [], rent: ex.rent || (x && x.sn === "rent"), link,
-    g: ex.g || [], rt: ex.rt || null, dir: ex.dir || (x && x.d ? x.d.split(", ") : []), cast: ex.cast || [], vote: ex.vote || null, votes: ex.votes || 0, tag: ex.tag || "", x };
+    g: genresOf(e), rt: ex.rt || null, dir: ex.dir || (x && x.d ? x.d.split(", ") : []), cast: ex.cast || [], vote: ex.vote || null, votes: ex.votes || 0, tag: ex.tag || "", x };
 }
 function provLine(e){
   const I = infoOf(e);
@@ -939,7 +1013,7 @@ function openDetails(e, ro){
   if (!e.extra && !ro) enrichOne(e).then(ne => { if (ne && document.getElementById("overlay") === o) openDetails(ne, ro); });
 }
 function extraFrom(d){
-  return { tmdb: d.id, type: d.type, sy: d.overview || "", syl: d.syl || "", g: d.genre_names || [], rt: d.runtime || null, dir: d.dir || [], cast: d.cast || [],
+  return { tmdb: d.id, type: d.type, gid: d.genres || [], kw: d.kw || [], sy: d.overview || "", syl: d.syl || "", g: d.genre_names || [], rt: d.runtime || null, dir: d.dir || [], cast: d.cast || [],
     vote: d.vote || null, votes: d.votes || 0, prov: d.providers || [], rent: !!d.rent, wl: d.wlink || null, tag: d.tagline || "", at: new Date().toISOString().slice(0,10) };
 }
 async function enrichOne(e){
@@ -962,7 +1036,7 @@ async function enrichOne(e){
 let enriching = false;
 async function enrichAll(){
   if (enriching || !ME) return; enriching = true;
-  const stale = d => !d || !d.at || (Date.now() - new Date(d.at).getTime()) > 14 * 864e5;
+  const stale = d => !d || !d.at || (!d.gid && !d.none) || (Date.now() - new Date(d.at).getTime()) > 14 * 864e5;
   const todo = [...ENT.values()].filter(e => stale(e.extra));
   for (let i = 0; i < todo.length; i += 4) {
     await Promise.all(todo.slice(i, i + 4).map(enrichOne));
@@ -1030,7 +1104,14 @@ function kindChips(A){
   if (dstate.kind !== "all" && !ks.includes(dstate.kind)) dstate.kind = "all";
   return `<div class="dchips">${[["all","Tudo"], ...ks.map(k => [k, KIND_PLURAL[k]])].map(([k,l]) => `<button data-kind="${k}" aria-pressed="${dstate.kind===k}">${l} <i>${k==="all" ? A.length : A.filter(e => e.kind === k).length}</i></button>`).join("")}</div>`;
 }
-function byKind(A){ return dstate.kind === "all" ? A : A.filter(e => e.kind === dstate.kind); }
+function byKind(A){ A = dstate.kind === "all" ? A : A.filter(e => e.kind === dstate.kind); return dstate.gen ? A.filter(e => genresOf(e).includes(dstate.gen)) : A; }
+function genreChips(A){
+  const cnt = {}; A.forEach(e => genresOf(e).forEach(g => cnt[g] = (cnt[g] || 0) + 1));
+  const gs = GENRES.filter(g => cnt[g]).sort((a,b) => cnt[b] - cnt[a]);
+  if (dstate.gen && !cnt[dstate.gen]) dstate.gen = "";
+  if (gs.length < 2) return "";
+  return `<div class="dchips gch">${[["","Todos os gêneros"], ...gs.map(g => [g, g])].map(([k,l]) => `<button data-dgen="${esc(k)}" aria-pressed="${dstate.gen===k}">${esc(l)}${k ? ` <i>${cnt[k]}</i>` : ""}</button>`).join("")}</div>`;
+}
 function isSerial(e){ return (e.seasons_total || 0) > 1 || e.kind === "serie" || e.kind === "anime"; }
 function watchCard(e){
   const tot = e.seasons_total || 0, sw = e.seasons_watched ?? 0, pct = tot ? Math.round(sw / tot * 100) : 0;
@@ -1077,12 +1158,12 @@ function renderDiary(){
   } else if (sh === "vi") {
     const base = G.vi.filter(match), L = byKind(base);
     const U = L.filter(e => !e.verdict).length;
-    html += `<li class="shead"><h3>Sua tier list</h3><p>Cada obra vista ganha um veredito em um toque, sem nota quebrada.</p>${kindChips(base)}</li>`;
+    html += `<li class="shead"><h3>Sua tier list</h3><p>Cada obra vista ganha um veredito em um toque, sem nota quebrada.</p>${kindChips(base)}${genreChips(dstate.kind === "all" ? base : base.filter(e => e.kind === dstate.kind))}</li>`;
     if (U) html += `<li class="classify"><div><b>${U} sem veredito</b><small>Vá passando um por um, leva segundos</small></div><button class="pri" data-act="classify">Classificar agora</button></li>`;
     html += L.length ? `<li class="board">${tierBoard(L, false)}</li>` : `<li class="empty">Nenhuma obra vista aqui ainda.</li>`;
   } else if (sh === "quero") {
     const base = G.quero.filter(match), L = byKind(base);
-    html += `<li class="shead"><h3>Na fila</h3><p>O que você quer ver. Quando começar, toque em Começar.</p>${kindChips(base)}</li>`;
+    html += `<li class="shead"><h3>Na fila</h3><p>O que você quer ver. Quando começar, toque em Começar.</p>${kindChips(base)}${genreChips(dstate.kind === "all" ? base : base.filter(e => e.kind === dstate.kind))}</li>`;
     html += L.length ? L.map(queueCard).join("") : `<li class="empty">Fila vazia. Use o marcador nas obras do ranking ou + Adicionar.</li>`;
   } else {
     const L = G.abandonei.filter(match);
@@ -1181,8 +1262,9 @@ function routeHash(){
 }
 document.getElementById("list").addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if (g) { e.preventDefault(); go(g.dataset.go); return; }
-  const shelf = e.target.closest("[data-shelf]"); if (shelf) { dstate.shelf = shelf.dataset.shelf; dstate.kind = "all"; render(); return; }
+  const shelf = e.target.closest("[data-shelf]"); if (shelf) { dstate.shelf = shelf.dataset.shelf; dstate.kind = "all"; dstate.gen = ""; render(); return; }
   const kd = e.target.closest("[data-kind]"); if (kd) { dstate.kind = kd.dataset.kind; render(); return; }
+  const dg = e.target.closest("[data-dgen]"); if (dg) { dstate.gen = dg.dataset.dgen; render(); return; }
   const op = e.target.closest("[data-open]"); if (op) { const en = ENT.get(op.dataset.open); if (en) openDetails(en); return; }
   const pb = e.target.closest("[data-pub]"); if (pb) { const en = (PUB.ents || []).find(x => x.key === pb.dataset.pub); if (en) openDetails(en, !(ME && PUB.prof && PUB.prof.id === ME.id)); return; }
   const act = e.target.closest("[data-act]");
