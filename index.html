@@ -499,7 +499,7 @@ li.item{cursor:pointer}
 <p>Entram só obras de 2001 em diante que passam em todos os cortes de IMDb, Rotten Tomatoes e Metacritic, com número mínimo de votos por ano. A nota vai de 0 a 100: 35% IMDb, 25% Rotten Tomatoes e 40% Metacritic. Documentários de natureza ficam de fora. Anime usa outra régua: MyAnimeList ≥ 8,0, AniList ≥ 80% e IMDb ≥ 7,5, com mínimo de avaliações no MyAnimeList por ano (2001–2022: 200 mil; 2023–2024: 100 mil; 2025: 50 mil; 2026: 25 mil). Só séries: a 1ª temporada precisa ter estreado de 2001 em diante e é ela que vale para as notas do MyAnimeList e do AniList; filmes de anime concorrem na aba Filmes, com a régua dos filmes. Nota do anime: 40% MyAnimeList, 30% AniList e 30% IMDb. Time (2021) é julgada como minissérie, pela 1ª temporada. “Pipoca” é a nota do público verificado no Rotten Tomatoes; aparece para consulta e não entra no cálculo.</p>
 <p>Notas de 2021–2026 coletadas em 25/10/2026; de 2016–2020, em 28/10/2026; de 2011–2015, em 29/10/2026; de 2001–2010, em 30/10/2026. Para 2001–2015 o mínimo de votos no IMDb é 150 mil para filmes, 100 mil para séries, 50 mil para minisséries e 10 mil para documentários. Onde assistir é conferido automaticamente várias vezes por dia, com dados do JustWatch via TMDB (última verificação: <span id="catAt">carregando</span>). As notas seguem as datas de coleta acima. “Onde assistir” abre a página da obra no JustWatch Brasil, com todos os serviços, inclusive aluguel. Toque num título para ler a sinopse inteira e ver diretor e votos. Sinopses do TMDB. As marcações de “vi” e a lista “Ver já” ficam salvas só neste aparelho.</p>
 </details>
-<p>Os selos S, A, B, C e D são os seus vereditos no diário. Oscars das cerimônias de 2002 a 2026 e Emmys de 2001 a 2026 (cerimônia principal e Creative Arts, somando todas as temporadas), contados na Wikipédia (Band of Brothers e Deadwood conferidos no site oficial da Television Academy); podem variar uma ou duas indicações do total oficial.</p>
+<p>Os selos S, A, B, C e D são os seus vereditos na cinemateca. Oscars das cerimônias de 2002 a 2026 e Emmys de 2001 a 2026 (cerimônia principal e Creative Arts, somando todas as temporadas), contados na Wikipédia (Band of Brothers e Deadwood conferidos no site oficial da Television Academy); podem variar uma ou duas indicações do total oficial.</p>
 <p class="tmdb">Cartazes e dados de imagem fornecidos pelo <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>. Este site usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.</p>
 </footer>
 <script>
@@ -598,9 +598,9 @@ function renderMyDiary(){
   if (ME) {
     const E = [...ENT.values()], c = s => E.filter(e => e.status === s).length;
     const name = PROFILE ? (PROFILE.display_name || PROFILE.username) : "";
-    b.innerHTML = `<span class="mdi">📖</span><span class="mdt"><b>${on ? "Você está no seu diário" : "Meu diário" + (name ? `, ${esc(name.split(" ")[0])}` : "")}</b><small>${E.length} obras · ${c("vendo")} assistindo · ${c("quero")} na fila</small></span><span class="mda">${on ? "Ranking ↑" : "→"}</span>`;
+    b.innerHTML = `<span class="mdi">🎞️</span><span class="mdt"><b>${on ? "Você está na sua cinemateca" : "Minha cinemateca" + (name ? `, ${esc(name.split(" ")[0])}` : "")}</b><small>${E.length} obras · ${c("vendo")} assistindo · ${c("quero")} na fila</small></span><span class="mda">${on ? "Ranking ↑" : "→"}</span>`;
   } else {
-    b.innerHTML = `<span class="mdi">📖</span><span class="mdt"><b>${on ? "Seu diário" : "Monte o seu diário"}</b><small>Notas, temporadas, recomendações e link para compartilhar</small></span><span class="mda">${on ? "Ranking ↑" : "→"}</span>`;
+    b.innerHTML = `<span class="mdi">🎞️</span><span class="mdt"><b>${on ? "Sua cinemateca" : "Monte a sua cinemateca"}</b><small>Notas, temporadas, recomendações e link para compartilhar</small></span><span class="mda">${on ? "Ranking ↑" : "→"}</span>`;
   }
 }
 function renderTabs(){
@@ -663,7 +663,7 @@ if (hideSeen) L = L.filter(x => !isSeenId(x.id));
 document.getElementById("count").textContent = `${total} para ver` + (seenCount ? `, ${seenCount} já visto${seenCount>1?"s":""}` : "");
 const add = `<li class="addbox"><p>Adicione qualquer título, mesmo fora do ranking. Para trazer uma obra do ranking, toque no marcador dela.</p><div class="row"><input id="addt" type="text" placeholder="Ex.: a série que te indicaram" autocomplete="off" enterkeyhint="done"><button id="addb">Adicionar</button></div></li>`;
 const body = L.length ? L.map(x => x.c ? card(x) : extraCard(x)).join("") : `<li class="empty">${total ? "Você já viu todos da lista. Desmarque “Esconder os que vi” para ver de novo." : "Sua lista está vazia. Toque no marcador de qualquer obra do ranking para trazê-la para cá."}</li>`;
-const cta = `<li class="cta"><b>Monte o seu diário</b><p>Crie uma conta para dar nota, marcar temporadas, anotar onde parou e compartilhar o que você já viu. Funciona em qualquer aparelho.</p><div class="btns"><button class="pri" data-act="signup">Criar conta</button><button class="sec" data-act="login">Já tenho conta</button></div></li>`;
+const cta = `<li class="cta"><b>Monte a sua cinemateca</b><p>Crie uma conta para dar nota, marcar temporadas, anotar onde parou e compartilhar o que você já viu. Funciona em qualquer aparelho.</p><div class="btns"><button class="pri" data-act="signup">Criar conta</button><button class="sec" data-act="login">Já tenho conta</button></div></li>`;
 document.getElementById("list").innerHTML = cta + add + body;
 }
 function addExtra(){
@@ -707,7 +707,7 @@ function alsoHtml(){
   if (!state.q || state.q.length < 2) return "";
   const q = norm(state.q), out = [];
   CATS.forEach(([c, label]) => { if (c === state.cat) return; const n = DATA.filter(x => x.c === c && norm(x.t+" "+x.o+" "+x.d).includes(q)).length; if (n) out.push([c, label, n]); });
-  if (ME) { const n = [...ENT.values()].filter(e => norm(e.title + " " + (e.orig || "")).includes(q)).length; if (n) out.push(["lista", "Diário", n]); }
+  if (ME) { const n = [...ENT.values()].filter(e => norm(e.title + " " + (e.orig || "")).includes(q)).length; if (n) out.push(["lista", "Cinemateca", n]); }
   return out.length ? `<li class="also">Também em ${out.map(([c,l,n]) => `<button data-gq="${c}">${esc(l)} <i>${n}</i></button>`).join("")}</li>` : "";
 }
 function card(x){
@@ -915,7 +915,7 @@ function openAccount(mode){
   if (!ME) {
     const signup = mode === "signup";
     const o = sheet(`<h2>${signup ? "Criar conta" : "Entrar"}</h2>
-      <p class="hint">${signup ? "Com uma conta, seu diário fica salvo e aparece em qualquer aparelho." : "Entre para ver e editar o seu diário."}</p>
+      <p class="hint">${signup ? "Com uma conta, sua cinemateca fica salva e aparece em qualquer aparelho." : "Entre para ver e editar a sua cinemateca."}</p>
       <label>E-mail<input id="em" type="email" autocomplete="email" autofocus></label>
       <label>Senha<input id="pw" type="password" autocomplete="${signup ? "new-password" : "current-password"}" minlength="6"></label>
       <p class="err" id="err"></p>
@@ -942,10 +942,10 @@ function openAccount(mode){
   }
   if (!PROFILE || mode === "perfil") {
     const o = sheet(`<h2>${PROFILE ? "Seu perfil" : "Crie seu perfil"}</h2>
-      <p class="hint">O nome de usuário vira o endereço do seu diário para compartilhar.</p>
+      <p class="hint">O nome de usuário vira o endereço da sua cinemateca para compartilhar.</p>
       <label>Seu nome<input id="dn" type="text" value="${esc((PROFILE && PROFILE.display_name) || "")}" autofocus></label>
       <label>Nome de usuário<input id="un" type="text" value="${esc((PROFILE && PROFILE.username) || "")}" placeholder="ex.: adriel" autocapitalize="none" autocomplete="off"></label>
-      <label class="check"><input id="pub" type="checkbox" ${!PROFILE || PROFILE.is_public ? "checked" : ""}> Deixar meu diário visível para quem tiver o link</label>
+      <label class="check"><input id="pub" type="checkbox" ${!PROFILE || PROFILE.is_public ? "checked" : ""}> Deixar minha cinemateca visível para quem tiver o link</label>
       <p class="err" id="err"></p>
       <div class="btns"><button class="pri" id="go">Salvar</button>${PROFILE ? '<button class="sec" id="cancel">Cancelar</button>' : ""}</div>`);
     if (PROFILE) o.querySelector("#cancel").onclick = closeSheet;
@@ -965,8 +965,8 @@ function openAccount(mode){
   const o = sheet(`<h2>${esc(PROFILE.display_name || PROFILE.username)}</h2>
     <p class="hint">${esc(ME.email || "")}</p>
     <div class="menu">
-      <button id="m-diario">Abrir meu diário</button>
-      <button id="m-share">Compartilhar meu diário</button>
+      <button id="m-diario">Abrir minha cinemateca</button>
+      <button id="m-share">Compartilhar minha cinemateca</button>
       <button id="m-perfil">Editar perfil</button>
       <button id="m-import">Importar uma lista com código</button>
       <button id="m-out" class="danger">Sair da conta</button>
@@ -991,17 +991,17 @@ function openImport(){
     if (error) { o.querySelector("#err").textContent = /invalido|usado/i.test(error.message) ? "Código inválido ou já usado." : error.message; return; }
     const { data: es } = await sb.from("entries").select("*").eq("user_id", ME.id).order("updated_at", { ascending: false });
     ENT.clear(); (es || []).forEach(e => ENT.set(e.key, e));
-    closeSheet(); dstate.shelf = null; toast(`${data} títulos importados para o seu diário.`); go("lista"); enrichAll();
+    closeSheet(); dstate.shelf = null; toast(`${data} títulos importados para a sua cinemateca.`); go("lista"); enrichAll();
   };
 }
 async function share(){
   if (!PROFILE) { openAccount("perfil"); return; }
   const url = location.origin + location.pathname + "#u/" + PROFILE.username;
-  if (!PROFILE.is_public) toast("Seu diário está privado. Ative “visível” em Editar perfil.");
+  if (!PROFILE.is_public) toast("Sua cinemateca está privada. Ative “visível” em Editar perfil.");
   try {
-    if (navigator.share) { await navigator.share({ title: "Meu diário de séries e filmes", url }); return; }
+    if (navigator.share) { await navigator.share({ title: "Minha cinemateca de séries e filmes", url }); return; }
   } catch(e) { if (e && e.name === "AbortError") return; }
-  try { await navigator.clipboard.writeText(url); toast("Link copiado: " + url); } catch(e) { prompt("Copie o link do seu diário:", url); }
+  try { await navigator.clipboard.writeText(url); toast("Link copiado: " + url); } catch(e) { prompt("Copie o link da sua cinemateca:", url); }
 }
 
 /* ---------- editor de uma obra ---------- */
@@ -1023,7 +1023,7 @@ function openEditor(base){
       <div class="lbl">Nota <b id="rv">${e.rating == null ? "sem nota" : nota(e.rating)}</b></div>
       <input id="rt" type="range" min="0" max="10" step="0.5" value="${e.rating == null ? 8 : e.rating}" aria-label="Nota">
       <label class="check"><input id="nr" type="checkbox" ${e.rating == null ? "checked" : ""}> Sem nota</label></details>
-    <div class="btns"><button class="pri" id="save">Salvar</button>${cur ? '<button class="sec danger" id="del">Tirar do diário</button>' : '<button class="sec" id="cancel">Cancelar</button>'}</div>`);
+    <div class="btns"><button class="pri" id="save">Salvar</button>${cur ? '<button class="sec danger" id="del">Tirar da cinemateca</button>' : '<button class="sec" id="cancel">Cancelar</button>'}</div>`);
   let status = e.status, sw = e.seasons_watched ?? 0, verdict = e.verdict, tags = [...(e.tags || [])];
   o.querySelectorAll("[data-st]").forEach(b => b.onclick = () => {
     status = b.dataset.st; o.querySelectorAll("[data-st]").forEach(x => x.setAttribute("aria-checked", x === b));
@@ -1046,14 +1046,14 @@ function openEditor(base){
     o.querySelector("#sp").onclick = () => { sw = tot ? Math.min(tot, sw + 1) : sw + 1; o.querySelector("#sv").textContent = sw; };
   }
   if (o.querySelector("#cancel")) o.querySelector("#cancel").onclick = closeSheet;
-  if (o.querySelector("#del")) o.querySelector("#del").onclick = async () => { await removeEntry(e.key); closeSheet(); all(); toast("Tirado do diário."); };
+  if (o.querySelector("#del")) o.querySelector("#del").onclick = async () => { await removeEntry(e.key); closeSheet(); all(); toast("Tirado da cinemateca."); };
   o.querySelector("#save").onclick = async () => {
     const row = { key: e.key, kind: e.kind, title: e.title, orig: e.orig || null, year: e.year || null, poster: e.poster || null, seasons_total: e.seasons_total || null,
       status, verdict, tags, extra: e.extra || null, rating: nr.checked ? null : +rt.value, seasons_watched: o.querySelector("#sv") ? sw : null,
       platform: o.querySelector("#pl").value.trim() || null, note: o.querySelector("#nt").value.trim() || null };
     o.querySelector("#save").disabled = true;
     const ok = await saveEntry(row);
-    if (ok) { closeSheet(); all(); toast("Salvo no seu diário."); } else o.querySelector("#save").disabled = false;
+    if (ok) { closeSheet(); all(); toast("Salvo na sua cinemateca."); } else o.querySelector("#save").disabled = false;
   };
 }
 function openEditorForId(id){
@@ -1123,7 +1123,7 @@ function openDetailsSheet(e, ro){
     ${I.dir.length ? `<p class="dcr"><b>${e.kind === "filme" || e.kind === "doc" && !tot ? "Direção" : "Criação"}:</b> ${esc(I.dir.join(", "))}</p>` : ""}
     ${I.cast.length ? `<p class="dcr"><b>Elenco:</b> ${esc(I.cast.join(", "))}</p>` : ""}
     <div class="dwhere"><div class="lbl">Onde assistir no Brasil</div><div class="pchips">${pv}</div>${I.link ? `<a href="${esc(I.link)}" target="_blank" rel="noopener">Ver todas as opções</a>` : ""}</div>
-    <div class="btns">${ro ? "" : '<button class="pri" id="ed">Editar no diário</button>'}<button class="sec" id="cl">Fechar</button></div></div>`);
+    <div class="btns">${ro ? "" : '<button class="pri" id="ed">Editar na cinemateca</button>'}<button class="sec" id="cl">Fechar</button></div></div>`);
   o.querySelector("#cl").onclick = closeSheet;
   if (!ro) o.querySelector("#ed").onclick = () => openEditor(ENT.get(e.key) || e);
   if (!e.extra && !ro) enrichOne(e).then(ne => { if (ne && document.getElementById("overlay") === o) openDetails(ne, ro); });
@@ -1267,7 +1267,7 @@ function renderDiary(){
   const name = PROFILE ? (PROFILE.display_name || PROFILE.username) : "";
   const S = G.vi.filter(e => e.verdict === "S").length;
   document.getElementById("count").textContent = "";
-  let html = `<li class="dx-hero"><div class="dx-top"><div><small>Diário</small><b>${esc(name || "Meu diário")}</b></div><div class="dx-btns"><button data-act="add" class="dx-add">+ Adicionar</button><button data-act="share" class="dx-share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div></div>
+  let html = `<li class="dx-hero"><div class="dx-top"><div><small>Cinemateca</small><b>${esc(name || "Minha cinemateca")}</b></div><div class="dx-btns"><button data-act="add" class="dx-add">+ Adicionar</button><button data-act="share" class="dx-share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div></div>
     <div class="dx-stats">${SHELVES.map(([k,l]) => `<button data-shelf="${k}" aria-pressed="${dstate.shelf===k}"><b>${G[k].length}</b><span>${l}</span></button>`).join("")}</div>
     <button class="dx-recs" data-shelf="recs" aria-pressed="${dstate.shelf==="recs"}"><span>✦</span><b>Para você</b><small>Recomendações a partir do seu gosto</small></button>
     ${S ? `<p class="dx-foot">${S} obra${S > 1 ? "s" : ""}-prima${S > 1 ? "s" : ""} no seu topo</p>` : ""}</li>`;
@@ -1335,7 +1335,7 @@ function openClassify(queue, i, title){
 }
 function openAdd(){
   if (!ME) { openAccount("login"); return; }
-  const o = sheet(`<h2>Adicionar ao diário</h2><p class="hint">Qualquer série ou filme, mesmo fora do ranking.</p>
+  const o = sheet(`<h2>Adicionar à cinemateca</h2><p class="hint">Qualquer série ou filme, mesmo fora do ranking.</p>
     <div class="adder"><input id="sq" type="search" placeholder="Nome da série ou filme" autocomplete="off" enterkeyhint="search" autofocus><ul id="sres" class="sres"></ul></div>
     <div class="btns"><button class="sec" id="cancel">Fechar</button></div>`);
   const sq = o.querySelector("#sq");
@@ -1452,7 +1452,7 @@ function renderRecs(){
   let L = R.list.filter(r => !hid.has(r.x.id));
   if (dstate.kind !== "all") L = L.filter(r => KINDOF[r.x.c] === dstate.kind);
   if (dstate.gen) L = L.filter(r => (r.x.g || []).includes(dstate.gen));
-  let html = `<li class="shead"><h3>Para você</h3><p>Escolhido a partir de ${R.n} obra${R.n === 1 ? "" : "s"} do seu diário, só entre as aprovadas por público e crítica. O número é o quanto combina com você.</p>`;
+  let html = `<li class="shead"><h3>Para você</h3><p>Escolhido a partir de ${R.n} obra${R.n === 1 ? "" : "s"} da sua cinemateca, só entre as aprovadas por público e crítica. O número é o quanto combina com você.</p>`;
   const kinds = KIND_ORDER.filter(k => R.list.some(r => KINDOF[r.x.c] === k));
   html += `<div class="dchips">${[["all","Tudo"], ...kinds.map(k => [k, KIND_PLURAL[k]])].map(([k,l]) => `<button data-kind="${k}" aria-pressed="${dstate.kind===k}">${l}</button>`).join("")}</div>`;
   const gs = GENRES.filter(g => R.list.some(r => (dstate.kind === "all" || KINDOF[r.x.c] === dstate.kind) && (r.x.g || []).includes(g)));
@@ -1538,13 +1538,13 @@ function renderPage(){
   let aw = awardsHtml(base);
   if (x && x.os && x.os[2].length) aw += `<p class="pgaw">Oscar, venceu: ${esc(oc(x.os[2]))}.</p>`;
   if (x && x.em && x.em[1] && x.em[2].length) aw += `<p class="pgaw">Emmy, venceu: ${esc(x.em[2].map(([i,k]) => EMY_CATS[i] + (k > 1 ? ` (${k}×)` : "")).join(", "))}${x.em[3] ? ` e mais ${x.em[3]} técnicas` : ""}.</p>`;
-  const st = en ? `<div class="pgme t-${v || "U"}">${v ? `<span class="tb">${v}</span><div><b>${TIER_LABEL[v]}</b><small>${STATUS_LABEL[en.status]}${en.seasons_total > 1 && en.seasons_watched != null ? ` · ${en.seasons_watched} de ${en.seasons_total} temp.` : ""}</small></div>` : `<div><b>No seu diário: ${STATUS_LABEL[en.status]}</b>${en.note ? `<small>${esc(en.note)}</small>` : ""}</div>`}</div>` : "";
+  const st = en ? `<div class="pgme t-${v || "U"}">${v ? `<span class="tb">${v}</span><div><b>${TIER_LABEL[v]}</b><small>${STATUS_LABEL[en.status]}${en.seasons_total > 1 && en.seasons_watched != null ? ` · ${en.seasons_watched} de ${en.seasons_total} temp.` : ""}</small></div>` : `<div><b>Na sua cinemateca: ${STATUS_LABEL[en.status]}</b>${en.note ? `<small>${esc(en.note)}</small>` : ""}</div>`}</div>` : "";
   const pv = I.prov.length ? I.prov.map(p => `<span class="pchip">${esc(p)}</span>`).join("") : `<span class="muted">${I.rent ? "Só aluguel ou compra" : "Não está em streaming no Brasil agora"}</span>`;
   const tr = d && d.trailer ? `<section class="pgsec"><h3>Trailer</h3><button class="trl" data-yt="${esc(d.trailer.key)}" aria-label="Assistir ao trailer"><img src="https://i.ytimg.com/vi/${esc(d.trailer.key)}/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span><small>${esc(d.trailer.name || "Trailer")}</small></button></section>` : (d ? "" : `<section class="pgsec"><h3>Trailer</h3><p class="muted">Carregando…</p></section>`);
   const cx = d && d.castx && d.castx.length ? `<section class="pgsec"><h3>Elenco</h3><div class="cast">${d.castx.map(c => `<div class="cp">${c.p ? `<img src="https://image.tmdb.org/t/p/w185${c.p}" alt="" loading="lazy">` : `<span class="noph">${esc(c.n.charAt(0))}</span>`}<b>${esc(c.n)}</b>${c.c ? `<small>${esc(c.c)}</small>` : ""}</div>`).join("")}</div></section>` : "";
   const sim = similarTo(x || base, 10);
   const simH = sim.length ? `<section class="pgsec"><h3>Parecidos no ranking</h3><div class="rail2">${sim.map(s => `<button class="tile" data-page="${s.id}"><span class="tp">${s.pp ? `<img src="https://image.tmdb.org/t/p/w185${s.pp}" alt="" loading="lazy">` : `<span class="ph">${esc(s.t.charAt(0))}</span>`}</span><span class="tt">${esc(s.t)}</span></button>`).join("")}</div></section>` : "";
-  const acts = ME ? `<div class="pgact">${en ? `<button class="pri" data-pg="edit">Editar no diário</button>` : `<button class="pri" data-pg="want">Quero ver</button><button class="sec" data-pg="seen">Já vi</button>`}<button class="sec ic" data-pg="share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div>`
+  const acts = ME ? `<div class="pgact">${en ? `<button class="pri" data-pg="edit">Editar na cinemateca</button>` : `<button class="pri" data-pg="want">Quero ver</button><button class="sec" data-pg="seen">Já vi</button>`}<button class="sec ic" data-pg="share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div>`
     : `<div class="pgact"><button class="pri" data-pg="login">Entrar para salvar</button><button class="sec ic" data-pg="share" aria-label="Compartilhar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg></button></div>`;
   const scores = scoreBits(base);
   list.innerHTML = `<li class="pg">
@@ -1588,7 +1588,7 @@ async function loadPublic(username){
   PUB.user = username; PUB.prof = null; PUB.ents = null; PUB.err = "";
   render();
   const { data: p } = await sb.from("profiles").select("*").eq("username", username).maybeSingle();
-  if (!p) { PUB.err = "Diário não encontrado ou privado."; render(); return; }
+  if (!p) { PUB.err = "Cinemateca não encontrada ou privada."; render(); return; }
   const { data: es } = await sb.from("entries").select("*").eq("user_id", p.id);
   PUB.prof = p; PUB.ents = es || []; render();
 }
@@ -1602,9 +1602,9 @@ function renderProfile(){
   const vi = E.filter(e => e.status === "vi"), quero = E.filter(e => e.status === "quero");
   const mine = ME && PUB.prof.id === ME.id;
   const S = vi.filter(e => e.verdict === "S").length;
-  let html = `<li class="dx-hero"><div class="dx-top"><div><small>Diário de</small><b>${esc(name)}</b></div>${mine ? `<div class="dx-btns"><button data-act="share" class="dx-share" aria-label="Compartilhar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg></button></div>` : ""}</div>
+  let html = `<li class="dx-hero"><div class="dx-top"><div><small>Cinemateca de</small><b>${esc(name)}</b></div>${mine ? `<div class="dx-btns"><button data-act="share" class="dx-share" aria-label="Compartilhar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg></button></div>` : ""}</div>
     <div class="dx-stats ro"><div><b>${vi.length}</b><span>Vistos</span></div><div><b>${vendo.length}</b><span>Assistindo</span></div><div><b>${S}</b><span>Tier S</span></div><div><b>${quero.length}</b><span>Na fila</span></div></div>
-    <p class="dx-foot">${mine ? "É assim que os outros veem o seu diário." : "Diário pessoal, feito no Ranking 2001–2026."} <a href="#filmes" data-go="filmes">Ver o ranking</a></p></li>`;
+    <p class="dx-foot">${mine ? "É assim que os outros veem a sua cinemateca." : "Cinemateca pessoal, feita no Ranking 2001–2026."} <a href="#filmes" data-go="filmes">Ver o ranking</a></p></li>`;
   if (vendo.length) html += `<li class="shead"><h3>Assistindo agora</h3></li><li class="rail">${vendo.map(e => tile(e, true)).join("")}</li>`;
   if (vi.some(e => e.verdict)) html += `<li class="shead"><h3>Tier list</h3></li><li class="board">${tierBoard(vi.filter(e => e.verdict), true)}</li>`;
   const uv = vi.filter(e => !e.verdict);
