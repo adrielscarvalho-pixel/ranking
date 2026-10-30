@@ -200,6 +200,98 @@ body.noscroll{overflow:hidden}
 .pa{position:relative;width:64px}
 .pa img,.pa .ph.s{width:64px;height:96px;border-radius:6px;object-fit:cover;display:grid;place-items:center;color:var(--muted)}
 .pn{position:absolute;left:4px;bottom:4px;background:var(--accent);color:var(--accent-ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.85rem;padding:1px 6px;border-radius:6px}
+
+:root{--tS:#D9A21B;--tA:#2E9E6A;--tB:#2F7DD1;--tC:#8A94A0;--tD:#C9503F;--tU:#5B6673}
+li.dx-hero{list-style:none;background:linear-gradient(150deg,#141C26 0%,#1D2A3A 100%);color:#F4F1EA;border-radius:18px;margin:8px 0 14px;padding:16px;box-shadow:0 8px 24px rgba(10,20,30,.18)}
+.dx-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.dx-top small{display:block;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#9FB0C2}
+.dx-top b{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.45rem;line-height:1.1}
+.dx-btns{display:flex;gap:8px}
+.dx-add{appearance:none;border:0;background:#F2C14E;color:#141C26;font:inherit;font-weight:800;font-size:.88rem;padding:9px 13px;border-radius:10px;cursor:pointer}
+.dx-share{appearance:none;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06);color:#F4F1EA;width:38px;height:38px;border-radius:10px;display:grid;place-items:center;cursor:pointer;padding:0}
+.dx-share svg{width:18px;height:18px}
+.dx-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px}
+.dx-stats>button,.dx-stats>div{appearance:none;font:inherit;color:#F4F1EA;background:rgba(255,255,255,.06);border:1.5px solid transparent;border-radius:12px;padding:10px 4px 9px;cursor:pointer;text-align:center}
+.dx-stats.ro>div{cursor:default}
+.dx-stats b{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.35rem;line-height:1}
+.dx-stats span{display:block;font-size:.72rem;color:#B8C4D0;margin-top:4px}
+.dx-stats>button[aria-pressed="true"]{background:#F4F1EA;color:#141C26;border-color:#F2C14E}
+.dx-stats>button[aria-pressed="true"] span{color:#425466;font-weight:700}
+.dx-foot{margin:12px 0 0;font-size:.82rem;color:#B8C4D0}
+.dx-foot a{color:#F2C14E}
+li.shead{list-style:none;margin:16px 2px 8px}
+.shead h3{margin:0;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.15rem}
+.shead p{margin:3px 0 0;font-size:.84rem;color:var(--muted)}
+.shead .dchips{margin:10px 0 0;padding:0}
+li.wcard{position:relative;list-style:none;display:grid;grid-template-columns:92px 1fr;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;margin:0 0 10px}
+.wp,.rp{appearance:none;border:0;padding:0;background:none;cursor:pointer;border-radius:10px;overflow:hidden;align-self:start}
+.wp img,.wp .ph{width:92px;height:138px;object-fit:cover;display:grid;place-items:center;background:var(--chip);border-radius:10px;font-size:1.6rem;color:var(--muted)}
+.wb .ttl{margin:0;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:700;font-size:1.08rem;line-height:1.2}
+.wb .sub{font-size:.8rem;color:var(--muted);margin-top:2px}
+.prog{margin-top:10px}
+.prog .bar{height:7px;background:var(--chip);border-radius:99px;overflow:hidden}
+.prog .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#6FB3FF);border-radius:99px}
+.prog span{display:block;font-size:.8rem;margin-top:5px;font-weight:600}
+.wact{display:flex;gap:6px;margin-top:11px;flex-wrap:wrap}
+.wact button,.sm{appearance:none;font:inherit;font-weight:700;font-size:.84rem;padding:8px 12px;border-radius:10px;border:1px solid var(--line);cursor:pointer}
+.wact{flex-wrap:nowrap}.wact button{padding:8px 11px;white-space:nowrap}
+.wmore{position:absolute;top:8px;right:8px;appearance:none;border:0;background:transparent;color:var(--muted);font-size:1.2rem;font-weight:800;width:34px;height:30px;border-radius:8px;cursor:pointer;line-height:1}
+.wb .ttl{padding-right:28px}
+li.rcard{list-style:none;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:9px 12px 9px 9px;margin:0 0 8px}
+.rp img,.rp .ph{width:52px;height:78px;object-fit:cover;display:grid;place-items:center;background:var(--chip);border-radius:8px;color:var(--muted)}
+.rb b{display:block;line-height:1.25;font-size:.95rem}
+.rb small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
+li.classify{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;background:color-mix(in srgb,var(--tS) 14%,var(--surface));border:1px solid color-mix(in srgb,var(--tS) 45%,transparent);border-radius:14px;padding:12px 14px;margin:0 0 12px}
+.classify b{display:block}
+.classify small{display:block;color:var(--muted);font-size:.8rem}
+.classify button{appearance:none;font:inherit;font-weight:800;font-size:.86rem;padding:9px 13px;border-radius:10px;cursor:pointer;flex:none;border:1px solid var(--accent)}
+li.board{list-style:none}
+.tier{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--tc);border-radius:14px;padding:11px 12px;margin:0 0 10px}
+.tier .th{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+.tier .th b{display:block;font-size:.98rem}
+.tier .th small{display:block;color:var(--muted);font-size:.76rem}
+.tier .th i{font-style:normal;color:var(--muted);font-weight:700}
+.tb{display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--tc);color:#fff;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:1.15rem;flex:none}
+.t-S{--tc:var(--tS)}.t-A{--tc:var(--tA)}.t-B{--tc:var(--tB)}.t-C{--tc:var(--tC)}.t-D{--tc:var(--tD)}.t-U{--tc:var(--tU)}
+.tier.t-U{border-style:dashed;border-left-style:solid}
+.tier.empty{padding:7px 12px;margin-bottom:6px;opacity:.6}
+.tier.empty .tb{width:26px;height:26px;font-size:.9rem}
+.tier.empty .th small{display:none}
+.tier.empty .th b{font-size:.88rem}
+.tier .th>div{text-align:left}
+@media (min-width:600px){.tiles{grid-template-columns:repeat(auto-fill,minmax(92px,1fr))}}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:11px}
+.tile{appearance:none;border:0;background:none;padding:0;font:inherit;color:var(--ink);text-align:left;cursor:pointer;min-width:0}
+.tp{position:relative;display:block}
+.tp img,.tp .ph{display:grid;place-items:center;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;background:var(--chip);color:var(--muted)}
+.rev{position:absolute;right:4px;top:4px;background:rgba(20,28,38,.85);color:#F2C14E;font-size:.72rem;font-weight:800;width:20px;height:20px;border-radius:50%;display:grid;place-items:center}
+.tt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:.72rem;line-height:1.2;margin-top:4px}
+.tempty{margin:8px 0 0;font-size:.8rem;color:var(--muted)}
+li.rail{list-style:none;display:grid;grid-auto-flow:column;grid-auto-columns:84px;gap:9px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+li.rail.wrap{grid-auto-flow:row;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-columns:auto}
+li.rail::-webkit-scrollbar{display:none}
+.cls .chead{display:flex;gap:14px;align-items:center;margin:6px 0 4px}
+.cls .chead img{border-radius:8px;object-fit:cover;flex:none;box-shadow:0 4px 14px rgba(0,0,0,.2)}
+.cbar{height:4px;background:var(--chip);border-radius:9px;overflow:hidden;margin:-4px 0 10px}
+.cbar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.tierbtns{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.tierbtns button{appearance:none;display:flex;gap:12px;align-items:center;text-align:left;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:9px 12px;cursor:pointer;transition:transform .12s}
+.tierbtns button:active{transform:scale(.98)}
+.tierbtns button.on{border-color:var(--tc);background:color-mix(in srgb,var(--tc) 14%,var(--bg))}
+.tierbtns b{display:block;font-size:.98rem}
+.tierbtns small{display:block;font-size:.78rem;color:var(--muted)}
+.vrow{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:6px}
+.vrow button{appearance:none;display:flex;flex-direction:column;align-items:center;gap:4px;font:inherit;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:7px 2px;cursor:pointer;color:var(--ink)}
+.vrow .tb{width:28px;height:28px;font-size:.95rem;opacity:.45}
+.vrow small{font-size:.66rem;color:var(--muted);white-space:nowrap}
+.vrow button[aria-pressed="true"]{border-color:var(--tc);background:color-mix(in srgb,var(--tc) 14%,var(--bg))}
+.vrow button[aria-pressed="true"] .tb{opacity:1}
+.vrow button[aria-pressed="true"] small{color:var(--ink);font-weight:700}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tagrow button{appearance:none;font:inherit;font-size:.82rem;padding:6px 11px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.tagrow button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+details.fine{margin-top:14px;border-top:1px solid var(--line);padding-top:10px}
+details.fine summary{cursor:pointer;font-size:.85rem;color:var(--muted)}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -418,7 +510,7 @@ const KIND = {filmes:"filme", series:"serie", minisseries:"minisserie", document
 const KIND_LABEL = {filme:"Filme", serie:"Série", minisserie:"Minissérie", doc:"Documentário", anime:"Anime", outro:"Outro"};
 const STATUS = [["vendo","Vendo"],["quero","Quero ver"],["vi","Vi"],["abandonei","Abandonei"]];
 const STATUS_LABEL = Object.fromEntries(STATUS);
-const dstate = { filter: "vendo", sort: "rec", results: [] };
+const dstate = { shelf: null, kind: "all", results: [] };
 const nota = r => r == null ? "" : Number(r).toFixed(1).replace(".", ",").replace(",0", "");
 const posterUrl = p => p ? `https://image.tmdb.org/t/p/w185${p}` : "";
 const pencil = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 3.5l3 3L7 16H4v-3z"/></svg>';
@@ -473,7 +565,8 @@ function toggleWl(id){
 function myLine(id){
   const e = ME && ENT.get(id); if (!e) return "";
   const bits = [STATUS_LABEL[e.status]];
-  if (e.rating != null) bits.push(`sua nota ${nota(e.rating)}`);
+  if (e.verdict) bits.push(`${e.verdict} · ${TIER_LABEL[e.verdict]}`);
+  else if (e.rating != null) bits.push(`nota ${nota(e.rating)}`);
   if (e.seasons_total > 1 && e.seasons_watched != null) bits.push(`${e.seasons_watched} de ${e.seasons_total} temp.`);
   return `<div class="myline s-${e.status}">${esc(bits.join(" · "))}</div>`;
 }
@@ -609,7 +702,7 @@ function openImport(){
     if (error) { o.querySelector("#err").textContent = /invalido|usado/i.test(error.message) ? "Código inválido ou já usado." : error.message; return; }
     const { data: es } = await sb.from("entries").select("*").eq("user_id", ME.id).order("updated_at", { ascending: false });
     ENT.clear(); (es || []).forEach(e => ENT.set(e.key, e));
-    closeSheet(); toast(`${data} títulos importados para o seu diário.`); go("lista");
+    closeSheet(); dstate.shelf = null; toast(`${data} títulos importados para o seu diário.`); go("lista");
   };
 }
 async function share(){
@@ -626,22 +719,35 @@ async function share(){
 function openEditor(base){
   if (!ME) { openAccount("login"); return; }
   const cur = ENT.get(base.key);
-  const e = { status: "quero", rating: null, seasons_watched: null, platform: "", note: "", ...base, ...(cur || {}) };
+  const e = { status: "quero", rating: null, seasons_watched: null, platform: "", note: "", verdict: null, tags: [], ...base, ...(cur || {}) };
   const tot = e.seasons_total || 0;
+  const ser = tot > 1 || e.kind === "serie" || e.kind === "anime";
   const o = sheet(`<div class="ed-head">${e.poster ? `<img src="${posterUrl(e.poster)}" alt="" width="56" height="84">` : ""}<div><h2>${esc(e.title)}</h2><p class="hint">${esc([e.orig, KIND_LABEL[e.kind], e.year, tot ? tot + (tot > 1 ? " temporadas" : " temporada") : ""].filter(Boolean).join(", "))}</p></div></div>
     <div class="seg" role="radiogroup" aria-label="Status">${STATUS.map(([k,l]) => `<button data-st="${k}" role="radio" aria-checked="${e.status===k}">${l}</button>`).join("")}</div>
-    <div class="field"><div class="lbl">Minha nota <b id="rv">${e.rating == null ? "sem nota" : nota(e.rating)}</b></div>
-      <input id="rt" type="range" min="0" max="10" step="0.5" value="${e.rating == null ? 8 : e.rating}" aria-label="Minha nota">
-      <label class="check"><input id="nr" type="checkbox" ${e.rating == null ? "checked" : ""}> Ainda sem nota</label></div>
-    ${tot > 1 || e.kind === "serie" || e.kind === "anime" ? `<div class="field"><div class="lbl">Temporadas vistas</div><div class="step"><button id="sm" aria-label="Menos uma">−</button><span id="sv">${e.seasons_watched ?? 0}</span><span class="of">${tot ? "de " + tot : ""}</span><button id="sp" aria-label="Mais uma">+</button></div></div>` : ""}
+    <div class="field" id="vf"><div class="lbl">Veredito</div><div class="vrow">${TIERS.map(([k,l]) => `<button data-v="${k}" class="t-${k}" aria-pressed="${e.verdict===k}"><span class="tb">${k}</span><small>${l}</small></button>`).join("")}</div></div>
+    <div class="field"><div class="lbl">Etiquetas</div><div class="tagrow">${TAGS.map(t => `<button data-tag="${esc(t)}" aria-pressed="${(e.tags || []).includes(t)}">${esc(t)}</button>`).join("")}</div></div>
+    ${ser ? `<div class="field"><div class="lbl">Temporadas vistas</div><div class="step"><button id="sm" aria-label="Menos uma">−</button><span id="sv">${e.seasons_watched ?? 0}</span><span class="of">${tot ? "de " + tot : ""}</span><button id="sp" aria-label="Mais uma">+</button></div></div>` : ""}
     <label>Onde estou vendo<input id="pl" type="text" list="svcs" value="${esc(e.platform || "")}" placeholder="Netflix, HBO Max…"></label>
     <datalist id="svcs">${["Netflix","HBO Max","Disney+","Prime Video","Apple TV","Globoplay","Crunchyroll","Paramount+","MUBI","Star+","Telecine","Universal+","Cinema"].map(s => `<option value="${s}">`).join("")}</datalist>
-    <label>Anotação<textarea id="nt" rows="3" placeholder="O que achou? Onde parou?">${esc(e.note || "")}</textarea></label>
+    <label>Anotação<textarea id="nt" rows="2" placeholder="O que achou? Onde parou?">${esc(e.note || "")}</textarea></label>
+    <details class="fine"${e.rating != null ? " open" : ""}><summary>Nota fina, opcional</summary>
+      <div class="lbl">Nota <b id="rv">${e.rating == null ? "sem nota" : nota(e.rating)}</b></div>
+      <input id="rt" type="range" min="0" max="10" step="0.5" value="${e.rating == null ? 8 : e.rating}" aria-label="Nota">
+      <label class="check"><input id="nr" type="checkbox" ${e.rating == null ? "checked" : ""}> Sem nota</label></details>
     <div class="btns"><button class="pri" id="save">Salvar</button>${cur ? '<button class="sec danger" id="del">Tirar do diário</button>' : '<button class="sec" id="cancel">Cancelar</button>'}</div>`);
-  let status = e.status, sw = e.seasons_watched ?? 0;
+  let status = e.status, sw = e.seasons_watched ?? 0, verdict = e.verdict, tags = [...(e.tags || [])];
   o.querySelectorAll("[data-st]").forEach(b => b.onclick = () => {
     status = b.dataset.st; o.querySelectorAll("[data-st]").forEach(x => x.setAttribute("aria-checked", x === b));
     if (status === "vi" && tot && o.querySelector("#sv")) { sw = tot; o.querySelector("#sv").textContent = sw; }
+  });
+  o.querySelectorAll("[data-v]").forEach(b => b.onclick = () => {
+    verdict = verdict === b.dataset.v ? null : b.dataset.v;
+    o.querySelectorAll("[data-v]").forEach(x => x.setAttribute("aria-pressed", x.dataset.v === verdict));
+    if (verdict && status !== "vi" && status !== "abandonei") { status = "vi"; o.querySelectorAll("[data-st]").forEach(x => x.setAttribute("aria-checked", x.dataset.st === "vi")); if (tot && o.querySelector("#sv")) { sw = tot; o.querySelector("#sv").textContent = sw; } }
+  });
+  o.querySelectorAll("[data-tag]").forEach(b => b.onclick = () => {
+    const t = b.dataset.tag; tags = tags.includes(t) ? tags.filter(x => x !== t) : [...tags, t];
+    b.setAttribute("aria-pressed", tags.includes(t));
   });
   const rt = o.querySelector("#rt"), nr = o.querySelector("#nr"), rv = o.querySelector("#rv");
   rt.oninput = () => { nr.checked = false; rv.textContent = nota(+rt.value); };
@@ -654,7 +760,7 @@ function openEditor(base){
   if (o.querySelector("#del")) o.querySelector("#del").onclick = async () => { await removeEntry(e.key); closeSheet(); all(); toast("Tirado do diário."); };
   o.querySelector("#save").onclick = async () => {
     const row = { key: e.key, kind: e.kind, title: e.title, orig: e.orig || null, year: e.year || null, poster: e.poster || null, seasons_total: e.seasons_total || null,
-      status, rating: nr.checked ? null : +rt.value, seasons_watched: o.querySelector("#sv") ? sw : null,
+      status, verdict, tags, rating: nr.checked ? null : +rt.value, seasons_watched: o.querySelector("#sv") ? sw : null,
       platform: o.querySelector("#pl").value.trim() || null, note: o.querySelector("#nt").value.trim() || null };
     o.querySelector("#save").disabled = true;
     const ok = await saveEntry(row);
@@ -699,55 +805,133 @@ async function pickResult(i){
 }
 
 /* ---------- aba Diário ---------- */
-function diaryCard(e){
-  const rk = BYID[e.key];
-  const tot = e.seasons_total || 0;
-  const prog = tot > 1 || e.kind === "serie" || e.kind === "anime";
-  return `<li class="item dcard s-${e.status}" data-key="${esc(e.key)}">
-    <div class="art">${e.poster ? `<img src="${posterUrl(e.poster)}" alt="Cartaz de ${esc(e.title)}" loading="lazy" width="84" height="126">` : `<span class="ph" aria-hidden="true">${esc(e.title.charAt(0))}</span>`}${e.rating != null ? `<div class="score mine"><span class="n">${nota(e.rating)}</span></div>` : ""}</div>
-    <div class="main"><span class="pill s-${e.status}">${STATUS_LABEL[e.status]}</span>
-      <p class="ttl">${esc(e.title)}</p>
-      <div class="sub">${esc([e.orig, KIND_LABEL[e.kind], e.year].filter(Boolean).join(", "))}</div>
-      ${prog ? `<div class="step small"><button data-act="minus" aria-label="Menos uma temporada">−</button><span>${e.seasons_watched ?? 0}${tot ? " de " + tot : ""} temp.</span><button data-act="plus" aria-label="Mais uma temporada">+</button></div>` : ""}
-      ${e.platform ? `<div class="where"><span>${esc(e.platform)}</span></div>` : ""}
+const TIERS = [["S","Obra-prima","Indico pra todo mundo e reveria"],["A","Excelente","Valeu cada minuto"],["B","Boa","Gostei, mas não marcou"],["C","Ok","Passatempo, esqueci rápido"],["D","Não vale","Não recomendo"]];
+const TIER_LABEL = Object.fromEntries(TIERS.map(t => [t[0], t[1]]));
+const TAGS = ["Maratonei","Reveria","Indico","Começo lento","Melhora depois","Final fraco"];
+const SHELVES = [["vendo","Assistindo"],["vi","Vistos"],["quero","Na fila"],["abandonei","Largados"]];
+const KIND_PLURAL = {serie:"Séries", filme:"Filmes", minisserie:"Minis", doc:"Docs", anime:"Anime", outro:"Outros"};
+const KIND_ORDER = ["serie","minisserie","filme","doc","anime","outro"];
+function art(e, w){ return e.poster ? `<img src="https://image.tmdb.org/t/p/${w||"w185"}${e.poster}" alt="" loading="lazy">` : `<span class="ph">${esc(e.title.charAt(0))}</span>`; }
+function tile(e, ro){
+  const inner = `<span class="tp">${art(e)}${e.tags && e.tags.includes("Reveria") ? '<span class="rev" title="Reveria">↻</span>' : ""}</span><span class="tt">${esc(e.title)}</span>`;
+  return ro ? `<div class="tile">${inner}</div>` : `<button class="tile" data-open="${esc(e.key)}">${inner}</button>`;
+}
+function tierBoard(A, ro){
+  const rows = TIERS.map(([k,l,d]) => {
+    const R = A.filter(e => e.verdict === k);
+    if (!R.length && ro) return "";
+    return `<section class="tier t-${k}${R.length ? "" : " empty"}"><div class="th"><span class="tb">${k}</span><div><b>${l}</b><small>${d}</small></div><i>${R.length}</i></div>${R.length ? `<div class="tiles">${R.map(e => tile(e, ro)).join("")}</div>` : ""}</section>`;
+  }).join("");
+  const U = A.filter(e => !e.verdict);
+  const un = U.length && !ro ? `<section class="tier t-U"><div class="th"><span class="tb">?</span><div><b>Sem veredito</b><small>Toque num cartaz ou classifique em sequência</small></div><i>${U.length}</i></div><div class="tiles">${U.map(e => tile(e, false)).join("")}</div></section>` : "";
+  return rows + un;
+}
+function kindChips(A){
+  const ks = KIND_ORDER.filter(k => A.some(e => e.kind === k));
+  if (ks.length < 2) return "";
+  if (dstate.kind !== "all" && !ks.includes(dstate.kind)) dstate.kind = "all";
+  return `<div class="dchips">${[["all","Tudo"], ...ks.map(k => [k, KIND_PLURAL[k]])].map(([k,l]) => `<button data-kind="${k}" aria-pressed="${dstate.kind===k}">${l} <i>${k==="all" ? A.length : A.filter(e => e.kind === k).length}</i></button>`).join("")}</div>`;
+}
+function byKind(A){ return dstate.kind === "all" ? A : A.filter(e => e.kind === dstate.kind); }
+function isSerial(e){ return (e.seasons_total || 0) > 1 || e.kind === "serie" || e.kind === "anime"; }
+function watchCard(e){
+  const tot = e.seasons_total || 0, sw = e.seasons_watched ?? 0, pct = tot ? Math.round(sw / tot * 100) : 0;
+  const ser = isSerial(e);
+  return `<li class="wcard" data-key="${esc(e.key)}">
+    <button class="wp" data-act="edit" aria-label="Editar ${esc(e.title)}">${art(e)}</button>
+    <div class="wb"><p class="ttl">${esc(e.title)}</p>
+      <div class="sub">${esc([e.platform, KIND_LABEL[e.kind]].filter(Boolean).join(" · "))}</div>
+      ${ser ? `<div class="prog"><div class="bar"><i style="width:${pct}%"></i></div><span>${tot ? `${sw} de ${tot} temporada${tot > 1 ? "s" : ""}${sw < tot ? ` · próxima: T${sw + 1}` : ""}` : `${sw} temporada${sw === 1 ? "" : "s"} vista${sw === 1 ? "" : "s"}`}</span></div>` : ""}
       ${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}
-      ${rk && rk.c !== "extra" ? `<div class="rk-ref">${rk.r}º no ranking de ${CATS.find(c => c[0] === rk.c)[1]}, nota ${fmt(rk.n)}</div>` : ""}
-    </div>
-    <div class="acts"><button class="editbtn" data-act="edit" aria-label="Editar">${pencil}</button></div>
-  </li>`;
+      <div class="wact">${ser ? `<button class="pri" data-act="plus">+1 temporada</button>` : ""}<button class="${ser ? "sec" : "pri"}" data-act="done">Terminei</button></div>
+      <button class="wmore" data-act="edit" aria-label="Mais opções">⋯</button>
+    </div></li>`;
+}
+function rowCard(e, label, act, extra){
+  return `<li class="rcard" data-key="${esc(e.key)}"><button class="rp" data-act="edit" aria-label="Editar">${art(e, "w92")}</button>
+    <div class="rb"><b>${esc(e.title)}</b><small>${esc([KIND_LABEL[e.kind], e.year, extra].filter(Boolean).join(" · "))}</small>${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}</div>
+    <button class="sec sm" data-act="${act}">${label}</button></li>`;
 }
 function renderDiary(){
-  const all_ = [...ENT.values()];
-  const cnt = s => all_.filter(e => e.status === s).length;
-  const rated = all_.filter(e => e.rating != null);
-  const avg = rated.length ? rated.reduce((a,e) => a + Number(e.rating), 0) / rated.length : null;
-  let L = dstate.filter === "tudo" ? all_ : all_.filter(e => e.status === dstate.filter);
-  if (state.q) { const q = norm(state.q); L = L.filter(e => norm(e.title + " " + (e.orig || "")).includes(q)); }
-  if (dstate.sort === "nota") L.sort((a,b) => (b.rating ?? -1) - (a.rating ?? -1));
-  else if (dstate.sort === "titulo") L.sort((a,b) => a.title.localeCompare(b.title, "pt"));
-  else L.sort((a,b) => (b.updated_at || "").localeCompare(a.updated_at || ""));
-  document.getElementById("count").textContent = `${all_.length} no diário` + (avg != null ? `, média ${nota(Math.round(avg*10)/10)}` : "");
+  const E = [...ENT.values()];
+  const G = {}; SHELVES.forEach(([k]) => G[k] = E.filter(e => e.status === k));
+  if (!dstate.shelf || !G[dstate.shelf]) dstate.shelf = G.vendo.length ? "vendo" : "vi";
+  const q = state.q ? norm(state.q) : "";
+  const match = e => !q || norm(e.title + " " + (e.orig || "")).includes(q);
   const name = PROFILE ? (PROFILE.display_name || PROFILE.username) : "";
-  const top = `<li class="dhead"><div class="drow"><div><b>Diário${name ? " de " + esc(name) : ""}</b><small>${cnt("vendo")} vendo, ${cnt("vi")} vistos, ${cnt("quero")} para ver</small></div><button class="sharebtn" data-act="share">Compartilhar</button></div>
-    <div class="adder"><input id="sq" type="search" placeholder="Adicionar série ou filme…" autocomplete="off" enterkeyhint="search"><ul id="sres" class="sres"></ul></div>
-    <div class="dchips">${[...STATUS, ["tudo","Tudo"]].map(([k,l]) => `<button data-df="${k}" aria-pressed="${dstate.filter===k}">${l} <i>${k === "tudo" ? all_.length : cnt(k)}</i></button>`).join("")}</div>
-    <div class="dsort"><label>Ordenar <select id="dsort"><option value="rec"${dstate.sort==="rec"?" selected":""}>Mais recentes</option><option value="nota"${dstate.sort==="nota"?" selected":""}>Minha nota</option><option value="titulo"${dstate.sort==="titulo"?" selected":""}>Título</option></select></label></div></li>`;
-  const body = L.length ? L.map(diaryCard).join("") : `<li class="empty">${all_.length ? "Nada aqui com esse filtro." : "Seu diário está vazio. Busque uma série acima, ou toque no lápis de qualquer obra do ranking."}</li>`;
-  document.getElementById("list").innerHTML = top + body;
-  const sq = document.getElementById("sq");
-  sq.addEventListener("input", () => { clearTimeout(searchTimer); const v = sq.value.trim(); searchTimer = setTimeout(() => searchTmdb(v), 350); });
+  const S = G.vi.filter(e => e.verdict === "S").length;
+  document.getElementById("count").textContent = "";
+  let html = `<li class="dx-hero"><div class="dx-top"><div><small>Diário</small><b>${esc(name || "Meu diário")}</b></div><div class="dx-btns"><button data-act="add" class="dx-add">+ Adicionar</button><button data-act="share" class="dx-share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div></div>
+    <div class="dx-stats">${SHELVES.map(([k,l]) => `<button data-shelf="${k}" aria-pressed="${dstate.shelf===k}"><b>${G[k].length}</b><span>${l}</span></button>`).join("")}</div>
+    ${S ? `<p class="dx-foot">${S} obra${S > 1 ? "s" : ""}-prima${S > 1 ? "s" : ""} no seu topo</p>` : ""}</li>`;
+  const sh = dstate.shelf;
+  if (sh === "vendo") {
+    const L = G.vendo.filter(match).sort((a,b) => (b.updated_at||"").localeCompare(a.updated_at||""));
+    html += `<li class="shead"><h3>Continue de onde parou</h3><p>Avance uma temporada por vez. Quando terminar, você dá o veredito na hora.</p></li>`;
+    html += L.length ? L.map(watchCard).join("") : `<li class="empty">Nada sendo assistido agora. Toque em + Adicionar ou comece algo da fila.</li>`;
+  } else if (sh === "vi") {
+    const base = G.vi.filter(match), L = byKind(base);
+    const U = L.filter(e => !e.verdict).length;
+    html += `<li class="shead"><h3>Sua tier list</h3><p>Cada obra vista ganha um veredito em um toque, sem nota quebrada.</p>${kindChips(base)}</li>`;
+    if (U) html += `<li class="classify"><div><b>${U} sem veredito</b><small>Vá passando um por um, leva segundos</small></div><button class="pri" data-act="classify">Classificar agora</button></li>`;
+    html += L.length ? `<li class="board">${tierBoard(L, false)}</li>` : `<li class="empty">Nenhuma obra vista aqui ainda.</li>`;
+  } else if (sh === "quero") {
+    const base = G.quero.filter(match), L = byKind(base);
+    html += `<li class="shead"><h3>Na fila</h3><p>O que você quer ver. Quando começar, toque em Começar.</p>${kindChips(base)}</li>`;
+    html += L.length ? L.map(e => rowCard(e, "Começar", "start", e.seasons_total > 1 ? e.seasons_total + " temp." : "")).join("") : `<li class="empty">Fila vazia. Use o marcador nas obras do ranking ou + Adicionar.</li>`;
+  } else {
+    const L = G.abandonei.filter(match);
+    html += `<li class="shead"><h3>Largados</h3><p>Ficam guardados aqui, fora do caminho. Se mudar de ideia, retome.</p></li>`;
+    html += L.length ? L.map(e => rowCard(e, "Retomar", "resume", e.seasons_total ? `parou em ${e.seasons_watched ?? 0} de ${e.seasons_total}` : "")).join("") : `<li class="empty">Nenhuma obra largada.</li>`;
+  }
+  document.getElementById("list").innerHTML = html;
 }
 async function bumpSeason(key, d){
   const e = ENT.get(key); if (!e) return;
   const tot = e.seasons_total || 0;
   let sw = Math.max(0, (e.seasons_watched ?? 0) + d); if (tot) sw = Math.min(tot, sw);
   const upd = { ...e, seasons_watched: sw };
-  if (tot && sw === tot && e.status === "vendo") upd.status = "vi";
-  if (sw > 0 && (e.status === "quero")) upd.status = "vendo";
-  await saveEntry(upd); render();
-  if (upd.status !== e.status) toast(upd.status === "vi" ? "Temporadas completas: marcado como Vi." : "Marcado como Vendo.");
+  const finished = tot && sw === tot && e.status === "vendo";
+  if (finished) upd.status = "vi";
+  const ok = await saveEntry(upd); if (!ok) return;
+  all();
+  if (finished) openClassify([key], 0, "Última temporada vista. Qual o veredito?");
 }
-
+async function finish(key){
+  const e = ENT.get(key); if (!e) return;
+  const ok = await saveEntry({ ...e, status: "vi", seasons_watched: e.seasons_total || e.seasons_watched });
+  if (!ok) return; all(); openClassify([key], 0, "Terminou. Qual o veredito?");
+}
+function openClassify(queue, i, title){
+  if (i >= queue.length) { closeSheet(); all(); if (queue.length > 1) toast("Pronto, tier list atualizada."); return; }
+  const e = ENT.get(queue[i]); if (!e) return openClassify(queue, i + 1, title);
+  const multi = queue.length > 1;
+  const o = sheet(`<div class="cls"><p class="hint">${multi ? `${i + 1} de ${queue.length}` : esc(title || "Qual o veredito?")}</p>
+    ${multi ? `<div class="cbar"><i style="width:${Math.round(i / queue.length * 100)}%"></i></div>` : ""}
+    <div class="chead">${e.poster ? `<img src="https://image.tmdb.org/t/p/w185${e.poster}" alt="" width="72" height="108">` : ""}<div><h2>${esc(e.title)}</h2><p class="hint">${esc([KIND_LABEL[e.kind], e.year].filter(Boolean).join(", "))}</p></div></div>
+    <div class="tierbtns">${TIERS.map(([k,l,d]) => `<button data-t="${k}" class="t-${k}${e.verdict===k ? " on" : ""}"><span class="tb">${k}</span><span><b>${l}</b><small>${d}</small></span></button>`).join("")}</div>
+    <div class="btns"><button class="sec" id="skip">${multi ? "Pular" : "Depois"}</button>${multi ? '<button class="sec" id="stop">Parar por aqui</button>' : ""}</div></div>`);
+  o.querySelectorAll("[data-t]").forEach(b => b.onclick = async () => {
+    o.querySelectorAll("[data-t]").forEach(x => x.disabled = true);
+    b.classList.add("on");
+    const ok = await saveEntry({ ...ENT.get(e.key), verdict: b.dataset.t });
+    if (!ok) return;
+    if (!multi) { closeSheet(); all(); toast(`${TIER_LABEL[b.dataset.t]}. Foi para a tier ${b.dataset.t}.`); return; }
+    setTimeout(() => openClassify(queue, i + 1, title), 180);
+  });
+  o.querySelector("#skip").onclick = () => multi ? openClassify(queue, i + 1, title) : (closeSheet(), all());
+  if (multi) o.querySelector("#stop").onclick = () => { closeSheet(); all(); };
+}
+function openAdd(){
+  if (!ME) { openAccount("login"); return; }
+  const o = sheet(`<h2>Adicionar ao diário</h2><p class="hint">Qualquer série ou filme, mesmo fora do ranking.</p>
+    <div class="adder"><input id="sq" type="search" placeholder="Nome da série ou filme" autocomplete="off" enterkeyhint="search" autofocus><ul id="sres" class="sres"></ul></div>
+    <div class="btns"><button class="sec" id="cancel">Fechar</button></div>`);
+  const sq = o.querySelector("#sq");
+  sq.addEventListener("input", () => { clearTimeout(searchTimer); const v = sq.value.trim(); searchTimer = setTimeout(() => searchTmdb(v), 350); });
+  o.querySelector("#sres").addEventListener("click", ev => { const r = ev.target.closest("[data-res]"); if (r) pickResult(+r.dataset.res); });
+  o.querySelector("#cancel").onclick = closeSheet;
+}
 /* ---------- perfil público ---------- */
 const PUB = { user: null, prof: null, ents: null, err: "" };
 async function loadPublic(username){
@@ -758,10 +942,6 @@ async function loadPublic(username){
   const { data: es } = await sb.from("entries").select("*").eq("user_id", p.id);
   PUB.prof = p; PUB.ents = es || []; render();
 }
-function pubCard(e){
-  return `<li class="pcard"><div class="pa">${e.poster ? `<img src="${posterUrl(e.poster)}" alt="" loading="lazy" width="64" height="96">` : `<span class="ph s">${esc(e.title.charAt(0))}</span>`}${e.rating != null ? `<span class="pn">${nota(e.rating)}</span>` : ""}</div>
-    <div><b>${esc(e.title)}</b><small>${esc([KIND_LABEL[e.kind], e.year, e.seasons_total > 1 && e.seasons_watched != null ? e.seasons_watched + " de " + e.seasons_total + " temp." : ""].filter(Boolean).join(", "))}</small>${e.note ? `<p class="note">${esc(e.note)}</p>` : ""}</div></li>`;
-}
 function renderProfile(){
   const list = document.getElementById("list");
   document.getElementById("count").textContent = "";
@@ -769,15 +949,18 @@ function renderProfile(){
   if (!PUB.ents) { list.innerHTML = `<li class="empty">Carregando…</li>`; return; }
   const E = PUB.ents, name = PUB.prof.display_name || PUB.prof.username;
   const vendo = E.filter(e => e.status === "vendo").sort((a,b) => (b.updated_at||"").localeCompare(a.updated_at||""));
-  const vi = E.filter(e => e.status === "vi").sort((a,b) => (b.rating ?? -1) - (a.rating ?? -1) || a.title.localeCompare(b.title, "pt"));
-  const quero = E.filter(e => e.status === "quero");
-  const rated = E.filter(e => e.rating != null);
-  const avg = rated.length ? Math.round(rated.reduce((a,e) => a + Number(e.rating), 0) / rated.length * 10) / 10 : null;
-  const sec = (t, A) => A.length ? `<li class="psec"><h3>${t} <i>${A.length}</i></h3><ul class="pgrid">${A.map(pubCard).join("")}</ul></li>` : "";
+  const vi = E.filter(e => e.status === "vi"), quero = E.filter(e => e.status === "quero");
   const mine = ME && PUB.prof.id === ME.id;
-  list.innerHTML = `<li class="dhead"><div class="drow"><div><b>Diário de ${esc(name)}</b><small>${vi.length} vistos, ${vendo.length} vendo${avg != null ? ", nota média " + nota(avg) : ""}</small></div>${mine ? '<button class="sharebtn" data-act="share">Compartilhar</button>' : ""}</div>
-    <p class="hint">${mine ? "É assim que os outros veem o seu diário." : "Diário pessoal, feito no Ranking 2011–2026."} <a href="#filmes" data-go="filmes">Ver o ranking</a></p></li>`
-    + sec("Vendo agora", vendo) + sec("Já vi", vi) + sec("Quero ver", quero);
+  const S = vi.filter(e => e.verdict === "S").length;
+  let html = `<li class="dx-hero"><div class="dx-top"><div><small>Diário de</small><b>${esc(name)}</b></div>${mine ? `<div class="dx-btns"><button data-act="share" class="dx-share" aria-label="Compartilhar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg></button></div>` : ""}</div>
+    <div class="dx-stats ro"><div><b>${vi.length}</b><span>Vistos</span></div><div><b>${vendo.length}</b><span>Assistindo</span></div><div><b>${S}</b><span>Tier S</span></div><div><b>${quero.length}</b><span>Na fila</span></div></div>
+    <p class="dx-foot">${mine ? "É assim que os outros veem o seu diário." : "Diário pessoal, feito no Ranking 2011–2026."} <a href="#filmes" data-go="filmes">Ver o ranking</a></p></li>`;
+  if (vendo.length) html += `<li class="shead"><h3>Assistindo agora</h3></li><li class="rail">${vendo.map(e => tile(e, true)).join("")}</li>`;
+  if (vi.some(e => e.verdict)) html += `<li class="shead"><h3>Tier list</h3></li><li class="board">${tierBoard(vi.filter(e => e.verdict), true)}</li>`;
+  const uv = vi.filter(e => !e.verdict);
+  if (uv.length) html += `<li class="shead"><h3>Também viu</h3></li><li class="rail wrap">${uv.map(e => tile(e, true)).join("")}</li>`;
+  if (quero.length) html += `<li class="shead"><h3>Na fila</h3></li><li class="rail">${quero.map(e => tile(e, true)).join("")}</li>`;
+  list.innerHTML = html;
 }
 
 /* ---------- navegação ---------- */
@@ -793,18 +976,26 @@ function routeHash(){
 }
 document.getElementById("list").addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if (g) { e.preventDefault(); go(g.dataset.go); return; }
-  const res = e.target.closest("[data-res]"); if (res) { pickResult(+res.dataset.res); return; }
-  const df = e.target.closest("[data-df]"); if (df) { dstate.filter = df.dataset.df; render(); return; }
+  const shelf = e.target.closest("[data-shelf]"); if (shelf) { dstate.shelf = shelf.dataset.shelf; dstate.kind = "all"; render(); return; }
+  const kd = e.target.closest("[data-kind]"); if (kd) { dstate.kind = kd.dataset.kind; render(); return; }
+  const op = e.target.closest("[data-open]"); if (op) { const en = ENT.get(op.dataset.open); if (en) openEditor(en); return; }
   const act = e.target.closest("[data-act]");
   if (act) {
     const a = act.dataset.act;
     if (a === "share") { share(); return; }
+    if (a === "add") { openAdd(); return; }
     if (a === "signup" || a === "login") { openAccount(a); return; }
-    const li = act.closest("li.dcard");
-    if (li) { e.stopPropagation(); const k = li.dataset.key;
-      if (a === "edit") openEditor(ENT.get(k));
+    if (a === "classify") {
+      const q = byKind([...ENT.values()].filter(x => x.status === "vi" && !x.verdict)).sort((x,y) => (y.year||0) - (x.year||0)).map(x => x.key);
+      openClassify(q, 0); return;
+    }
+    const li = act.closest("[data-key]");
+    if (li) { e.stopPropagation(); const k = li.dataset.key, en = ENT.get(k);
+      if (a === "edit") openEditor(en);
       if (a === "plus") bumpSeason(k, 1);
-      if (a === "minus") bumpSeason(k, -1);
+      if (a === "done") finish(k);
+      if (a === "start") saveEntry({ ...en, status: "vendo" }).then(r => { if (r) { dstate.shelf = "vendo"; all(); toast("Foi para Assistindo."); } });
+      if (a === "resume") saveEntry({ ...en, status: "vendo" }).then(r => { if (r) { dstate.shelf = "vendo"; all(); toast("De volta para Assistindo."); } });
       return; }
   }
   const eb = e.target.closest(".editbtn");
