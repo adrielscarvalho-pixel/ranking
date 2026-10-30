@@ -416,6 +416,49 @@ li.also{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px;m
 li.also button{appearance:none;font:inherit;font-size:.82rem;padding:5px 11px;border-radius:999px;border:1px solid var(--accent);background:var(--surface);color:var(--accent);cursor:pointer}
 li.also i{font-style:normal;opacity:.75}
 .stats.qs{margin-top:5px;font-size:.74rem;gap:2px 9px}
+
+li.pg{list-style:none;margin:0 -12px}
+.pghero{position:relative;padding:12px 16px 18px;background:#141C26;color:#F4F1EA;overflow:hidden}
+.pghero::before{content:"";position:absolute;inset:0;background-image:var(--bd);background-size:cover;background-position:center 25%;opacity:.45}
+.pghero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,28,38,.15) 0%,rgba(20,28,38,.75) 60%,#141C26 100%)}
+.pghero>*{position:relative;z-index:1}
+.pgback{appearance:none;border:0;background:rgba(0,0,0,.35);color:#fff;font:inherit;font-weight:700;font-size:.86rem;padding:7px 12px;border-radius:999px;cursor:pointer;backdrop-filter:blur(6px)}
+.pgtop{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:end;margin-top:54px}
+.pghero.nobd .pgtop{margin-top:14px}
+.pgpost{border-radius:10px;object-fit:cover;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.pgt{margin:0;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.5rem;line-height:1.1}
+.pgo{margin:4px 0 0;color:#C7D1DB;font-size:.86rem}
+.pgm{margin:6px 0 0;color:#C7D1DB;font-size:.84rem}
+.pgrk{margin-top:8px;font-size:.82rem;color:#F2C14E;font-weight:700}
+.pgrk span{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.05rem}
+.pgbody{padding:14px 16px 8px}
+.pgg{margin-top:0}
+.pgs{margin-top:10px;font-size:.86rem}
+.pgaw{margin:6px 0 0;font-size:.8rem;color:var(--muted);line-height:1.4}
+.pgme{display:flex;gap:10px;align-items:center;margin-top:14px;padding:10px 12px;border-radius:12px;border:1.5px solid var(--tc);background:color-mix(in srgb,var(--tc) 8%,var(--surface))}
+.pgme b{display:block;font-size:.92rem}.pgme small{display:block;color:var(--muted);font-size:.8rem}
+.pgact{display:flex;gap:8px;margin-top:14px}
+.pgact button{appearance:none;font:inherit;font-weight:700;font-size:.9rem;padding:10px 16px;border-radius:10px;border:1px solid var(--line);cursor:pointer}
+.pgact .ic{padding:8px 11px;display:grid;place-items:center;margin-left:auto}
+.pgact .ic svg{width:18px;height:18px}
+.pgsec{margin-top:20px}
+.pgsec h3{margin:0 0 8px;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.05rem}
+.pglink{display:inline-block;margin-top:9px;font-size:.86rem;color:var(--accent);font-weight:700}
+.trl{appearance:none;position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;border-radius:12px;overflow:hidden;background:#000;cursor:pointer}
+.trl img{width:100%;height:100%;object-fit:cover;opacity:.85}
+.trl .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.92);color:#141C26;display:grid;place-items:center;font-size:1.4rem;padding-left:4px}
+.trl small{position:absolute;left:10px;bottom:8px;right:10px;color:#fff;font-size:.78rem;text-align:left;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.trl.on iframe{width:100%;height:100%;border:0}
+.cast{display:grid;grid-auto-flow:column;grid-auto-columns:88px;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.cast::-webkit-scrollbar{display:none}
+.cp img,.cp .noph{width:88px;height:110px;border-radius:10px;object-fit:cover;display:grid;place-items:center;background:var(--chip);color:var(--muted);font-size:1.4rem}
+.cp b{display:block;font-size:.76rem;line-height:1.2;margin-top:5px}
+.cp small{display:block;font-size:.7rem;color:var(--muted);line-height:1.2;margin-top:2px}
+.rail2{display:grid;grid-auto-flow:column;grid-auto-columns:88px;gap:10px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}
+.rail2::-webkit-scrollbar{display:none}
+.pgfoot{margin:22px 0 6px;font-size:.8rem;color:var(--muted)}
+.pgfoot a,.pgopen{color:var(--accent);font-weight:700}
+li.item .art{cursor:pointer}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -542,12 +585,12 @@ function renderTabs(){
 document.getElementById("tabs").innerHTML = CATS.map(([k,l]) =>
 `<button role="tab" data-cat="${k}" aria-selected="${state.cat===k}"><b>${DATA.filter(x=>x.c===k).length}</b>${l}</button>`).join("")
 + `<button role="tab" class="wl" data-cat="lista" aria-selected="${state.cat==="lista"}"><b>${ME ? ENT.size : wl.length}</b>Diário</button>`;
-document.querySelector("header").classList.toggle("listmode", state.cat === "lista" || state.cat === "perfil");
-document.querySelector("header").classList.toggle("perfil", state.cat === "perfil");
-const hl = document.querySelector(".status label"); if (hl) hl.style.display = (state.cat === "perfil" || (state.cat === "lista" && ME)) ? "none" : "";
+document.querySelector("header").classList.toggle("listmode", state.cat === "lista" || state.cat === "perfil" || state.cat === "obra");
+document.querySelector("header").classList.toggle("perfil", state.cat === "perfil" || state.cat === "obra");
+const hl = document.querySelector(".status label"); if (hl) hl.style.display = (state.cat === "perfil" || state.cat === "obra" || (state.cat === "lista" && ME)) ? "none" : "";
 }
 function renderChips(){
-if (state.cat === "lista" || state.cat === "perfil") { document.getElementById("chips").innerHTML = ""; return; }
+if (state.cat === "lista" || state.cat === "perfil" || state.cat === "obra") { document.getElementById("chips").innerHTML = ""; return; }
 const inCat = DATA.filter(x => x.c === state.cat);
 const have = SVC_ORDER.filter(s => inCat.some(x => x.s.includes(s)));
 const none = inCat.some(x => !x.s.length);
@@ -567,7 +610,7 @@ document.getElementById("chips").innerHTML = opts.map(([v,l]) =>
 }
 function renderGenres(){
 const el = document.getElementById("gchips");
-if (state.cat === "lista" || state.cat === "perfil") { el.innerHTML = ""; return; }
+if (state.cat === "lista" || state.cat === "perfil" || state.cat === "obra") { el.innerHTML = ""; return; }
 const inCat = DATA.filter(x => x.c === state.cat && (!state.year || x.y === +state.year));
 const cnt = {}; inCat.forEach(x => x.g.forEach(g => cnt[g] = (cnt[g] || 0) + 1));
 const gs = GENRES.filter(g => cnt[g]).sort((a,b) => cnt[b] - cnt[a]);
@@ -575,7 +618,7 @@ if (state.gen && !cnt[state.gen]) state.gen = "";
 el.innerHTML = `<button data-gen="" aria-pressed="${!state.gen}">Todos os gêneros</button>` + gs.map(g => `<button data-gen="${esc(g)}" aria-pressed="${state.gen===g}">${esc(g)} <i>${cnt[g]}</i></button>`).join("");
 }
 function renderYears(){
-if (state.cat === "lista" || state.cat === "perfil") return;
+if (state.cat === "lista" || state.cat === "perfil" || state.cat === "obra") return;
 const ys = [...new Set(DATA.filter(x => x.c === state.cat).map(x => x.y))].sort((a,b) => b-a);
 if (state.year && !ys.includes(+state.year)) state.year = "";
 document.getElementById("year").innerHTML = `<option value="">Todo ano</option>` + ys.map(y => `<option value="${y}"${String(y)===state.year?" selected":""}>${y}</option>`).join("");
@@ -609,6 +652,7 @@ else { const id = "x" + Date.now(); extras.push({id, t}); wl.unshift(id); }
 saveWl(); renderTabs(); renderList();
 }
 function render(){
+if (state.cat === "obra") return renderPage();
 if (state.cat === "perfil") return renderProfile();
 if (state.cat === "lista") return ME ? renderDiary() : renderList();
 let L = DATA.filter(x => x.c === state.cat);
@@ -649,7 +693,7 @@ const sub = [x.o && x.o !== x.t ? x.o : "", x.f, String(x.y), x.ns ? `${x.ns} te
 const gl = x.g && x.g.length ? `<div class="gl">${x.g.slice(0,3).map(g => `<span${g===state.gen?' class="on"':""}>${esc(g)}</span>`).join("")}</div>` : "";
 const oc = a => [...new Set(a)].map(i => OSC_CATS[i]).join(", ");
 const em = x.em && x.em[1] ? `<span class="oscd">Emmy, venceu: ${x.em[2].map(([i,k]) => EMY_CATS[i] + (k > 1 ? ` (${k}×)` : "")).join(", ")}${x.em[3] ? `${x.em[2].length ? " e mais " : ""}${x.em[3]} em categorias técnicas` : ""}.</span><br>` : "";
-const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + em + (x.os ? `<span class="oscd">${x.os[2].length ? `Oscar, venceu: ${oc(x.os[2])}.` : ""}${x.os[2].length && x.os[3].length ? " " : ""}${x.os[3].length ? `Indicado: ${oc(x.os[3])}.` : ""}</span><br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
+const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + em + (x.os ? `<span class="oscd">${x.os[2].length ? `Oscar, venceu: ${oc(x.os[2])}.` : ""}${x.os[2].length && x.os[3].length ? " " : ""}${x.os[3].length ? `Indicado: ${oc(x.os[3])}.` : ""}</span><br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>` + (x.c !== "extra" ? `<br><a href="#t/${x.id}" data-page="${x.id}" class="pgopen">Abrir página completa, com trailer e elenco →</a>` : "");
 const isSeen = isSeenId(x.id), wlOn = inWl(x.id), v = verdictOf(x.id);
 const svc = x.s.length ? x.s.slice(0,2).map(esc).join(", ") + (x.s.length > 2 ? ` <i>+${x.s.length-2}</i>` : "") : `<em>${NOTE[x.sn]}</em>`;
 const href = x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/";
@@ -1037,7 +1081,8 @@ function provLine(e){
   const txt = I.prov.length ? I.prov.slice(0,3).map(esc).join(", ") + (I.prov.length > 3 ? ` <i>+${I.prov.length-3}</i>` : "") : "<em>Só aluguel ou compra</em>";
   return `<div class="pline">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h14v9H3zM7.5 3.5l2.5 3 2.5-3"/></svg>'}<span>${txt}</span></div>`;
 }
-function openDetails(e, ro){
+function openDetails(e, ro){ if (goPage(e.key)) return; openDetailsSheet(e, ro); }
+function openDetailsSheet(e, ro){
   const I = infoOf(e), x = I.x, tot = e.seasons_total || 0;
   const meta = [KIND_LABEL[e.kind], e.year, tot ? `${tot} temporada${tot > 1 ? "s" : ""}` : (I.rt ? `${I.rt} min` : ""), I.g.slice(0,3).join(", ")].filter(Boolean).join(" · ");
   const scores = x ? (x.c === "anime"
@@ -1404,6 +1449,116 @@ async function recAction(id, act){
   if (act === "seen") { const ok = await saveEntry({ ...rowFromItem(x), status: "vi", seasons_watched: x.ns || null }); if (ok) { all(); openClassify([id], 0, "Você já viu. Qual o veredito?"); } }
 }
 
+/* ---------- página própria de cada obra ---------- */
+const PAGE = { key: null, d: null, err: "", fromApp: false, scroll: 0, prev: "filmes" };
+const PCACHE = new Map();
+const keyToHash = k => k.replace(/^tmdb:(tv|movie):/, "tmdb-$1-");
+const hashToKey = h => h.replace(/^tmdb-(tv|movie)-/, "tmdb:$1:");
+function goPage(key){
+  if (!/^(tt\d+|tmdb:(tv|movie):\d+)$/.test(key || "")) return false;
+  PAGE.fromApp = true; PAGE.scroll = window.scrollY; PAGE.prev = state.cat !== "obra" ? state.cat : PAGE.prev;
+  closeSheet(); location.hash = "#t/" + keyToHash(key); return true;
+}
+function leavePage(){
+  if (PAGE.fromApp && history.length > 1) { history.back(); return; }
+  go(PAGE.prev || "filmes");
+}
+function pageGuessType(key){
+  const x = BYID[key], e = ENT.get(key);
+  const k = x ? KINDOF[x.c] : e ? e.kind : null;
+  if (k === "filme") return "movie";
+  if (k === "doc") return x && x.f === "Filme" ? "movie" : (e && !e.seasons_total ? "movie" : "tv");
+  return k ? "tv" : "movie";
+}
+async function openPage(key){
+  PAGE.key = key; PAGE.err = "";
+  PAGE.d = PCACHE.get(key) || null;
+  render(); window.scrollTo({ top: 0 });
+  if (PAGE.d) return;
+  try {
+    const m = key.match(/^tmdb:(tv|movie):(\d+)$/);
+    const url = m ? `${FN}?id=${m[2]}&type=${m[1]}&full=1` : `${FN}?imdb=${key}&type=${pageGuessType(key)}&full=1`;
+    const d = await fetch(url).then(r => r.ok ? r.json() : null);
+    if (PAGE.key !== key) return;
+    if (!d || d.error) { PAGE.err = "Não encontrei essa obra."; render(); return; }
+    PCACHE.set(key, d); PAGE.d = d; render();
+  } catch(e) { PAGE.err = "Não consegui carregar agora."; render(); }
+}
+function similarTo(base, n){
+  const F = featsOf(base); let bn = 0; F.forEach((v, k) => { const iv = v * idf(k); bn += iv * iv; }); bn = Math.sqrt(bn) || 1;
+  const out = [];
+  POOL.forEach(x => {
+    if (x.id === base.key || x.id === base.id) return;
+    const G = featsOf(x); let s = 0, gn = 0;
+    G.forEach((v, k) => { const iv = v * idf(k); gn += iv * iv; const b = F.get(k); if (b) s += b * idf(k) * iv; });
+    const same = (KINDOF[x.c] === (base.c ? KINDOF[base.c] : base.kind)) ? 1.8 : 1;
+    out.push({ x, s: same * s / (bn * (Math.sqrt(gn) || 1)) });
+  });
+  return out.sort((a, b) => b.s - a.s).slice(0, n).map(r => r.x);
+}
+function renderPage(){
+  const list = document.getElementById("list"); document.getElementById("count").textContent = "";
+  const key = PAGE.key, x = BYID[key] && BYID[key].c !== "extra" ? BYID[key] : null, en = ME ? ENT.get(key) : null, d = PAGE.d;
+  if (!x && !en && !d) { list.innerHTML = `<li class="empty">${esc(PAGE.err || "Carregando…")} ${PAGE.err ? `<a href="#filmes" data-go="filmes">Ver o ranking</a>` : ""}</li>`; return; }
+  const base = { key, kind: x ? KINDOF[x.c] : en ? en.kind : (d && d.type === "movie" ? "filme" : "serie"), title: x ? x.t : en ? en.title : d.title,
+    orig: x ? (x.o || null) : en ? en.orig : (d.orig !== d.title ? d.orig : null), year: x ? x.y : en ? en.year : d.year,
+    poster: (x && x.pp) || (en && en.poster) || (d && d.poster), seasons_total: (x && x.ns) || (en && en.seasons_total) || (d && d.seasons_total) || null,
+    extra: (en && en.extra) || (d ? extraFrom(d) : null) };
+  if (!base.extra && d) base.extra = extraFrom(d);
+  if (d && base.extra && !base.extra.sc) base.extra = { ...base.extra, sc: d.sc };
+  if (d && (!base.extra || !base.extra.at)) base.extra = extraFrom(d);
+  const I = infoOf(base), tot = base.seasons_total || 0;
+  const v = en && en.verdict;
+  const meta = [KIND_LABEL[base.kind], base.year, tot ? `${tot} temporada${tot > 1 ? "s" : ""}` : (I.rt ? `${Math.floor(I.rt/60) ? Math.floor(I.rt/60) + " h " : ""}${I.rt % 60} min` : "")].filter(Boolean).join(" · ");
+  const bd = d && d.backdrop ? `https://image.tmdb.org/t/p/w780${d.backdrop}` : "";
+  const oc = a => [...new Set(a)].map(i => OSC_CATS[i]).join(", ");
+  let aw = awardsHtml(base);
+  if (x && x.os && x.os[2].length) aw += `<p class="pgaw">Oscar, venceu: ${esc(oc(x.os[2]))}.</p>`;
+  if (x && x.em && x.em[1] && x.em[2].length) aw += `<p class="pgaw">Emmy, venceu: ${esc(x.em[2].map(([i,k]) => EMY_CATS[i] + (k > 1 ? ` (${k}×)` : "")).join(", "))}${x.em[3] ? ` e mais ${x.em[3]} técnicas` : ""}.</p>`;
+  const st = en ? `<div class="pgme t-${v || "U"}">${v ? `<span class="tb">${v}</span><div><b>${TIER_LABEL[v]}</b><small>${STATUS_LABEL[en.status]}${en.seasons_total > 1 && en.seasons_watched != null ? ` · ${en.seasons_watched} de ${en.seasons_total} temp.` : ""}</small></div>` : `<div><b>No seu diário: ${STATUS_LABEL[en.status]}</b>${en.note ? `<small>${esc(en.note)}</small>` : ""}</div>`}</div>` : "";
+  const pv = I.prov.length ? I.prov.map(p => `<span class="pchip">${esc(p)}</span>`).join("") : `<span class="muted">${I.rent ? "Só aluguel ou compra" : "Não está em streaming no Brasil agora"}</span>`;
+  const tr = d && d.trailer ? `<section class="pgsec"><h3>Trailer</h3><button class="trl" data-yt="${esc(d.trailer.key)}" aria-label="Assistir ao trailer"><img src="https://i.ytimg.com/vi/${esc(d.trailer.key)}/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span><small>${esc(d.trailer.name || "Trailer")}</small></button></section>` : (d ? "" : `<section class="pgsec"><h3>Trailer</h3><p class="muted">Carregando…</p></section>`);
+  const cx = d && d.castx && d.castx.length ? `<section class="pgsec"><h3>Elenco</h3><div class="cast">${d.castx.map(c => `<div class="cp">${c.p ? `<img src="https://image.tmdb.org/t/p/w185${c.p}" alt="" loading="lazy">` : `<span class="noph">${esc(c.n.charAt(0))}</span>`}<b>${esc(c.n)}</b>${c.c ? `<small>${esc(c.c)}</small>` : ""}</div>`).join("")}</div></section>` : "";
+  const sim = similarTo(x || base, 10);
+  const simH = sim.length ? `<section class="pgsec"><h3>Parecidos no ranking</h3><div class="rail2">${sim.map(s => `<button class="tile" data-page="${s.id}"><span class="tp">${s.pp ? `<img src="https://image.tmdb.org/t/p/w185${s.pp}" alt="" loading="lazy">` : `<span class="ph">${esc(s.t.charAt(0))}</span>`}</span><span class="tt">${esc(s.t)}</span></button>`).join("")}</div></section>` : "";
+  const acts = ME ? `<div class="pgact">${en ? `<button class="pri" data-pg="edit">Editar no diário</button>` : `<button class="pri" data-pg="want">Quero ver</button><button class="sec" data-pg="seen">Já vi</button>`}<button class="sec ic" data-pg="share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div>`
+    : `<div class="pgact"><button class="pri" data-pg="login">Entrar para salvar</button><button class="sec ic" data-pg="share" aria-label="Compartilhar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg></button></div>`;
+  const scores = scoreBits(base);
+  list.innerHTML = `<li class="pg">
+    <div class="pghero${bd ? "" : " nobd"}"${bd ? ` style="--bd:url('${bd}')"` : ""}>
+      <button class="pgback" data-pg="back" aria-label="Voltar">← Voltar</button>
+      <div class="pgtop">${base.poster ? `<img class="pgpost" src="https://image.tmdb.org/t/p/w342${base.poster}" alt="" width="120" height="180">` : ""}
+        <div><h1 class="pgt">${esc(base.title)}</h1>${base.orig && base.orig !== base.title ? `<p class="pgo">${esc(base.orig)}</p>` : ""}<p class="pgm">${esc(meta)}</p>
+        ${x ? `<div class="pgrk"><span>${x.r}º</span> em ${CATS.find(c => c[0] === x.c)[1]} · nota ${fmt(x.n)}</div>` : ""}</div></div>
+    </div>
+    <div class="pgbody">
+      ${I.g.length ? `<div class="gl pgg">${I.g.map(g => `<span>${esc(g)}</span>`).join("")}</div>` : ""}
+      ${scores ? `<div class="stats pgs">${scores}</div>` : ""}${aw}
+      ${st}${acts}
+      ${I.tag ? `<p class="dtag">${esc(I.tag)}</p>` : ""}${I.sy ? `<p class="dsy">${esc(I.sy)}</p>` : ""}
+      ${I.dir.length ? `<p class="dcr"><b>${base.kind === "filme" || (base.kind === "doc" && !tot) ? "Direção" : "Criação"}:</b> ${esc(I.dir.join(", "))}</p>` : ""}
+      <section class="pgsec"><h3>Onde assistir no Brasil</h3><div class="pchips">${pv}</div>${I.link ? `<a class="pglink" href="${esc(I.link)}" target="_blank" rel="noopener">Ver todas as opções, inclusive aluguel</a>` : ""}</section>
+      ${tr}${cx}${simH}
+      ${x ? `<p class="pgfoot">${votes(x.v)} votos no IMDb · <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a></p>` : (key.startsWith("tt") ? `<p class="pgfoot"><a href="https://www.imdb.com/title/${key}/" target="_blank" rel="noopener">Abrir no IMDb</a></p>` : "")}
+    </div></li>`;
+}
+async function pageAction(a){
+  const key = PAGE.key, x = BYID[key] && BYID[key].c !== "extra" ? BYID[key] : null, d = PAGE.d, en = ENT.get(key);
+  const row = x ? rowFromItem(x) : d ? { key, kind: d.type === "movie" ? (d.genres || []).includes(99) ? "doc" : "filme" : kindOf(d), title: d.title, orig: d.orig !== d.title ? d.orig : null, year: d.year, poster: d.poster, seasons_total: d.seasons_total, extra: extraFrom(d) } : null;
+  if (a === "back") return leavePage();
+  if (a === "share") {
+    const url = location.origin + location.pathname + "#t/" + keyToHash(key);
+    try { if (navigator.share) { await navigator.share({ title: row ? row.title : "Ranking", url }); return; } } catch(e) { if (e && e.name === "AbortError") return; }
+    try { await navigator.clipboard.writeText(url); toast("Link copiado."); } catch(e) { prompt("Copie o link:", url); }
+    return;
+  }
+  if (a === "login") return openAccount("login");
+  if (a === "edit" && en) return openEditor(en);
+  if (!row) return;
+  if (a === "want") { const ok = await saveEntry({ ...row, status: "quero" }); if (ok) { render(); toast("Foi para a sua fila."); } }
+  if (a === "seen") { const ok = await saveEntry({ ...row, status: "vi", seasons_watched: row.seasons_total || null }); if (ok) { render(); openClassify([key], 0, "Você já viu. Qual o veredito?"); } }
+}
+
 /* ---------- perfil público ---------- */
 const PUB = { user: null, prof: null, ents: null, err: "" };
 async function loadPublic(username){
@@ -1443,11 +1598,16 @@ function go(cat){
 }
 function routeHash(){
   const h2 = decodeURIComponent(location.hash.replace("#", ""));
+  if (h2.startsWith("t/")) { state.cat = "obra"; all(); openPage(hashToKey(h2.slice(2))); return true; }
   if (h2.startsWith("u/")) { state.cat = "perfil"; if (sb) loadPublic(h2.slice(2).toLowerCase()); else { PUB.err = "Não consegui conectar ao servidor."; } all(); return true; }
   return false;
 }
 document.getElementById("list").addEventListener("click", e => {
   const g = e.target.closest("[data-go]"); if (g) { e.preventDefault(); go(g.dataset.go); return; }
+  const pgb = e.target.closest("[data-pg]"); if (pgb) { pageAction(pgb.dataset.pg); return; }
+  const pgl = e.target.closest("[data-page]"); if (pgl) { e.preventDefault(); goPage(pgl.dataset.page); return; }
+  const yt = e.target.closest("[data-yt]"); if (yt) { yt.outerHTML = `<div class="trl on"><iframe src="https://www.youtube-nocookie.com/embed/${yt.dataset.yt}?autoplay=1&rel=0" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`; return; }
+  const artc = e.target.closest("li.item .art"); if (artc) { const li = artc.closest("li.item"); if (li && li.dataset.id && goPage(li.dataset.id)) { e.stopPropagation(); return; } }
   const shelf = e.target.closest("[data-shelf]"); if (shelf) { dstate.shelf = shelf.dataset.shelf; dstate.kind = "all"; dstate.gen = ""; render(); return; }
   const kd = e.target.closest("[data-kind]"); if (kd) { dstate.kind = kd.dataset.kind; render(); return; }
   const dg = e.target.closest("[data-dgen]"); if (dg) { dstate.gen = dg.dataset.dgen; render(); return; }
@@ -1483,7 +1643,8 @@ document.getElementById("list").addEventListener("click", e => {
 }, true);
 document.getElementById("list").addEventListener("change", e => { if (e.target.id === "dsort") { dstate.sort = e.target.value; render(); } });
 document.getElementById("acct").addEventListener("click", () => openAccount(ME ? "menu" : "login"));
-window.addEventListener("hashchange", () => { if (!routeHash()) { const c = location.hash.replace("#",""); if ([...CATS.map(c => c[0]), "lista"].includes(c) && c !== state.cat) { state.cat = c; all(); } } });
+window.addEventListener("hashchange", () => { if (!routeHash()) { const wasPage = state.cat === "obra"; let c = location.hash.replace("#",""); if (![...CATS.map(c => c[0]), "lista"].includes(c)) c = wasPage ? (PAGE.prev || "filmes") : state.cat;
+  if (c !== state.cat) { state.cat = c; all(); } if (wasPage) { const y = PAGE.scroll || 0; [30, 200, 600].forEach(t => setTimeout(() => window.scrollTo({ top: y }), t)); } } });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
 if (sb) {
   sb.auth.onAuthStateChange((ev, session) => {
