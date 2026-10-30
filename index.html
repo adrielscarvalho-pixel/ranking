@@ -339,6 +339,15 @@ li.seen .bar .seenbtn{background:var(--seen);color:#fff}
 li.item.open .syn{-webkit-line-clamp:unset;color:var(--ink)}
 li.item.top{border-color:#E0A526;box-shadow:0 0 0 1px #E0A526 inset,0 6px 18px rgba(201,139,18,.12)}
 #list{padding-left:12px;padding-right:12px}
+
+li.item.vt{border-color:var(--tc);box-shadow:0 0 0 1px var(--tc) inset}
+li.item.vt.t-S{border-color:#E0A526;box-shadow:0 0 0 1px #E0A526 inset,0 6px 18px rgba(201,139,18,.12)}
+li.item.seen:not(.vt){background:color-mix(in srgb,var(--seen) 6%,var(--surface));border-color:color-mix(in srgb,var(--seen) 35%,var(--line))}
+.vb.vs{background:var(--seen);color:#fff}
+.vb.vs svg{width:13px;height:13px}
+.vline.seenl{color:var(--seen)}
+.vline.seenl::before{background:var(--seen);border-radius:50%}
+.osc.emy svg{width:9px;height:14px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -354,7 +363,7 @@ li.item.top{border-color:#E0A526;box-shadow:0 0 0 1px #E0A526 inset,0 6px 18px r
 <option value="n">Nota</option>
 <option value="i">IMDb</option>
 <option value="y">Recentes</option>
-<option value="o">Oscars</option>
+<option value="o">Prêmios</option>
 </select>
 </div>
 <div class="chips" id="chips"></div>
@@ -368,7 +377,7 @@ li.item.top{border-color:#E0A526;box-shadow:0 0 0 1px #E0A526 inset,0 6px 18px r
 <p>Entram só obras de 2011 em diante que passam em todos os cortes de IMDb, Rotten Tomatoes e Metacritic, com número mínimo de votos por ano. A nota vai de 0 a 100: 35% IMDb, 25% Rotten Tomatoes e 40% Metacritic. Documentários de natureza ficam de fora. Anime usa outra régua: MyAnimeList ≥ 8,0, AniList ≥ 80% e IMDb ≥ 7,5, com mínimo de avaliações no MyAnimeList por ano (2011–2022: 200 mil; 2023–2024: 100 mil; 2025: 50 mil; 2026: 25 mil). Só séries: a 1ª temporada precisa ter estreado de 2011 em diante e é ela que vale para as notas do MyAnimeList e do AniList; filmes de anime concorrem na aba Filmes, com a régua dos filmes. Nota do anime: 40% MyAnimeList, 30% AniList e 30% IMDb. Time (2021) é julgada como minissérie, pela 1ª temporada. “Pipoca” é a nota do público verificado no Rotten Tomatoes; aparece para consulta e não entra no cálculo.</p>
 <p>Notas de 2021–2026 coletadas em 25/10/2026; de 2016–2020, em 28/10/2026; de 2011–2015, em 29/10/2026. Para 2011–2015 o mínimo de votos no IMDb é 150 mil para filmes, 100 mil para séries, 50 mil para minisséries e 10 mil para documentários. Streaming conforme o JustWatch Brasil na mesma data; catálogos mudam todo mês. “Onde assistir” abre a página da obra no JustWatch Brasil, com todos os serviços, inclusive aluguel. Toque num título para ler a sinopse inteira e ver diretor e votos. Sinopses do TMDB. As marcações de “vi” e a lista “Ver já” ficam salvas só neste aparelho.</p>
 </details>
-<p>Os selos S, A, B, C e D são os seus vereditos no diário. Oscars das cerimônias de 2012 a 2026, conferidos na Wikipédia.</p>
+<p>Os selos S, A, B, C e D são os seus vereditos no diário. Oscars das cerimônias de 2012 a 2026 e Emmys de 2011 a 2026 (cerimônia principal e Creative Arts, somando todas as temporadas), contados na Wikipédia; podem variar uma ou duas indicações do total oficial.</p>
 <p class="tmdb">Cartazes e dados de imagem fornecidos pelo <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>. Este site usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.</p>
 </footer>
 <script>
@@ -383,6 +392,13 @@ EXTRA.forEach(x => { x.r = 0; x.n = 0; x.b = 0; DATA.push(x); });
 const OSC_CATS = ["Filme", "Direção", "Ator", "Atriz coadjuvante", "Roteiro original", "Trilha sonora", "Direção de arte", "Fotografia", "Figurino", "Montagem", "Roteiro adaptado", "Edição de som", "Mixagem de som", "Efeitos visuais", "Ator coadjuvante", "Filme internacional", "Documentário", "Maquiagem", "Atriz", "Canção original", "Maquiagem e penteados", "Animação", "Som", "Elenco"];
 const OSC = {"1655442":[10,5,[0,1,2,5,8],[3,4,6,7,9]],"0970179":[11,5,[11,12,6,7,13],[0,1,10,5,8,9]],"1605783":[4,1,[4],[0,1,6]],"1210166":[6,0,[],[0,2,14,10,12,9]],"1832382":[2,1,[15],[4]],"1440266":[1,0,[],[16]],"0780504":[1,0,[],[11]],"1201607":[3,0,[],[6,17,13]],"1024648":[7,3,[0,10,9],[14,5,11,12]],"0443272":[12,2,[2,6],[0,1,14,3,10,5,12,7,8,9]],"1045658":[8,1,[18],[0,1,2,14,3,10,9]],"1790885":[5,1,[11],[0,18,4,9]],"1748122":[1,0,[],[4]],"2125608":[1,1,[16],[]],"1074638":[5,2,[19,11],[5,12,7]],"2024544":[9,3,[0,3,10],[1,2,14,6,8,9]],"1800241":[10,0,[],[0,1,2,18,14,3,4,6,8,9]],"1535109":[6,0,[],[0,14,10,11,12,9]],"0790636":[6,3,[2,14,20],[0,4,9]],"1454468":[10,7,[1,5,11,12,7,9,13],[0,18,6]],"1798709":[5,1,[4],[0,5,19,6]],"2334873":[3,1,[18],[3,4]],"2209418":[1,0,[],[10]],"2106476":[1,0,[],[15]],"2375605":[1,0,[],[16]],"2042568":[2,0,[],[12,7]],"2562232":[9,4,[0,1,4,7],[2,14,3,11,12]],"1065073":[6,1,[3],[0,1,14,4,9]],"2278388":[9,4,[5,6,20,8],[0,1,4,7,9]],"2582802":[5,3,[14,12,9],[0,10]],"2872718":[1,0,[],[4]],"1646971":[1,0,[],[21]],"3011894":[1,0,[],[15]],"4044364":[1,1,[16],[]],"2714900":[1,0,[],[16]],"3455224":[1,0,[],[16]],"1490017":[1,0,[],[19]],"2015381":[2,0,[],[20,13]],"2103281":[1,0,[],[13]],"1877832":[1,0,[],[13]],"1895587":[6,2,[0,4],[1,14,3,9]],"3682448":[6,1,[14],[0,4,5,12,6]],"2381111":[3,0,[],[0,18,10]],"1392190":[10,6,[11,12,6,20,8,9],[0,1,7,13]],"3659388":[7,0,[],[0,2,10,11,12,6,13]],"3170832":[4,1,[18],[0,1,10]],"2402927":[6,0,[],[18,3,10,5,7,8]],"3076658":[1,0,[],[14]],"0470752":[2,1,[13],[4]],"2096673":[2,1,[21],[4]],"2870648":[1,1,[16],[]],"3521134":[1,0,[],[16]],"3397884":[3,0,[],[5,11,7]],"2488496":[5,0,[],[5,11,12,9,13]],"4975722":[8,3,[0,14,10],[1,3,5,7,9]],"2543164":[8,1,[11],[0,1,10,12,6,7,9]],"2671706":[4,1,[3],[0,2,10]],"2582782":[4,0,[],[0,14,4,9]],"3783958":[14,6,[1,18,5,19,6,7],[0,2,4,19,11,12,8,9]],"4034228":[6,2,[2,4],[0,1,14,3]],"2948356":[1,1,[21],[]],"4302938":[2,0,[],[21,13]],"3521164":[2,0,[],[21,19]],"5275892":[1,1,[16],[]],"5895028":[1,0,[],[16]],"5804038":[1,0,[],[16]],"3040964":[1,1,[13],[]],"5580390":[13,4,[0,1,5,6],[18,14,3,4,11,12,7,8,9]],"5726616":[4,1,[10],[0,2,19]],"5013056":[8,3,[11,12,9],[0,1,5,6,7]],"5052448":[4,1,[4],[0,1,2]],"4925292":[5,0,[],[0,1,18,3,4]],"5776858":[6,1,[8],[0,1,2,3,5]],"5027774":[7,2,[18,14],[0,14,4,5,9]],"5580036":[3,1,[3],[18,9]],"5649144":[1,0,[],[14]],"5462602":[1,0,[],[4]],"3521126":[1,0,[],[10]],"3315342":[1,0,[],[10]],"2380307":[2,2,[21,19],[]],"5598102":[1,0,[],[16]],"3890160":[3,0,[],[11,12,9]],"3450958":[1,0,[],[13]],"1825683":[7,3,[5,6,8],[0,19,11,12]],"7349662":[6,1,[10],[0,1,14,5,9]],"5083738":[10,1,[18],[0,1,3,4,6,7,8,9]],"6155172":[10,3,[1,15,7],[0,18,3,4,11,12,6]],"1517451":[8,1,[19],[0,2,18,14,10,12,7]],"6412452":[3,0,[],[10,19,8]],"4633694":[1,1,[21],[]],"3606756":[1,0,[],[21]],"5104604":[2,0,[],[21,5]],"7775622":[1,1,[16],[]],"7476236":[1,0,[],[16]],"6644200":[1,0,[],[11]],"6751668":[6,4,[0,1,4,15],[6,9]],"1950186":[4,2,[11,9],[0,12]],"1302006":[9,0,[],[0,1,14,10,6,7,8,9,13]],"3281548":[6,1,[8],[0,18,3,10,5]],"7653254":[6,1,[3],[0,2,18,4,5]],"8946378":[2,0,[],[4,10]],"1979376":[2,1,[21],[19]],"8991268":[2,0,[],[15,16]],"9617456":[1,0,[],[16]],"7984734":[1,0,[],[7]],"4154796":[1,0,[],[13]],"9770150":[6,3,[0,1,18],[10,7,9]],"10272386":[6,2,[2,10],[0,3,6,9]],"9784798":[6,2,[14,19],[0,14,4,7]],"10633456":[6,1,[3],[0,1,2,4,5]],"5363618":[6,2,[22,9],[0,2,14,4]],"10288566":[2,1,[15],[1]],"2948372":[3,2,[21,5],[22]],"10706602":[2,0,[],[15,16]],"14039582":[4,1,[15],[0,1,10]],"9620288":[6,1,[2],[0,3,4,19,9]],"11271038":[3,0,[],[0,1,4]],"3581652":[7,1,[3],[0,1,22,6,7,8]],"10370710":[2,0,[],[4,15]],"2953050":[3,1,[21],[5,19]],"8430054":[3,0,[],[21,15,16]],"7979580":[1,0,[],[21]],"7378922":[1,1,[16],[]],"6710474":[11,7,[0,1,18,14,3,4,9],[3,5,19,8]],"1016150":[9,4,[15,5,6,7],[0,10,22,20,13]],"11813216":[9,0,[],[0,1,2,14,14,3,4,5,9]],"14208870":[7,0,[],[0,1,18,14,4,5,6]],"14444726":[6,0,[],[0,1,18,4,7,9]],"1745960":[6,1,[22],[0,10,19,9,13]],"19770238":[1,0,[],[2]],"11564570":[1,0,[],[10]],"1488589":[1,1,[21],[]],"17041964":[1,1,[16],[]],"21374850":[1,0,[],[16]],"16227014":[1,0,[],[16]],"8178634":[1,1,[19],[]],"15398776":[13,7,[0,1,2,14,5,7,9],[3,10,22,6,20,8]],"23561236":[5,1,[10],[0,2,14,5]],"17009710":[5,1,[4],[0,1,18,9]],"14849194":[5,1,[3],[0,2,4,9]],"5537002":[10,0,[],[0,1,18,14,5,19,6,7,8,9]],"13238346":[2,0,[],[0,4]],"14230458":[11,4,[18,6,20,8],[0,1,14,10,5,7,9]],"7160372":[5,2,[15,22],[0,1,10]],"9362722":[1,0,[],[21]],"27503384":[1,0,[],[15]],"24082438":[1,1,[16],[]],"9603212":[2,0,[],[22,13]],"23289160":[1,1,[13],[]],"28607951":[6,5,[0,1,18,4,9],[14]],"8999762":[10,3,[2,5,7],[0,1,14,3,4,6,9]],"20215234":[8,1,[10],[0,2,3,5,6,8,9]],"15239678":[5,2,[22,13],[0,6,7]],"14961016":[3,1,[15],[0,18]],"21823606":[2,1,[14],[4]],"4772188":[2,1,[21],[15]],"29623480":[3,0,[],[21,5,22]],"30953759":[1,1,[16],[]],"30144839":[13,6,[0,1,14,10,23,9],[2,3,5,22,6,7]],"32916440":[9,0,[],[0,1,2,4,23,6,7,8,9]],"27847051":[4,0,[],[0,2,15,23]],"27714581":[9,1,[15],[0,1,18,14,3,4,9]],"31193180":[16,4,[2,4,5,7],[0,1,14,3,19,22,23,6,20,8,9,13]],"29768334":[4,0,[],[0,10,19,7]],"26581740":[1,1,[3],[]],"36491653":[2,0,[],[4,15]],"14205554":[2,2,[21,19],[]],"32298285":[2,0,[],[15,22]],"36943034":[1,0,[],[15]],"35307139":[1,0,[],[16]],"34966013":[1,0,[],[16]]};
 DATA.forEach(x => { if (x.c === "filmes" || x.c === "documentarios") { const o = OSC[x.id.slice(2)]; if (o) x.os = o; } });
+const EMY_CATS = ["Especial documental", "Roteiro", "Atriz coadjuvante", "Elenco", "Atriz principal", "Minissérie", "Ator principal", "Ator coadjuvante", "Direção", "Animação", "Ator convidado", "Série de comédia", "Atriz convidada", "Série documental", "Série dramática"];
+const EMY = {"5895028":[9,4,[[0,1],[1,1]],2],"27497448":[9,1,[],1],"14218830":[37,4,[[2,1],[1,1],[3,1],[4,1]],0],"31806037":[14,9,[[5,1],[6,1],[7,1],[2,1],[8,1],[1,1],[3,1]],2],"9253284":[22,5,[[1,1]],4],"8760684":[5,3,[],3],"11126994":[9,8,[[9,3]],5],"4288182":[26,7,[[6,1],[8,1],[10,1]],4],"5348176":[55,10,[[6,2],[7,1]],7],"14403178":[29,11,[[5,1],[6,1],[4,1],[8,1],[1,1],[3,1]],5],"3032476":[56,2,[],2],"4301160":[4,2,[[7,1]],1],"13309742":[5,4,[[9,1]],3],"3398228":[3,0,[],0],"7493974":[2,0,[],0],"7366338":[19,10,[[5,1],[8,1],[1,1]],7],"4044364":[3,0,[],0],"2802850":[70,7,[[5,1],[8,1],[3,1],[7,1]],3],"5687612":[11,6,[[11,1],[4,1],[8,1],[1,1],[3,1]],1],"7772588":[2,2,[],2],"7775622":[7,7,[[8,1]],6],"4257858":[7,3,[[0,1],[8,1],[1,1]],0],"11815682":[89,14,[[4,5],[12,2],[1,2],[11,1],[2,1],[8,1]],2],"2243973":[1,0,[],0],"10801534":[3,0,[],0],"6741278":[3,0,[],0],"4229236":[7,0,[],0],"5114356":[1,0,[],0],"11337908":[3,0,[],0],"10155688":[16,4,[[4,1],[7,1],[2,1]],1],"5290382":[2,0,[],0],"7476236":[1,0,[],0],"4158110":[14,3,[[6,1]],2],"36998986":[3,1,[[13,1]],0],"36464353":[3,2,[[0,1],[8,1]],0],"9059760":[4,0,[],0],"5275892":[5,2,[[8,1]],1],"11691774":[63,7,[[10,1]],6],"2372162":[21,4,[[12,1],[3,1],[2,1]],1],"2234222":[3,1,[[4,1]],0],"3006802":[4,0,[],0],"14419140":[5,3,[[0,1],[8,1]],1],"2861424":[6,2,[[9,2]],0],"21056886":[2,1,[],1],"11280740":[41,10,[[4,1],[7,1],[12,1]],7],"2788316":[26,19,[[14,1],[6,1],[4,1],[8,1],[10,1],[3,1]],13],"2649356":[8,0,[],0],"2575988":[41,2,[],2],"14688458":[2,0,[],0],"5875444":[23,3,[[8,2],[1,1]],0],"12327578":[2,0,[],0],"36594331":[1,0,[],0],"19853258":[7,4,[[0,1],[8,1]],2],"7660850":[76,20,[[1,4],[14,3],[6,2],[8,2],[3,2],[7,2],[12,1],[4,1]],3],"27902121":[4,0,[],0],"28814949":[5,0,[],0],"35328184":[2,0,[],0],"2149175":[19,4,[[12,2],[6,1],[1,1]],0],"14452776":[57,22,[[6,2],[7,2],[2,2],[8,2],[3,2],[10,2],[11,1],[1,1],[12,1]],7],"1190634":[17,5,[],5],"6958022":[5,0,[],0],"17491088":[10,1,[[2,1]],0],"6257970":[2,0,[],0],"4955642":[14,0,[],0],"6792200":[1,0,[],0],"8420184":[3,1,[[13,1]],0],"3581920":[42,9,[[10,1],[12,1]],7],"2699128":[1,0,[],0],"5788792":[80,22,[[2,2],[11,1],[4,1],[8,1],[1,1],[3,1],[7,1],[10,1],[12,1]],12],"26453092":[1,1,[],1],"2401256":[13,5,[[6,1]],4],"31938062":[39,12,[[14,2],[6,2],[10,2],[3,2],[2,1]],3],"10048342":[18,11,[[5,1],[8,1],[3,1]],8],"10802170":[4,0,[],0],"23649128":[23,13,[[11,1],[6,1],[8,1],[1,1],[10,1],[3,1]],7],"1877514":[4,0,[],0],"13406094":[68,16,[[2,2],[3,2],[5,1],[7,1],[8,1],[1,1]],8],"5555260":[39,4,[[10,3],[6,1]],0],"7664504":[2,0,[],0],"4093826":[9,0,[],0],"7909970":[4,0,[],0],"9815454":[8,1,[[8,1]],0],"2306299":[14,1,[],1],"3455224":[2,1,[],1],"9140560":[23,3,[],3],"7049682":[26,11,[[5,1],[4,1],[7,1],[1,1],[3,1]],6],"14674086":[19,11,[[8,1]],10],"7908628":[35,1,[],1],"7137906":[16,2,[[6,1],[3,1]],0],"33332385":[19,14,[[11,1],[6,1],[7,1],[2,1],[8,1],[1,1],[12,1],[3,1]],6],"7768848":[5,1,[[13,1]],0],"16026746":[1,0,[],0]};
+DATA.forEach(x => { if (x.c === "series" || x.c === "minisseries" || x.c === "documentarios") { const e = EMY[x.id.slice(2)]; if (e) x.em = e; } });
+const emmyIcon = '<svg viewBox="0 0 16 24" aria-hidden="true"><circle cx="8" cy="3.2" r="2.3" fill="none" stroke="currentColor" stroke-width="1.3"/><path fill="currentColor" d="M8 6.4C5 6.4 2.2 5 1 2.6c1.3 3.6 3.6 5.8 5.6 6.9L6 17.6h4l-.6-8.1c2-1.1 4.3-3.3 5.6-6.9C13.8 5 11 6.4 8 6.4zM4.4 18.6h7.2l.8 2.2H3.6zM2.8 21.6h10.4V23H2.8z"/></svg>';
+const awardWins = x => (x.os ? x.os[1] : 0) + (x.em ? x.em[1] : 0);
+const awardNoms = x => (x.os ? x.os[0] : 0) + (x.em ? x.em[0] : 0);
+
 const statue = '<svg viewBox="0 0 12 24" fill="currentColor" aria-hidden="true"><circle cx="6" cy="2.6" r="2.1"/><path d="M4.3 5.2h3.4l.5 3.2-.7 1.1.4 7.3H4.1l.4-7.3-.7-1.1zM3 18.4h6l.6 2.1H2.4zM1.6 21.3h8.8V23H1.6z"/></svg>';
 const TIER_ORDER = {S:0,A:1,B:2,C:3,D:4};
 function verdictOf(id){ return ME ? (ENT.get(id) || {}).verdict || null : null; }
@@ -426,15 +442,17 @@ if (state.cat === "lista" || state.cat === "perfil") { document.getElementById("
 const inCat = DATA.filter(x => x.c === state.cat);
 const have = SVC_ORDER.filter(s => inCat.some(x => x.s.includes(s)));
 const none = inCat.some(x => !x.s.length);
-if (state.svc && state.svc !== "_none" && state.svc !== "_mine" && state.svc !== "_osc" && !have.includes(state.svc)) state.svc = "";
+if (state.svc && state.svc !== "_none" && state.svc !== "_mine" && state.svc !== "_osc" && state.svc !== "_emy" && !have.includes(state.svc)) state.svc = "";
 if (state.svc === "_none" && !none) state.svc = "";
 const mine = !!ME && inCat.some(x => verdictOf(x.id));
 const hasOsc = inCat.some(x => x.os);
+const hasEmy = inCat.some(x => x.em);
+if (state.svc === "_emy" && !hasEmy) state.svc = "";
 if (state.svc === "_osc" && !hasOsc) state.svc = "";
 if (state.svc === "_mine" && !mine) state.svc = "";
-const opts = [["","Tudo"], ...(mine ? [["_mine","★ Meus vereditos"]] : []), ...(hasOsc ? [["_osc","Oscar"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
+const opts = [["","Tudo"], ...(mine ? [["_mine","★ Meus vereditos"]] : []), ...(hasOsc ? [["_osc","Oscar"]] : []), ...(hasEmy ? [["_emy","Emmy"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
 document.getElementById("chips").innerHTML = opts.map(([v,l]) =>
-`<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':v==="_osc"?' class="oscchip"':""}>${esc(l)}</button>`).join("");
+`<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':(v==="_osc"||v==="_emy")?' class="oscchip"':""}>${esc(l)}</button>`).join("");
 }
 function renderYears(){
 if (state.cat === "lista" || state.cat === "perfil") return;
@@ -478,6 +496,7 @@ if (state.year) L = L.filter(x => x.y === +state.year);
 if (state.svc === "_none") L = L.filter(x => !x.s.length);
 else if (state.svc === "_mine") L = L.filter(x => verdictOf(x.id)).sort((a,b) => TIER_ORDER[verdictOf(a.id)]-TIER_ORDER[verdictOf(b.id)] || a.r-b.r);
 else if (state.svc === "_osc") L = L.filter(x => x.os).sort((a,b) => b.os[1]-a.os[1] || b.os[0]-a.os[0] || a.r-b.r);
+else if (state.svc === "_emy") L = L.filter(x => x.em).sort((a,b) => b.em[1]-a.em[1] || b.em[0]-a.em[0] || a.r-b.r);
 else if (state.svc) L = L.filter(x => x.s.includes(state.svc));
 if (state.q) { const q = norm(state.q); L = L.filter(x => norm(x.t+" "+x.o+" "+x.d).includes(q)); }
 const total = L.length;
@@ -485,7 +504,7 @@ const seenCount = L.filter(x => isSeenId(x.id)).length;
 if (hideSeen) L = L.filter(x => !isSeenId(x.id));
 if (state.sort === "i") L = [...L].sort((a,b) => b.i-a.i || b.v-a.v);
 else if (state.sort === "y") L = [...L].sort((a,b) => b.y-a.y || a.r-b.r);
-else if (state.sort === "o") L = [...L].sort((a,b) => ((b.os||[0,0])[1]-(a.os||[0,0])[1]) || ((b.os||[0,0])[0]-(a.os||[0,0])[0]) || a.r-b.r);
+else if (state.sort === "o") L = [...L].sort((a,b) => awardWins(b)-awardWins(a) || awardNoms(b)-awardNoms(a) || a.r-b.r);
 const [one,many] = NOUN[state.cat];
 document.getElementById("count").textContent = `${total} ${total===1?one:many}` + (seenCount ? `, ${seenCount} já vist${state.cat==="filmes"||state.cat==="documentarios"?"o":"a"}${seenCount>1?"s":""}` : "");
 const list = document.getElementById("list");
@@ -499,21 +518,23 @@ function card(x){
 const ST = {fin:"finalizada", and:"em andamento", can:"cancelada"};
 const sub = [x.o && x.o !== x.t ? x.o : "", x.f, String(x.y), x.ns ? `${x.ns} temp.` : "", ST[x.st] || ""].filter(Boolean).map(esc).join(", ");
 const oc = a => [...new Set(a)].map(i => OSC_CATS[i]).join(", ");
-const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + (x.os ? `<span class="oscd">${x.os[2].length ? `Oscar, venceu: ${oc(x.os[2])}.` : ""}${x.os[2].length && x.os[3].length ? " " : ""}${x.os[3].length ? `Indicado: ${oc(x.os[3])}.` : ""}</span><br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
+const em = x.em && x.em[1] ? `<span class="oscd">Emmy, venceu: ${x.em[2].map(([i,k]) => EMY_CATS[i] + (k > 1 ? ` (${k}×)` : "")).join(", ")}${x.em[3] ? `${x.em[2].length ? " e mais " : ""}${x.em[3]} em categorias técnicas` : ""}.</span><br>` : "";
+const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + em + (x.os ? `<span class="oscd">${x.os[2].length ? `Oscar, venceu: ${oc(x.os[2])}.` : ""}${x.os[2].length && x.os[3].length ? " " : ""}${x.os[3].length ? `Indicado: ${oc(x.os[3])}.` : ""}</span><br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>`;
 const isSeen = isSeenId(x.id), wlOn = inWl(x.id), v = verdictOf(x.id);
 const svc = x.s.length ? x.s.slice(0,2).map(esc).join(", ") + (x.s.length > 2 ? ` <i>+${x.s.length-2}</i>` : "") : `<em>${NOTE[x.sn]}</em>`;
 const href = x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/";
 const stats = x.c==="anime"
   ? `<span>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span>AniList <b>${x.al}%</b></span><span>IMDb <b>${fmt(x.i)}</b></span>`
   : `<span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span>${x.mc!=null ? `<span>MC <b>${x.mc}</b></span>` : ""}${x.au!=null ? `<span>Pipoca <b>${x.au}%</b></span>` : ""}`;
-return `<li class="item${isSeen?" seen":""}${v==="S"?" top":""}" data-id="${x.id}">
-<div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${v ? `<span class="vb t-${v}" title="Seu veredito: ${TIER_LABEL[v]}">${v}</span>` : ""}</div>
+return `<li class="item${isSeen?" seen":""}${v ? ` vt t-${v}` : ""}${v==="S"?" top":""}" data-id="${x.id}">
+<div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${v ? `<span class="vb t-${v}" title="Seu veredito: ${TIER_LABEL[v]}">${v}</span>` : isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div>
 <div class="main" tabindex="0" role="button" aria-expanded="false">
 <p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
 <div class="stats">${stats}</div>
 ${x.os ? `<div class="osc${x.os[1] ? " won" : ""}">${statue}${x.os[1] ? `<b>${x.os[1]} Oscar${x.os[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.os[0]} indicaç${x.os[0] > 1 ? "ões" : "ão"}</div>` : ""}
-${v ? `<div class="vline t-${v}">${TIER_LABEL[v]}</div>` : ""}
+${x.em ? `<div class="osc emy${x.em[1] ? " won" : ""}">${emmyIcon}${x.em[1] ? `<b>${x.em[1]} Emmy${x.em[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.em[0]} indicaç${x.em[0] > 1 ? "ões" : "ão"}</div>` : ""}
+${v ? `<div class="vline t-${v}">${TIER_LABEL[v]}</div>` : isSeen ? `<div class="vline seenl">Visto</div>` : ""}
 </div>
 <div class="bar"><a class="where" href="${href}" target="_blank" rel="noopener" aria-label="Onde assistir ${esc(x.t)}"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h14v9H3zM7.5 3.5l2.5 3 2.5-3"/></svg><span>${svc}</span></a>
 <div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wlOn}" aria-label="${wlOn?"Tirar de Quero ver":"Pôr em Quero ver"}">${wlOn?bmkOn:bmk}</button>${x.c!=="extra" || ME ? `<button class="editbtn" aria-label="Veredito e status">${pencil}</button>` : ""}</div></div>
