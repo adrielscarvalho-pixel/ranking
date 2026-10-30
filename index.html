@@ -415,6 +415,7 @@ li.rcd .qp{position:relative}
 li.also{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 10px;font-size:.84rem;color:var(--muted)}
 li.also button{appearance:none;font:inherit;font-size:.82rem;padding:5px 11px;border-radius:999px;border:1px solid var(--accent);background:var(--surface);color:var(--accent);cursor:pointer}
 li.also i{font-style:normal;opacity:.75}
+.stats.qs{margin-top:5px;font-size:.74rem;gap:2px 9px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -1022,6 +1023,14 @@ function infoOf(e){
   return { sy: (ex.sy && ex.syl === "pt") ? ex.sy : ((x && x.sy) || ex.sy || ""), prov: prov || [], rent: ex.rent || (x && x.sn === "rent"), link,
     g: genresOf(e), rt: ex.rt || null, dir: ex.dir || (x && x.d ? x.d.split(", ") : []), cast: ex.cast || [], vote: ex.vote || null, votes: ex.votes || 0, tag: ex.tag || "", x };
 }
+function scoreBits(e){
+  const x = rk(e), sc = (e.extra || {}).sc;
+  if (x) return x.c === "anime"
+    ? `<span>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span>AniList <b>${x.al}%</b></span><span>IMDb <b>${fmt(x.i)}</b></span>`
+    : `<span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span>${x.mc!=null ? `<span>MC <b>${x.mc}</b></span>` : ""}${x.au!=null ? `<span>Pipoca <b>${x.au}%</b></span>` : ""}`;
+  if (!sc) return "";
+  return (sc.i != null ? `<span>IMDb <b>${fmt(sc.i)}</b></span>` : "") + (sc.rt != null ? `<span>RT <b>${sc.rt}%</b></span>` : "") + (sc.mc != null ? `<span>MC <b>${sc.mc}</b></span>` : "");
+}
 function provLine(e){
   const I = infoOf(e);
   if (!I.prov.length && !I.rent) return "";
@@ -1034,7 +1043,7 @@ function openDetails(e, ro){
   const scores = x ? (x.c === "anime"
       ? `<span>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span>AniList <b>${x.al}%</b></span><span>IMDb <b>${fmt(x.i)}</b></span>`
       : `<span>IMDb <b>${fmt(x.i)}</b></span><span>RT <b>${x.rt}%</b></span>${x.mc!=null ? `<span>MC <b>${x.mc}</b></span>` : ""}${x.au!=null ? `<span>Pipoca <b>${x.au}%</b></span>` : ""}`)
-    : (I.vote ? `<span>TMDB <b>${nota(Math.round(I.vote*10)/10)}</b></span><span class="muted">${I.votes.toLocaleString("pt-BR")} votos</span>` : "");
+    : (scoreBits(e) + ((e.extra || {}).sc && e.extra.sc.v ? `<span class="muted">${e.extra.sc.v.toLocaleString("pt-BR")} votos no IMDb</span>` : (I.vote ? `<span>TMDB <b>${nota(Math.round(I.vote*10)/10)}</b></span><span class="muted">${I.votes.toLocaleString("pt-BR")} votos</span>` : "")));
   const pv = I.prov.length ? I.prov.map(p => `<span class="pchip">${esc(p)}</span>`).join("") : `<span class="muted">${I.rent ? "Só aluguel ou compra" : "Não está em streaming no Brasil agora"}</span>`;
   const o = sheet(`<div class="det">
     <div class="dtop">${e.poster ? `<img src="https://image.tmdb.org/t/p/w342${e.poster}" alt="" width="110" height="165">` : ""}<div>
@@ -1053,7 +1062,7 @@ function openDetails(e, ro){
 }
 function extraFrom(d){
   return { tmdb: d.id, type: d.type, gid: d.genres || [], kw: d.kw || [], sy: d.overview || "", syl: d.syl || "", g: d.genre_names || [], rt: d.runtime || null, dir: d.dir || [], cast: d.cast || [],
-    vote: d.vote || null, votes: d.votes || 0, prov: d.providers || [], rent: !!d.rent, wl: d.wlink || null, tag: d.tagline || "", next: d.next || null, last: d.last || null, at: new Date().toISOString().slice(0,10) };
+    vote: d.vote || null, votes: d.votes || 0, prov: d.providers || [], rent: !!d.rent, wl: d.wlink || null, tag: d.tagline || "", next: d.next || null, last: d.last || null, sc: d.sc || null, scv: 1, at: new Date().toISOString().slice(0,10) };
 }
 async function enrichOne(e){
   try {
@@ -1076,7 +1085,7 @@ async function enrichOne(e){
 let enriching = false;
 async function enrichAll(){
   if (enriching || !ME) return; enriching = true;
-  const stale = e => { const d = e.extra; if (!d || !d.at || (!d.gid && !d.none)) return true;
+  const stale = e => { const d = e.extra; if (!d || !d.at || (!d.gid && !d.none) || (d.scv !== 1 && !d.none)) return true;
     const tv = d.type === "tv" && (e.status === "vendo" || e.status === "vi");
     if (tv && d.last === undefined) return true;
     return (Date.now() - new Date(d.at).getTime()) > (tv ? 3 : 14) * 864e5; };
@@ -1173,7 +1182,7 @@ function queueCard(e){
   const I = infoOf(e), tot = e.seasons_total || 0;
   const meta = [KIND_LABEL[e.kind], e.year, tot > 1 ? `${tot} temp.` : (I.rt ? `${I.rt} min` : ""), I.g.slice(0,2).join(", ")].filter(Boolean).join(" · ");
   return `<li class="qcard" data-key="${esc(e.key)}"><button class="qp" data-act="info" aria-label="Detalhes de ${esc(e.title)}">${art(e)}</button>
-    <div class="qb" data-act="info"><b>${esc(e.title)}</b><small>${esc(meta)}</small>${awardsHtml(e)}${I.sy ? `<p class="qsy">${esc(I.sy)}</p>` : ""}${provLine(e)}</div>
+    <div class="qb" data-act="info"><b>${esc(e.title)}</b><small>${esc(meta)}</small>${scoreBits(e) ? `<div class="stats qs">${scoreBits(e)}</div>` : ""}${awardsHtml(e)}${I.sy ? `<p class="qsy">${esc(I.sy)}</p>` : ""}${provLine(e)}</div>
     <div class="qact"><button class="pri sm" data-act="start">Começar</button></div></li>`;
 }
 function rowCard(e, label, act, extra){
