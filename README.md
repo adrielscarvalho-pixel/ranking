@@ -1,4 +1,4 @@
-# Ranking 2011–2026
+# Ranking 2001–2026
 
 Filmes, séries, minisséries e documentários aprovados ao mesmo tempo por público e crítica (IMDb, Rotten Tomatoes e Metacritic), com onde assistir no Brasil.
 
