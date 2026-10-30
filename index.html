@@ -44,7 +44,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:14px 16px 10px;border-bottom:1px solid var(--line)}
 h1{font-family:"Bricolage Grotesque","Arial Narrow",system-ui,sans-serif;font-weight:800;font-size:1.55rem;letter-spacing:-.02em;margin:0 0 10px;line-height:1.1}
 h1 small{display:block;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-weight:400;font-size:.82rem;color:var(--muted);letter-spacing:0;margin-top:3px}
-.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;background:var(--chip);border-radius:12px;padding:4px}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;background:var(--chip);border-radius:12px;padding:4px}
 .tabs button{appearance:none;border:0;background:transparent;color:var(--ink);font:inherit;font-size:.8rem;padding:8px 1px;border-radius:9px;cursor:pointer;line-height:1.15}
 .tabs button b{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1.05rem}
 .tabs button[aria-selected="true"]{background:var(--surface);box-shadow:0 1px 0 var(--line),0 0 0 1px var(--line)}
@@ -459,6 +459,15 @@ li.pg{list-style:none;margin:0 -12px}
 .pgfoot{margin:22px 0 6px;font-size:.8rem;color:var(--muted)}
 .pgfoot a,.pgopen{color:var(--accent);font-weight:700}
 li.item .art{cursor:pointer}
+
+.mydiary{appearance:none;display:flex;align-items:center;gap:12px;width:100%;margin:12px 0 10px;padding:10px 14px;text-align:left;font:inherit;color:#F4F1EA;background:linear-gradient(135deg,#141C26 0%,#24344A 100%);border:0;border-radius:14px;cursor:pointer;box-shadow:0 4px 14px rgba(10,20,30,.14)}
+.mydiary .mdi{font-size:1.35rem;flex:none}
+.mydiary .mdt{flex:1;min-width:0}
+.mydiary b{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:1rem}
+.mydiary small{display:block;font-size:.76rem;color:#B8C4D0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mydiary .mda{flex:none;font-weight:800;color:#F2C14E;font-size:.9rem}
+.mydiary[aria-pressed="true"]{box-shadow:0 0 0 2px #F2C14E inset}
+li.item{cursor:pointer}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -466,6 +475,7 @@ li.item .art{cursor:pointer}
 <div class="wrap">
 <header>
 <div class="topbar"><h1>Ranking 2001–2026<small>Só o que agradou público e crítica ao mesmo tempo</small></h1><button id="acct" class="acct">Entrar</button></div>
+<button id="mydiary" class="mydiary" aria-pressed="false"></button>
 <div class="tabs" role="tablist" id="tabs"></div>
 <div class="tools">
 <input id="q" type="search" placeholder="Buscar" autocomplete="off">
@@ -581,10 +591,23 @@ const bmkOn = '<svg viewBox="0 0 20 20" fill="currentColor" stroke="currentColor
 const xIcon = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg>';
 const tick = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>';
 
+function renderMyDiary(){
+  const b = document.getElementById("mydiary"); if (!b) return;
+  const on = state.cat === "lista";
+  b.setAttribute("aria-pressed", on);
+  if (ME) {
+    const E = [...ENT.values()], c = s => E.filter(e => e.status === s).length;
+    const name = PROFILE ? (PROFILE.display_name || PROFILE.username) : "";
+    b.innerHTML = `<span class="mdi">📖</span><span class="mdt"><b>${on ? "Você está no seu diário" : "Meu diário" + (name ? `, ${esc(name.split(" ")[0])}` : "")}</b><small>${E.length} obras · ${c("vendo")} assistindo · ${c("quero")} na fila</small></span><span class="mda">${on ? "Ranking ↑" : "→"}</span>`;
+  } else {
+    b.innerHTML = `<span class="mdi">📖</span><span class="mdt"><b>${on ? "Seu diário" : "Monte o seu diário"}</b><small>Notas, temporadas, recomendações e link para compartilhar</small></span><span class="mda">${on ? "Ranking ↑" : "→"}</span>`;
+  }
+}
 function renderTabs(){
 document.getElementById("tabs").innerHTML = CATS.map(([k,l]) =>
 `<button role="tab" data-cat="${k}" aria-selected="${state.cat===k}"><b>${DATA.filter(x=>x.c===k).length}</b>${l}</button>`).join("")
-+ `<button role="tab" class="wl" data-cat="lista" aria-selected="${state.cat==="lista"}"><b>${ME ? ENT.size : wl.length}</b>Diário</button>`;
+;
+renderMyDiary();
 document.querySelector("header").classList.toggle("listmode", state.cat === "lista" || state.cat === "perfil" || state.cat === "obra");
 document.querySelector("header").classList.toggle("perfil", state.cat === "perfil" || state.cat === "obra");
 const hl = document.querySelector(".status label"); if (hl) hl.style.display = (state.cat === "perfil" || state.cat === "obra" || (state.cat === "lista" && ME)) ? "none" : "";
@@ -1592,6 +1615,7 @@ function renderProfile(){
 
 /* ---------- navegação ---------- */
 function go(cat){
+  if (state.cat !== "lista" && state.cat !== "obra" && state.cat !== "perfil" && cat === "lista") PAGE.prev = state.cat;
   state.cat = cat; state.svc = "";
   try { history.replaceState(null, "", "#" + cat); } catch(e) {}
   all(); window.scrollTo({ top: 0 });
@@ -1607,7 +1631,8 @@ document.getElementById("list").addEventListener("click", e => {
   const pgb = e.target.closest("[data-pg]"); if (pgb) { pageAction(pgb.dataset.pg); return; }
   const pgl = e.target.closest("[data-page]"); if (pgl) { e.preventDefault(); goPage(pgl.dataset.page); return; }
   const yt = e.target.closest("[data-yt]"); if (yt) { yt.outerHTML = `<div class="trl on"><iframe src="https://www.youtube-nocookie.com/embed/${yt.dataset.yt}?autoplay=1&rel=0" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`; return; }
-  const artc = e.target.closest("li.item .art"); if (artc) { const li = artc.closest("li.item"); if (li && li.dataset.id && goPage(li.dataset.id)) { e.stopPropagation(); return; } }
+  const cardc = e.target.closest("li.item[data-id]");
+  if (cardc && !e.target.closest("button, a, .bar")) { if (goPage(cardc.dataset.id)) { e.stopPropagation(); return; } }
   const shelf = e.target.closest("[data-shelf]"); if (shelf) { dstate.shelf = shelf.dataset.shelf; dstate.kind = "all"; dstate.gen = ""; render(); return; }
   const kd = e.target.closest("[data-kind]"); if (kd) { dstate.kind = kd.dataset.kind; render(); return; }
   const dg = e.target.closest("[data-dgen]"); if (dg) { dstate.gen = dg.dataset.dgen; render(); return; }
@@ -1643,6 +1668,7 @@ document.getElementById("list").addEventListener("click", e => {
 }, true);
 document.getElementById("list").addEventListener("change", e => { if (e.target.id === "dsort") { dstate.sort = e.target.value; render(); } });
 document.getElementById("acct").addEventListener("click", () => openAccount(ME ? "menu" : "login"));
+document.getElementById("mydiary").addEventListener("click", () => go(state.cat === "lista" ? (PAGE.prev && PAGE.prev !== "lista" ? PAGE.prev : "filmes") : "lista"));
 window.addEventListener("hashchange", () => { if (!routeHash()) { const wasPage = state.cat === "obra"; let c = location.hash.replace("#",""); if (![...CATS.map(c => c[0]), "lista"].includes(c)) c = wasPage ? (PAGE.prev || "filmes") : state.cat;
   if (c !== state.cat) { state.cat = c; all(); } if (wasPage) { const y = PAGE.scroll || 0; [30, 200, 600].forEach(t => setTimeout(() => window.scrollTo({ top: y }), t)); } } });
 document.addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
