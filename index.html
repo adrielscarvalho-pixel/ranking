@@ -719,8 +719,7 @@ const none = inCat.some(x => !x.s.length);
 if (state.svc && state.svc !== "_none" && state.svc !== "_mine" && state.svc !== "_osc" && state.svc !== "_emy" && state.svc !== "_rec" && state.svc !== "_nyt" && !have.includes(state.svc)) state.svc = "";
 if (state.svc === "_none" && !none) state.svc = "";
 const mine = !!ME && inCat.some(x => verdictOf(x.id));
-const recOk = !!ME && computeRecs().n >= 3;
-if (state.svc === "_rec" && !recOk) state.svc = "";
+if (state.svc === "_rec") state.svc = "";
 const hasOsc = inCat.some(x => x.os);
 const hasEmy = inCat.some(x => x.em);
 const hasNyt = inCat.some(x => x.ny);
@@ -728,7 +727,7 @@ if (state.svc === "_nyt" && !hasNyt) state.svc = "";
 if (state.svc === "_emy" && !hasEmy) state.svc = "";
 if (state.svc === "_osc" && !hasOsc) state.svc = "";
 if (state.svc === "_mine" && !mine) state.svc = "";
-const opts = [["","Tudo"], ...(recOk ? [["_rec","✦ Para você"]] : []), ...(mine ? [["_mine","★ Meus vereditos"]] : []), ...(hasNyt ? [["_nyt","NYT 100"]] : []), ...(hasOsc ? [["_osc","Oscar"]] : []), ...(hasEmy ? [["_emy","Emmy"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
+const opts = [["","Tudo"], ...(mine ? [["_mine","★ Meus vereditos"]] : []), ...(hasNyt ? [["_nyt","NYT 100"]] : []), ...(hasOsc ? [["_osc","Oscar"]] : []), ...(hasEmy ? [["_emy","Emmy"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
 document.getElementById("chips").innerHTML = opts.map(([v,l]) =>
 `<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':(v==="_osc"||v==="_emy")?' class="oscchip"':v==="_nyt"?' class="nytchip"':v==="_rec"?' class="recchip"':""}>${esc(l)}</button>`).join("");
 }
@@ -1386,7 +1385,7 @@ function rowCard(e, label, act, extra){
 function renderDiary(){
   const E = [...ENT.values()];
   const G = {}; SHELVES.forEach(([k]) => G[k] = E.filter(e => e.status === k));
-  if (!dstate.shelf || (!G[dstate.shelf] && dstate.shelf !== "recs")) dstate.shelf = G.vendo.length ? "vendo" : "vi";
+  if (!dstate.shelf || !G[dstate.shelf]) dstate.shelf = G.vendo.length ? "vendo" : "vi";
   const q = state.q ? norm(state.q) : "";
   const match = e => !q || norm(e.title + " " + (e.orig || "")).includes(q);
   const name = PROFILE ? (PROFILE.display_name || PROFILE.username) : "";
@@ -1394,7 +1393,6 @@ function renderDiary(){
   document.getElementById("count").textContent = "";
   let html = `<li class="dx-hero"><div class="dx-top"><div><small>Cinemateca</small><b>${esc(name || "Minha cinemateca")}</b></div><div class="dx-btns"><button data-act="add" class="dx-add">+ Adicionar</button><button data-act="share" class="dx-share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div></div>
     <div class="dx-stats">${SHELVES.map(([k,l]) => `<button data-shelf="${k}" aria-pressed="${dstate.shelf===k}"><b>${G[k].length}</b><span>${l}</span></button>`).join("")}</div>
-    <button class="dx-recs" data-shelf="recs" aria-pressed="${dstate.shelf==="recs"}"><span>✦</span><b>Para você</b><small>Recomendações a partir do seu gosto</small></button>
     ${S ? `<p class="dx-foot">${S} obra${S > 1 ? "s" : ""}-prima${S > 1 ? "s" : ""} no seu topo</p>` : ""}</li>`;
   const NW = newsOf();
   if (NW.length) html += `<li class="news"><h3>Novidades nas suas séries</h3>${NW.map(n => `<div class="nrow"><button class="nb" data-news="${esc(n.e.key)}">${art(n.e, "w92")}<span><b>${esc(n.e.title)}</b><small class="${n.back ? "hot" : ""}">${esc(n.txt)}</small></span></button>${n.back ? `<button class="pri sm" data-nback="${esc(n.e.key)}">Voltar a assistir</button>` : ""}</div>`).join("")}</li>`;
