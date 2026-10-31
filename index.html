@@ -542,6 +542,16 @@ body.mode-ia footer,body.mode-ia .status{display:none}
 .stats span.hl{background:var(--ink);color:var(--surface);border-radius:6px;padding:0 6px;margin:0 -2px}
 .stats span.hl b{color:inherit}
 .osc.hlo{background:color-mix(in srgb,#E0A526 18%,var(--surface));border-radius:6px;padding:1px 7px;margin-left:-3px}
+
+.lcol{display:flex;flex-direction:column;gap:7px;width:76px}
+.vq{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
+.vq button{appearance:none;width:23px;height:23px;padding:0;border:0;border-radius:6px;display:grid;place-items:center;cursor:pointer;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.76rem;line-height:1;background:color-mix(in srgb,var(--tc) 13%,var(--surface));color:var(--tc);transition:transform .12s}
+.vq button:active{transform:scale(.9)}
+.vq button.on{background:var(--tc);color:#fff;box-shadow:0 2px 6px color-mix(in srgb,var(--tc) 45%,transparent)}
+.vq button.t-S.on{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
+.vq button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+li.item.vt .vq button:not(.on){opacity:.55}
+@media (prefers-reduced-motion:reduce){.vq button{transition:none}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -822,7 +832,7 @@ const stats = x.c==="anime"
   ? `<span${hl("ma")}>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span${hl("al")}>AniList <b>${x.al}%</b></span><span${hl("i")}>IMDb <b>${fmt(x.i)}</b></span>`
   : `<span${hl("i")}>IMDb <b>${fmt(x.i)}</b></span><span${hl("rt")}>RT <b>${x.rt}%</b></span>${x.mc!=null ? `<span${hl("mc")}>MC <b>${x.mc}</b></span>` : ""}${x.au!=null ? `<span${hl("au")}>Pipoca <b>${x.au}%</b></span>` : ""}`;
 return `<li class="item${isSeen?" seen":""}${v ? ` vt t-${v}` : ""}${v==="S"?" top":""}" data-id="${x.id}">
-<div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${v ? `<span class="vb t-${v}" title="Seu veredito: ${TIER_LABEL[v]}">${v}</span>` : isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div>
+<div class="lcol"><div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${!v && isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div>${x.c !== "extra" ? `<div class="vq" data-qid="${x.id}" role="group" aria-label="Seu veredito">${TIERS.map(([k,l]) => `<button data-qv="${k}" class="t-${k}${v === k ? " on" : ""}" aria-pressed="${v === k}" aria-label="${l}" title="${l}">${k}</button>`).join("")}</div>` : ""}</div>
 <div class="main" tabindex="0" role="button" aria-expanded="false">
 <p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
@@ -830,11 +840,10 @@ ${gl}<div class="stats">${stats}</div>
 ${x.os ? `<div class="osc${x.os[1] ? " won" : ""}${state.sort === "o" ? " hlo" : ""}">${statue}${x.os[1] ? `<b>${x.os[1]} Oscar${x.os[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.os[0]} indicaç${x.os[0] > 1 ? "ões" : "ão"}</div>` : ""}
 ${x.em ? `<div class="osc emy${x.em[1] ? " won" : ""}${state.sort === "o" ? " hlo" : ""}">${emmyIcon}${x.em[1] ? `<b>${x.em[1]} Emmy${x.em[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.em[0]} indicaç${x.em[0] > 1 ? "ões" : "ão"}</div>` : ""}
 ${state.svc === "_rec" && REC.map.get(x.id) ? `<div class="mline"><b>✦ ${REC.map.get(x.id).pct}% a sua cara</b> ${esc(REC.map.get(x.id).why)}</div>` : ""}
-${v ? `<div class="vline t-${v}">${TIER_LABEL[v]}</div>` : isSeen ? `<div class="vline seenl">Visto</div>` : ""}
+${v ? "" : isSeen ? `<div class="vline seenl">Visto</div>` : ""}
 </div>
 <div class="bar"><a class="where" href="${href}" target="_blank" rel="noopener" aria-label="Onde assistir ${esc(x.t)}"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h14v9H3zM7.5 3.5l2.5 3 2.5-3"/></svg><span>${svc}</span></a>
-<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wlOn}" aria-label="${wlOn?"Tirar de Quero ver":"Pôr em Quero ver"}">${wlOn?bmkOn:bmk}</button>${x.c!=="extra" ? `<button class="vbtn${v ? ` on t-${v}` : ""}" aria-expanded="false" aria-label="${v ? `Seu veredito: ${TIER_LABEL[v]}. Trocar` : "Dar veredito"}">${v ? v : starI}</button>` : ""}</div></div>
-${x.c!=="extra" ? quickPick(x.id, v) : ""}
+<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wlOn}" aria-label="${wlOn?"Tirar de Quero ver":"Pôr em Quero ver"}">${wlOn?bmkOn:bmk}</button></div></div>
 ${x.sy ? `<p class="syn">${esc(x.sy)}</p>` : ""}
 <div class="more">${more}</div>
 </li>`;
@@ -1782,7 +1791,7 @@ document.getElementById("list").addEventListener("click", e => {
     const li = vb.closest("li.item"), pk = li && li.querySelector(".vpick"); if (pk) { pk.hidden = !pk.hidden; vb.setAttribute("aria-expanded", !pk.hidden); } return; }
   const qv = e.target.closest("[data-qv]"); if (qv) { e.stopPropagation(); const q = qv.closest("[data-qid]"); if (q) quickVerdict(q.dataset.qid, qv.dataset.qv); return; }
   const cardc = e.target.closest("li.item[data-id]");
-  if (cardc && !e.target.closest("button, a, .bar, .vpick")) { if (goPage(cardc.dataset.id)) { e.stopPropagation(); return; } }
+  if (cardc && !e.target.closest("button, a, .bar, .vpick, .vq")) { if (goPage(cardc.dataset.id)) { e.stopPropagation(); return; } }
   const shelf = e.target.closest("[data-shelf]"); if (shelf) { dstate.shelf = shelf.dataset.shelf; dstate.kind = "all"; dstate.gen = ""; render(); return; }
   const kd = e.target.closest("[data-kind]"); if (kd) { dstate.kind = kd.dataset.kind; render(); return; }
   const dg = e.target.closest("[data-dgen]"); if (dg) { dstate.gen = dg.dataset.dgen; render(); return; }
