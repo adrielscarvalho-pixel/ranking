@@ -523,6 +523,22 @@ li.composer{list-style:none;position:sticky;bottom:calc(70px + env(safe-area-ins
 #aisend[disabled]{opacity:.45}
 #aisend svg{width:20px;height:20px}
 body.mode-ia footer,body.mode-ia .status{display:none}
+
+.bar .vbtn{appearance:none;width:34px;height:34px;border-radius:50%;border:0;background:var(--chip);color:var(--muted);display:grid;place-items:center;padding:0;cursor:pointer;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.95rem}
+.bar .vbtn svg{width:17px;height:17px}
+.bar .vbtn.on{background:var(--tc);color:#fff}
+.bar .vbtn.on.t-S{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
+.bar .vbtn[aria-expanded="true"]{box-shadow:0 0 0 2px var(--accent)}
+.vpick{grid-column:1 / -1;display:grid;grid-template-columns:repeat(5,1fr) auto;gap:5px;margin-top:9px}
+.vpick[hidden]{display:none}
+.vpick button{appearance:none;display:flex;flex-direction:column;align-items:center;gap:3px;font:inherit;background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:6px 2px;cursor:pointer;color:var(--ink);min-width:0}
+.vpick .tb{width:26px;height:26px;font-size:.9rem}
+.vpick small{font-size:.62rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.vpick button.on{border-color:var(--tc);background:color-mix(in srgb,var(--tc) 14%,var(--bg))}
+.vpick button.on small{color:var(--ink);font-weight:700}
+.vpick .qmore{justify-content:center;padding:6px 10px;font-size:.78rem;font-weight:700;color:var(--muted)}
+.pgvl{margin-top:16px;font-size:.84rem;color:var(--muted)}
+.vpick.pgv{margin-top:6px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -766,6 +782,20 @@ function alsoHtml(){
   if (ME) { const n = [...ENT.values()].filter(e => norm(e.title + " " + (e.orig || "")).includes(q)).length; if (n) out.push(["lista", "Cinemateca", n]); }
   return out.length ? `<li class="also">Também em ${out.map(([c,l,n]) => `<button data-gq="${c}">${esc(l)} <i>${n}</i></button>`).join("")}</li>` : "";
 }
+const starI = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M10 2.8l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5L2.8 8.1l5-.7z"/></svg>';
+function quickPick(id, v){
+  return `<div class="vpick" data-qid="${id}" hidden>${TIERS.map(([k,l]) => `<button data-qv="${k}" class="t-${k}${v === k ? " on" : ""}" aria-label="${l}"><span class="tb">${k}</span><small>${l}</small></button>`).join("")}<button data-qv="more" class="qmore">Mais</button></div>`;
+}
+async function quickVerdict(id, k){
+  if (!ME) { openAccount("login"); return; }
+  if (k === "more") { const cur = ENT.get(id); if (cur) openEditor(cur); else if (BYID[id]) openEditor(rowFromItem(BYID[id])); else if (PAGE.d) { const r = pageRow(); if (r) openEditor(r); } return; }
+  const cur = ENT.get(id);
+  const base = cur || (BYID[id] && BYID[id].c !== "extra" ? rowFromItem(BYID[id]) : (PAGE.key === id ? pageRow() : null));
+  if (!base) return;
+  if (cur && cur.verdict === k) { const ok = await saveEntry({ ...cur, verdict: null }); if (ok) { all(); toast("Veredito removido."); } return; }
+  const ok = await saveEntry({ ...base, verdict: k, status: cur && cur.status === "abandonei" ? "abandonei" : "vi", seasons_watched: base.seasons_total || base.seasons_watched || null });
+  if (ok) { all(); toast(`${TIER_LABEL[k]}. Foi para a tier ${k}.`); }
+}
 function card(x){
 const ST = {fin:"finalizada", and:"em andamento", can:"cancelada"};
 const sub = [x.o && x.o !== x.t ? x.o : "", x.f, String(x.y), x.ns ? `${x.ns} temp.` : "", ST[x.st] || ""].filter(Boolean).map(esc).join(", ");
@@ -791,7 +821,8 @@ ${state.svc === "_rec" && REC.map.get(x.id) ? `<div class="mline"><b>✦ ${REC.m
 ${v ? `<div class="vline t-${v}">${TIER_LABEL[v]}</div>` : isSeen ? `<div class="vline seenl">Visto</div>` : ""}
 </div>
 <div class="bar"><a class="where" href="${href}" target="_blank" rel="noopener" aria-label="Onde assistir ${esc(x.t)}"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h14v9H3zM7.5 3.5l2.5 3 2.5-3"/></svg><span>${svc}</span></a>
-<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wlOn}" aria-label="${wlOn?"Tirar de Quero ver":"Pôr em Quero ver"}">${wlOn?bmkOn:bmk}</button>${x.c!=="extra" || ME ? `<button class="editbtn" aria-label="Veredito e status">${pencil}</button>` : ""}</div></div>
+<div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wlOn}" aria-label="${wlOn?"Tirar de Quero ver":"Pôr em Quero ver"}">${wlOn?bmkOn:bmk}</button>${x.c!=="extra" ? `<button class="vbtn${v ? ` on t-${v}` : ""}" aria-expanded="false" aria-label="${v ? `Seu veredito: ${TIER_LABEL[v]}. Trocar` : "Dar veredito"}">${v ? v : starI}</button>` : ""}</div></div>
+${x.c!=="extra" ? quickPick(x.id, v) : ""}
 ${x.sy ? `<p class="syn">${esc(x.sy)}</p>` : ""}
 <div class="more">${more}</div>
 </li>`;
@@ -910,7 +941,6 @@ function toggleWl(id){
 function myLine(id){
   const e = ME && ENT.get(id); if (!e) return "";
   const bits = [STATUS_LABEL[e.status]];
-  if (!e.verdict && e.rating != null) bits.push(`nota ${nota(e.rating)}`);
   if (e.seasons_total > 1 && e.seasons_watched != null) bits.push(`${e.seasons_watched} de ${e.seasons_total} temp.`);
   return `<div class="myline s-${e.status}">${esc(bits.join(" · "))}</div>`;
 }
@@ -1077,10 +1107,6 @@ function openEditor(base){
     <label>Onde estou vendo<input id="pl" type="text" list="svcs" value="${esc(e.platform || "")}" placeholder="Netflix, HBO Max…"></label>
     <datalist id="svcs">${["Netflix","HBO Max","Disney+","Prime Video","Apple TV","Globoplay","Crunchyroll","Paramount+","MUBI","Star+","Telecine","Universal+","Cinema"].map(s => `<option value="${s}">`).join("")}</datalist>
     <label>Anotação<textarea id="nt" rows="2" placeholder="O que achou? Onde parou?">${esc(e.note || "")}</textarea></label>
-    <details class="fine"${e.rating != null ? " open" : ""}><summary>Nota fina, opcional</summary>
-      <div class="lbl">Nota <b id="rv">${e.rating == null ? "sem nota" : nota(e.rating)}</b></div>
-      <input id="rt" type="range" min="0" max="10" step="0.5" value="${e.rating == null ? 8 : e.rating}" aria-label="Nota">
-      <label class="check"><input id="nr" type="checkbox" ${e.rating == null ? "checked" : ""}> Sem nota</label></details>
     <div class="btns"><button class="pri" id="save">Salvar</button>${cur ? '<button class="sec danger" id="del">Tirar da cinemateca</button>' : '<button class="sec" id="cancel">Cancelar</button>'}</div>`);
   let status = e.status, sw = e.seasons_watched ?? 0, verdict = e.verdict, tags = [...(e.tags || [])];
   o.querySelectorAll("[data-st]").forEach(b => b.onclick = () => {
@@ -1096,9 +1122,6 @@ function openEditor(base){
     const t = b.dataset.tag; tags = tags.includes(t) ? tags.filter(x => x !== t) : [...tags, t];
     b.setAttribute("aria-pressed", tags.includes(t));
   });
-  const rt = o.querySelector("#rt"), nr = o.querySelector("#nr"), rv = o.querySelector("#rv");
-  rt.oninput = () => { nr.checked = false; rv.textContent = nota(+rt.value); };
-  nr.onchange = () => { rv.textContent = nr.checked ? "sem nota" : nota(+rt.value); };
   if (o.querySelector("#sm")) {
     o.querySelector("#sm").onclick = () => { sw = Math.max(0, sw - 1); o.querySelector("#sv").textContent = sw; };
     o.querySelector("#sp").onclick = () => { sw = tot ? Math.min(tot, sw + 1) : sw + 1; o.querySelector("#sv").textContent = sw; };
@@ -1107,7 +1130,7 @@ function openEditor(base){
   if (o.querySelector("#del")) o.querySelector("#del").onclick = async () => { await removeEntry(e.key); closeSheet(); all(); toast("Tirado da cinemateca."); };
   o.querySelector("#save").onclick = async () => {
     const row = { key: e.key, kind: e.kind, title: e.title, orig: e.orig || null, year: e.year || null, poster: e.poster || null, seasons_total: e.seasons_total || null,
-      status, verdict, tags, extra: e.extra || null, rating: nr.checked ? null : +rt.value, seasons_watched: o.querySelector("#sv") ? sw : null,
+      status, verdict, tags, extra: e.extra || null, rating: e.rating ?? null, seasons_watched: o.querySelector("#sv") ? sw : null,
       platform: o.querySelector("#pl").value.trim() || null, note: o.querySelector("#nt").value.trim() || null };
     o.querySelector("#save").disabled = true;
     const ok = await saveEntry(row);
@@ -1615,13 +1638,17 @@ function renderPage(){
     <div class="pgbody">
       ${I.g.length ? `<div class="gl pgg">${I.g.map(g => `<span>${esc(g)}</span>`).join("")}</div>` : ""}
       ${scores ? `<div class="stats pgs">${scores}</div>` : ""}${aw}
-      ${st}${acts}
+      ${st}${ME ? `<div class="pgvl">Seu veredito</div>${quickPick(key, v).replace(" hidden", "").replace('class="vpick"', 'class="vpick pgv"')}` : ""}${acts}
       ${I.tag ? `<p class="dtag">${esc(I.tag)}</p>` : ""}${I.sy ? `<p class="dsy">${esc(I.sy)}</p>` : ""}
       ${I.dir.length ? `<p class="dcr"><b>${base.kind === "filme" || (base.kind === "doc" && !tot) ? "Direção" : "Criação"}:</b> ${esc(I.dir.join(", "))}</p>` : ""}
       <section class="pgsec"><h3>Onde assistir no Brasil</h3><div class="pchips">${pv}</div>${I.link ? `<a class="pglink" href="${esc(I.link)}" target="_blank" rel="noopener">Ver todas as opções, inclusive aluguel</a>` : ""}</section>
       ${tr}${cx}${simH}
       ${x ? `<p class="pgfoot">${votes(x.v)} votos no IMDb · <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a></p>` : (key.startsWith("tt") ? `<p class="pgfoot"><a href="https://www.imdb.com/title/${key}/" target="_blank" rel="noopener">Abrir no IMDb</a></p>` : "")}
     </div></li>`;
+}
+function pageRow(){
+  const key = PAGE.key, x = BYID[key] && BYID[key].c !== "extra" ? BYID[key] : null, d = PAGE.d;
+  return x ? rowFromItem(x) : d ? { key, kind: d.type === "movie" ? ((d.genres || []).includes(99) ? "doc" : "filme") : kindOf(d), title: d.title, orig: d.orig !== d.title ? d.orig : null, year: d.year, poster: d.poster, seasons_total: d.seasons_total, extra: extraFrom(d) } : null;
 }
 async function pageAction(a){
   const key = PAGE.key, x = BYID[key] && BYID[key].c !== "extra" ? BYID[key] : null, d = PAGE.d, en = ENT.get(key);
@@ -1739,8 +1766,11 @@ document.getElementById("list").addEventListener("click", e => {
   const asr = e.target.closest("[data-aisearch]"); if (asr) { openAdd(); const sq = document.getElementById("sq"); if (sq) { sq.value = asr.dataset.aisearch; searchTmdb(sq.value); } return; }
   const pgl = e.target.closest("[data-page]"); if (pgl) { e.preventDefault(); goPage(pgl.dataset.page); return; }
   const yt = e.target.closest("[data-yt]"); if (yt) { yt.outerHTML = `<div class="trl on"><iframe src="https://www.youtube-nocookie.com/embed/${yt.dataset.yt}?autoplay=1&rel=0" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`; return; }
+  const vb = e.target.closest(".vbtn"); if (vb) { e.stopPropagation(); if (!ME) { openAccount("login"); return; }
+    const li = vb.closest("li.item"), pk = li && li.querySelector(".vpick"); if (pk) { pk.hidden = !pk.hidden; vb.setAttribute("aria-expanded", !pk.hidden); } return; }
+  const qv = e.target.closest("[data-qv]"); if (qv) { e.stopPropagation(); const q = qv.closest("[data-qid]"); if (q) quickVerdict(q.dataset.qid, qv.dataset.qv); return; }
   const cardc = e.target.closest("li.item[data-id]");
-  if (cardc && !e.target.closest("button, a, .bar")) { if (goPage(cardc.dataset.id)) { e.stopPropagation(); return; } }
+  if (cardc && !e.target.closest("button, a, .bar, .vpick")) { if (goPage(cardc.dataset.id)) { e.stopPropagation(); return; } }
   const shelf = e.target.closest("[data-shelf]"); if (shelf) { dstate.shelf = shelf.dataset.shelf; dstate.kind = "all"; dstate.gen = ""; render(); return; }
   const kd = e.target.closest("[data-kind]"); if (kd) { dstate.kind = kd.dataset.kind; render(); return; }
   const dg = e.target.closest("[data-dgen]"); if (dg) { dstate.gen = dg.dataset.dgen; render(); return; }
