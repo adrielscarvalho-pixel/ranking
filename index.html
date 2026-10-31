@@ -544,14 +544,25 @@ body.mode-ia footer,body.mode-ia .status{display:none}
 .osc.hlo{background:color-mix(in srgb,#E0A526 18%,var(--surface));border-radius:6px;padding:1px 7px;margin-left:-3px}
 
 .lcol{display:flex;flex-direction:column;gap:7px;width:76px}
-.vq{display:flex;flex-wrap:wrap;justify-content:center;gap:3px}
-.vq button{appearance:none;width:23px;height:23px;padding:0;border:0;border-radius:6px;display:grid;place-items:center;cursor:pointer;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.76rem;line-height:1;background:color-mix(in srgb,var(--tc) 13%,var(--surface));color:var(--tc);transition:transform .12s}
-.vq button:active{transform:scale(.9)}
-.vq button.on{background:var(--tc);color:#fff;box-shadow:0 2px 6px color-mix(in srgb,var(--tc) 45%,transparent)}
-.vq button.t-S.on{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
 .vq button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
-li.item.vt .vq button:not(.on){opacity:.55}
-@media (prefers-reduced-motion:reduce){.vq button{transition:none}}
+
+.vq{display:block;width:76px}
+.vq .vgrid{display:none;grid-template-columns:repeat(3,23px);gap:3px;justify-content:center}
+.vq.open .vgrid{display:grid}
+.vq.open .vbadge,.vq.open .vrate{display:none}
+.vq .vgrid button{appearance:none;width:23px;height:23px;padding:0;border:0;border-radius:6px;display:grid;place-items:center;cursor:pointer;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.76rem;line-height:1;background:var(--tc);color:#fff;opacity:1;box-shadow:none}
+.vq .vgrid button.t-S{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
+.vq .vgrid button.on{outline:2px solid var(--ink);outline-offset:1px}
+.vq .vgrid .vx{background:var(--chip);color:var(--muted);font-size:.72rem}
+.vbadge{appearance:none;width:100%;height:42px;border:0;border-radius:9px;background:var(--tc);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;padding:0;box-shadow:0 2px 8px color-mix(in srgb,var(--tc) 40%,transparent)}
+.vbadge b{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:1.08rem;line-height:1}
+.vbadge small{font-size:.6rem;font-weight:700;letter-spacing:.01em;line-height:1.1;opacity:.95}
+.vbadge.t-S{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
+.vrate{appearance:none;width:100%;height:42px;border:1.5px dashed color-mix(in srgb,var(--muted) 55%,transparent);border-radius:9px;background:transparent;color:var(--muted);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:0;font:inherit}
+.vrate svg{width:15px;height:15px}
+.vrate span{font-size:.66rem;font-weight:700}
+.vrate:active,.vbadge:active{transform:scale(.96)}
+.vrate:focus-visible,.vbadge:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -832,7 +843,7 @@ const stats = x.c==="anime"
   ? `<span${hl("ma")}>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span${hl("al")}>AniList <b>${x.al}%</b></span><span${hl("i")}>IMDb <b>${fmt(x.i)}</b></span>`
   : `<span${hl("i")}>IMDb <b>${fmt(x.i)}</b></span><span${hl("rt")}>RT <b>${x.rt}%</b></span>${x.mc!=null ? `<span${hl("mc")}>MC <b>${x.mc}</b></span>` : ""}${x.au!=null ? `<span${hl("au")}>Pipoca <b>${x.au}%</b></span>` : ""}`;
 return `<li class="item${isSeen?" seen":""}${v ? ` vt t-${v}` : ""}${v==="S"?" top":""}" data-id="${x.id}">
-<div class="lcol"><div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${!v && isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div>${x.c !== "extra" ? `<div class="vq" data-qid="${x.id}" role="group" aria-label="Seu veredito">${TIERS.map(([k,l]) => `<button data-qv="${k}" class="t-${k}${v === k ? " on" : ""}" aria-pressed="${v === k}" aria-label="${l}" title="${l}">${k}</button>`).join("")}</div>` : ""}</div>
+<div class="lcol"><div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${!v && isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div>${x.c !== "extra" ? `<div class="vq" data-qid="${x.id}">${v ? `<button class="vbadge t-${v}" data-vopen aria-label="Seu veredito: ${TIER_LABEL[v]}. Toque para trocar"><b>${v}</b><small>${TIER_LABEL[v]}</small></button>` : `<button class="vrate" data-vopen aria-label="Avaliar">${starI}<span>Avaliar</span></button>`}<div class="vgrid" role="group" aria-label="Escolha o veredito">${TIERS.map(([k,l]) => `<button data-qv="${k}" class="t-${k}${v === k ? " on" : ""}" aria-label="${l}" title="${l}">${k}</button>`).join("")}<button data-qx class="vx" aria-label="Cancelar">✕</button></div></div>` : ""}</div>
 <div class="main" tabindex="0" role="button" aria-expanded="false">
 <p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
@@ -1789,6 +1800,8 @@ document.getElementById("list").addEventListener("click", e => {
   const yt = e.target.closest("[data-yt]"); if (yt) { yt.outerHTML = `<div class="trl on"><iframe src="https://www.youtube-nocookie.com/embed/${yt.dataset.yt}?autoplay=1&rel=0" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`; return; }
   const vb = e.target.closest(".vbtn"); if (vb) { e.stopPropagation(); if (!ME) { openAccount("login"); return; }
     const li = vb.closest("li.item"), pk = li && li.querySelector(".vpick"); if (pk) { pk.hidden = !pk.hidden; vb.setAttribute("aria-expanded", !pk.hidden); } return; }
+  const vo = e.target.closest("[data-vopen]"); if (vo) { e.stopPropagation(); if (!ME) { openAccount("login"); return; } document.querySelectorAll(".vq.open").forEach(q => q.classList.remove("open")); vo.closest(".vq").classList.add("open"); return; }
+  const vx = e.target.closest("[data-qx]"); if (vx) { e.stopPropagation(); vx.closest(".vq").classList.remove("open"); return; }
   const qv = e.target.closest("[data-qv]"); if (qv) { e.stopPropagation(); const q = qv.closest("[data-qid]"); if (q) quickVerdict(q.dataset.qid, qv.dataset.qv); return; }
   const cardc = e.target.closest("li.item[data-id]");
   if (cardc && !e.target.closest("button, a, .bar, .vpick, .vq")) { if (goPage(cardc.dataset.id)) { e.stopPropagation(); return; } }
