@@ -575,6 +575,19 @@ body.mode-ia footer,body.mode-ia .status{display:none}
 .qrm{color:var(--muted)}
 #toast.act{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 16px}
 #toast .tact{appearance:none;border:0;background:#F2C14E;color:#141C26;font:inherit;font-weight:800;font-size:.84rem;padding:7px 12px;border-radius:8px;cursor:pointer}
+
+.rgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.rgrid button{appearance:none;font:inherit;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.95rem;padding:9px 0;border-radius:10px;border:1.5px solid color-mix(in srgb,var(--tc) 35%,var(--line));background:color-mix(in srgb,var(--tc) 9%,var(--surface));color:var(--ink);cursor:pointer}
+.rgrid button:active{transform:scale(.95)}
+.rgrid button.on{background:var(--tc);color:#fff;border-color:var(--tc)}
+.rgrid button.t-S.on{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
+.rgrid .rx{grid-column:span 1;font-family:inherit;font-weight:700;font-size:.74rem;color:var(--muted);background:var(--chip);border-color:var(--line)}
+.rgrid.ed{grid-template-columns:repeat(7,1fr)}.rgrid.ed button{font-size:.82rem;padding:7px 0}
+.rgrid.pgr{margin-top:6px}
+.pgvl b{color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif}
+.rbadge{position:absolute;left:4px;bottom:4px;background:var(--tc);color:#fff;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.74rem;padding:1px 6px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.rbadge.t-S{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
+.tier .tb{font-size:.82rem}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -600,7 +613,7 @@ body.mode-ia footer,body.mode-ia .status{display:none}
 <p>Entram obras de 2000 em diante por uma de três portas. Principal: passar nos cortes de IMDb, Rotten Tomatoes (90% ou mais; documentários, 95%) e Metacritic (75 ou mais), com número mínimo de votos por ano. Compensação: quem fica até 5 pontos abaixo no Rotten Tomatoes ou no Metacritic entra se a nota final for 80 ou mais. Consagrados: os 100 melhores filmes do século 21 segundo o New York Times (2025) entram com o selo NYT, mesmo fora da régua. A nota vai de 0 a 100: 35% IMDb, 25% Rotten Tomatoes e 40% Metacritic. Documentários de natureza ficam de fora. Anime usa outra régua: MyAnimeList ≥ 8,0, AniList ≥ 80% e IMDb ≥ 7,5, com mínimo de avaliações no MyAnimeList por ano (2000–2022: 200 mil; 2023–2024: 100 mil; 2025: 50 mil; 2026: 25 mil). Só séries: a 1ª temporada precisa ter estreado de 2000 em diante e é ela que vale para as notas do MyAnimeList e do AniList; filmes de anime concorrem na aba Filmes, com a régua dos filmes. Nota do anime: 40% MyAnimeList, 30% AniList e 30% IMDb. Time (2021) é julgada como minissérie, pela 1ª temporada. “Pipoca” é a nota do público verificado no Rotten Tomatoes; aparece para consulta e não entra no cálculo.</p>
 <p>Notas de 2021–2026 coletadas em 25/10/2026; de 2016–2020, em 28/10/2026; de 2011–2015, em 29/10/2026; de 2000–2010, em 30 e 31/10/2026. Para 2000–2015 o mínimo de votos no IMDb é 150 mil para filmes, 100 mil para séries, 50 mil para minisséries e 10 mil para documentários. Onde assistir é conferido automaticamente várias vezes por dia, com dados do JustWatch via TMDB (última verificação: <span id="catAt">carregando</span>). As notas seguem as datas de coleta acima. “Onde assistir” abre a página da obra no JustWatch Brasil, com todos os serviços, inclusive aluguel. Toque em qualquer obra para abrir a página dela, com trailer e elenco. Sinopses e imagens do TMDB. O assistente usa o Gemini, do Google, e lê só a sua cinemateca.</p>
 </details>
-<p>Os selos S, A, B, C e D são os seus vereditos na cinemateca. Oscars das cerimônias de 2001 a 2026 e Emmys de 2000 a 2026 (cerimônia principal e Creative Arts, somando todas as temporadas), contados na Wikipédia (séries anteriores a 2008, como Band of Brothers, 24 Horas e Malcolm, conferidas no site oficial da Television Academy); podem variar uma ou duas indicações do total oficial.</p>
+<p>O selo embaixo do cartaz é a sua nota, de 1 a 10, com meio ponto. Oscars das cerimônias de 2001 a 2026 e Emmys de 2000 a 2026 (cerimônia principal e Creative Arts, somando todas as temporadas), contados na Wikipédia (séries anteriores a 2008, como Band of Brothers, 24 Horas e Malcolm, conferidas no site oficial da Television Academy); podem variar uma ou duas indicações do total oficial.</p>
 <p class="tmdb">Cartazes e dados de imagem fornecidos pelo <a href="https://www.themoviedb.org/" target="_blank" rel="noopener">TMDB</a>. Este site usa a API do TMDB, mas não é endossado nem certificado pelo TMDB.</p>
 </footer>
 <nav class="dock" id="dock" aria-label="Navegação principal">
@@ -723,7 +736,7 @@ const have = SVC_ORDER.filter(s => inCat.some(x => x.s.includes(s)));
 const none = inCat.some(x => !x.s.length);
 if (state.svc && state.svc !== "_none" && state.svc !== "_mine" && state.svc !== "_osc" && state.svc !== "_emy" && state.svc !== "_rec" && state.svc !== "_nyt" && !have.includes(state.svc)) state.svc = "";
 if (state.svc === "_none" && !none) state.svc = "";
-const mine = !!ME && inCat.some(x => verdictOf(x.id));
+const mine = !!ME && inCat.some(x => ENT.get(x.id) && ENT.get(x.id).rating != null);
 if (state.svc === "_rec") state.svc = "";
 const hasOsc = inCat.some(x => x.os);
 const hasEmy = inCat.some(x => x.em);
@@ -732,7 +745,7 @@ if (state.svc === "_nyt" && !hasNyt) state.svc = "";
 if (state.svc === "_emy" && !hasEmy) state.svc = "";
 if (state.svc === "_osc" && !hasOsc) state.svc = "";
 if (state.svc === "_mine" && !mine) state.svc = "";
-const opts = [["","Tudo"], ...(mine ? [["_mine","★ Meus vereditos"]] : []), ...(hasNyt ? [["_nyt","NYT 100"]] : []), ...(hasOsc ? [["_osc","Oscar"]] : []), ...(hasEmy ? [["_emy","Emmy"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
+const opts = [["","Tudo"], ...(mine ? [["_mine","★ Minhas notas"]] : []), ...(hasNyt ? [["_nyt","NYT 100"]] : []), ...(hasOsc ? [["_osc","Oscar"]] : []), ...(hasEmy ? [["_emy","Emmy"]] : []), ...have.map(s=>[s,s]), ...(none ? [["_none","Sem streaming"]] : [])];
 document.getElementById("chips").innerHTML = opts.map(([v,l]) =>
 `<button data-svc="${esc(v)}" aria-pressed="${state.svc===v}"${v==="_mine"?' class="mine"':(v==="_osc"||v==="_emy")?' class="oscchip"':v==="_nyt"?' class="nytchip"':v==="_rec"?' class="recchip"':""}>${esc(l)}</button>`).join("");
 }
@@ -796,7 +809,7 @@ if (state.year) L = L.filter(x => x.y === +state.year);
 if (state.gen) L = L.filter(x => x.g.includes(state.gen));
 if (state.svc === "_rec") { const R = computeRecs(); L = L.filter(x => R.map.has(x.id)).sort((a,b) => R.map.get(b.id).adj - R.map.get(a.id).adj); }
 else if (state.svc === "_none") L = L.filter(x => !x.s.length);
-else if (state.svc === "_mine") L = L.filter(x => verdictOf(x.id)).sort((a,b) => TIER_ORDER[verdictOf(a.id)]-TIER_ORDER[verdictOf(b.id)] || a.r-b.r);
+else if (state.svc === "_mine") L = L.filter(x => ENT.get(x.id) && ENT.get(x.id).rating != null).sort((a,b) => Number(ENT.get(b.id).rating) - Number(ENT.get(a.id).rating) || a.r-b.r);
 else if (state.svc === "_osc") L = L.filter(x => x.os).sort((a,b) => b.os[1]-a.os[1] || b.os[0]-a.os[0] || a.r-b.r);
 else if (state.svc === "_nyt") L = L.filter(x => x.ny).sort((a,b) => a.ny - b.ny);
 else if (state.svc === "_emy") L = L.filter(x => x.em).sort((a,b) => b.em[1]-a.em[1] || b.em[0]-a.em[0] || a.r-b.r);
@@ -852,14 +865,14 @@ const gl = x.g && x.g.length ? `<div class="gl">${x.g.slice(0,3).map(g => `<span
 const oc = a => [...new Set(a)].map(i => OSC_CATS[i]).join(", ");
 const em = x.em && x.em[1] ? `<span class="oscd">Emmy, venceu: ${x.em[2].map(([i,k]) => EMY_CATS[i] + (k > 1 ? ` (${k}×)` : "")).join(", ")}${x.em[3] ? `${x.em[2].length ? " e mais " : ""}${x.em[3]} em categorias técnicas` : ""}.</span><br>` : "";
 const more = (x.d ? `Direção: ${esc(x.d)}<br>` : "") + em + (x.os ? `<span class="oscd">${x.os[2].length ? `Oscar, venceu: ${oc(x.os[2])}.` : ""}${x.os[2].length && x.os[3].length ? " " : ""}${x.os[3].length ? `Indicado: ${oc(x.os[3])}.` : ""}</span><br>` : "") + (x.c==="anime" ? `${votes(x.mv)} avaliações no MyAnimeList. ` : "") + `${votes(x.v)} votos no IMDb. <a href="https://www.imdb.com/title/${x.id}/" target="_blank" rel="noopener">Abrir no IMDb</a>` + (x.c !== "extra" ? `<br><a href="#t/${x.id}" data-page="${x.id}" class="pgopen">Abrir página completa, com trailer e elenco →</a>` : "");
-const isSeen = isSeenId(x.id), wlOn = inWl(x.id), v = verdictOf(x.id);
+const isSeen = isSeenId(x.id), wlOn = inWl(x.id), v = verdictOf(x.id), myR = ME && ENT.get(x.id) && ENT.get(x.id).rating != null ? Number(ENT.get(x.id).rating) : null;
 const svc = x.s.length ? x.s.slice(0,2).map(esc).join(", ") + (x.s.length > 2 ? ` <i>+${x.s.length-2}</i>` : "") : `<em>${NOTE[x.sn]}</em>`;
 const href = x.p ? "https://www.justwatch.com"+x.p : "https://www.imdb.com/title/"+x.id+"/";
 const stats = x.c==="anime"
   ? `<span${hl("ma")}>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span${hl("al")}>AniList <b>${x.al}%</b></span><span${hl("i")}>IMDb <b>${fmt(x.i)}</b></span>`
   : `<span${hl("i")}>IMDb <b>${fmt(x.i)}</b></span><span${hl("rt")}>RT <b>${x.rt}%</b></span>${x.mc!=null ? `<span${hl("mc")}>MC <b>${x.mc}</b></span>` : ""}${x.au!=null ? `<span${hl("au")}>Pipoca <b>${x.au}%</b></span>` : ""}`;
 return `<li class="item${isSeen?" seen":""}${v ? ` vt t-${v}` : ""}${v==="S"?" top":""}" data-id="${x.id}">
-<div class="lcol"><div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${!v && isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div>${x.c !== "extra" ? `<div class="vq" data-qid="${x.id}">${v ? `<button class="vbadge t-${v}" data-vopen aria-label="Seu veredito: ${TIER_LABEL[v]}. Toque para trocar"><b>${v}</b><small>${TIER_LABEL[v]}</small></button>` : `<button class="vrate" data-vopen aria-label="Avaliar">${starI}<span>Avaliar</span></button>`}<div class="vgrid" role="group" aria-label="Escolha o veredito">${TIERS.map(([k,l]) => `<button data-qv="${k}" class="t-${k}${v === k ? " on" : ""}" aria-label="${l}" title="${l}">${k}</button>`).join("")}<button data-qx class="vx" aria-label="Cancelar">✕</button></div></div>` : ""}</div>
+<div class="lcol"><div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${!v && isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div>${x.c !== "extra" ? `<div class="vq" data-qid="${x.id}">${myR != null ? `<button class="vbadge t-${tierOf(myR)}" data-rate aria-label="Sua nota: ${fmtR(myR)}. Toque para trocar"><b>${fmtR(myR)}</b><small>sua nota</small></button>` : `<button class="vrate" data-rate aria-label="Dar nota">${starI}<span>Dar nota</span></button>`}</div>` : ""}</div>
 <div class="main" tabindex="0" role="button" aria-expanded="false">
 <p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
@@ -1151,22 +1164,23 @@ function openEditor(base){
   const ser = tot > 1 || e.kind === "serie" || e.kind === "anime";
   const o = sheet(`<div class="ed-head">${e.poster ? `<img src="${posterUrl(e.poster)}" alt="" width="56" height="84">` : ""}<div><h2>${esc(e.title)}</h2><p class="hint">${esc([e.orig, KIND_LABEL[e.kind], e.year, tot ? tot + (tot > 1 ? " temporadas" : " temporada") : ""].filter(Boolean).join(", "))}</p></div></div>
     <div class="seg" role="radiogroup" aria-label="Status">${STATUS.map(([k,l]) => `<button data-st="${k}" role="radio" aria-checked="${e.status===k}">${l}</button>`).join("")}</div>
-    <div class="field" id="vf"><div class="lbl">Veredito</div><div class="vrow">${TIERS.map(([k,l]) => `<button data-v="${k}" class="t-${k}" aria-pressed="${e.verdict===k}"><span class="tb">${k}</span><small>${l}</small></button>`).join("")}</div></div>
+    <div class="field" id="vf"><div class="lbl">Sua nota <b id="erv">${e.rating != null ? fmtR(e.rating) : "sem nota"}</b></div><div class="rgrid ed">${RATES.map(v => `<button data-er="${v}" class="t-${tierOf(v)}${e.rating != null && Number(e.rating) === v ? " on" : ""}">${fmtR(v)}</button>`).join("")}</div></div>
     <div class="field"><div class="lbl">Etiquetas</div><div class="tagrow">${TAGS.map(t => `<button data-tag="${esc(t)}" aria-pressed="${(e.tags || []).includes(t)}">${esc(t)}</button>`).join("")}</div></div>
     ${ser ? `<div class="field"><div class="lbl">Temporadas vistas</div><div class="step"><button id="sm" aria-label="Menos uma">−</button><span id="sv">${e.seasons_watched ?? 0}</span><span class="of">${tot ? "de " + tot : ""}</span><button id="sp" aria-label="Mais uma">+</button></div></div>` : ""}
     <label>Onde estou vendo<input id="pl" type="text" list="svcs" value="${esc(e.platform || "")}" placeholder="Netflix, HBO Max…"></label>
     <datalist id="svcs">${["Netflix","HBO Max","Disney+","Prime Video","Apple TV","Globoplay","Crunchyroll","Paramount+","MUBI","Star+","Telecine","Universal+","Cinema"].map(s => `<option value="${s}">`).join("")}</datalist>
     <label>Anotação<textarea id="nt" rows="2" placeholder="O que achou? Onde parou?">${esc(e.note || "")}</textarea></label>
     <div class="btns"><button class="pri" id="save">Salvar</button>${cur ? '<button class="sec danger" id="del">Tirar da cinemateca</button>' : '<button class="sec" id="cancel">Cancelar</button>'}</div>`);
-  let status = e.status, sw = e.seasons_watched ?? 0, verdict = e.verdict, tags = [...(e.tags || [])];
+  let status = e.status, sw = e.seasons_watched ?? 0, rating = e.rating != null ? Number(e.rating) : null, tags = [...(e.tags || [])];
   o.querySelectorAll("[data-st]").forEach(b => b.onclick = () => {
     status = b.dataset.st; o.querySelectorAll("[data-st]").forEach(x => x.setAttribute("aria-checked", x === b));
     if (status === "vi" && tot && o.querySelector("#sv")) { sw = tot; o.querySelector("#sv").textContent = sw; }
   });
-  o.querySelectorAll("[data-v]").forEach(b => b.onclick = () => {
-    verdict = verdict === b.dataset.v ? null : b.dataset.v;
-    o.querySelectorAll("[data-v]").forEach(x => x.setAttribute("aria-pressed", x.dataset.v === verdict));
-    if (verdict && status !== "vi" && status !== "abandonei") { status = "vi"; o.querySelectorAll("[data-st]").forEach(x => x.setAttribute("aria-checked", x.dataset.st === "vi")); if (tot && o.querySelector("#sv")) { sw = tot; o.querySelector("#sv").textContent = sw; } }
+  o.querySelectorAll("[data-er]").forEach(b => b.onclick = () => {
+    const v = Number(b.dataset.er); rating = rating === v ? null : v;
+    o.querySelectorAll("[data-er]").forEach(x => x.classList.toggle("on", Number(x.dataset.er) === rating));
+    o.querySelector("#erv").textContent = rating == null ? "sem nota" : fmtR(rating);
+    if (rating != null && status !== "vi" && status !== "abandonei" && status !== "vendo") { status = "vi"; o.querySelectorAll("[data-st]").forEach(x => x.setAttribute("aria-checked", x.dataset.st === "vi")); if (tot && o.querySelector("#sv")) { sw = tot; o.querySelector("#sv").textContent = sw; } }
   });
   o.querySelectorAll("[data-tag]").forEach(b => b.onclick = () => {
     const t = b.dataset.tag; tags = tags.includes(t) ? tags.filter(x => x !== t) : [...tags, t];
@@ -1180,7 +1194,7 @@ function openEditor(base){
   if (o.querySelector("#del")) o.querySelector("#del").onclick = async () => { await removeEntry(e.key); closeSheet(); all(); toast("Tirado da cinemateca."); };
   o.querySelector("#save").onclick = async () => {
     const row = { key: e.key, kind: e.kind, title: e.title, orig: e.orig || null, year: e.year || null, poster: e.poster || null, seasons_total: e.seasons_total || null,
-      status, verdict, tags, extra: e.extra || null, rating: e.rating ?? null, seasons_watched: o.querySelector("#sv") ? sw : null,
+      status, verdict: tierOf(rating), tags, extra: e.extra || null, rating, seasons_watched: o.querySelector("#sv") ? sw : null,
       platform: o.querySelector("#pl").value.trim() || null, note: o.querySelector("#nt").value.trim() || null };
     o.querySelector("#save").disabled = true;
     const ok = await saveEntry(row);
@@ -1328,7 +1342,29 @@ async function pickResult(i){
 }
 
 /* ---------- aba Diário ---------- */
-const TIERS = [["S","Obra-prima","Indico pra todo mundo e reveria"],["A","Excelente","Valeu cada minuto"],["B","Muito boa","Gostei muito, mas não é top"],["C","Ok","Passatempo, esqueci rápido"],["D","Não vale","Não recomendo"]];
+const TIERS = [["S","Nota 9 a 10","Obras-primas"],["A","Nota 8 a 8,5","Excelentes"],["B","Nota 7 a 7,5","Muito boas"],["C","Nota 5,5 a 6,5","Medianas"],["D","Nota até 5","Não valeram"]];
+const TBS = {S:"9+",A:"8",B:"7",C:"6",D:"5−"};
+const tierOf = r => r == null ? null : r >= 9 ? "S" : r >= 8 ? "A" : r >= 7 ? "B" : r >= 5.5 ? "C" : "D";
+const fmtR = r => String(Number(r)).replace(".", ",");
+const RATES = [10,9.5,9,8.5,8,7.5,7,6.5,6,5.5,5,4.5,4,3.5,3,2.5,2,1.5,1];
+function rateGrid(id, cur, cls){ return `<div class="rgrid ${cls || ""}" data-qid="${esc(id)}">${RATES.map(v => `<button data-rv="${v}" class="t-${tierOf(v)}${cur != null && Number(cur) === v ? " on" : ""}" aria-label="Nota ${fmtR(v)}">${fmtR(v)}</button>`).join("")}${cur != null ? `<button data-rv="x" class="rx">Tirar nota</button>` : ""}</div>`; }
+async function setRating(id, v){
+  if (!ME) { openAccount("login"); return; }
+  const cur = ENT.get(id);
+  const base = cur || (BYID[id] && BYID[id].c !== "extra" ? rowFromItem(BYID[id]) : (PAGE.key === id ? pageRow() : null));
+  if (!base) return;
+  if (v === "x") { if (cur) { const ok = await saveEntry({ ...cur, rating: null, verdict: null }); if (ok) { all(); toast("Nota removida."); } } return; }
+  v = Number(v);
+  const ok = await saveEntry({ ...base, rating: v, verdict: tierOf(v), status: cur && (cur.status === "vendo" || cur.status === "abandonei") ? cur.status : "vi", seasons_watched: base.seasons_total || base.seasons_watched || null });
+  if (ok) { all(); toast(`Nota ${fmtR(v)} salva.`); }
+}
+function openRate(id){
+  if (!ME) { openAccount("login"); return; }
+  const x = BYID[id], en = ENT.get(id), t = (en && en.title) || (x && x.t) || "", pp = (en && en.poster) || (x && x.pp) || null;
+  const o = sheet(`<div class="cls"><p class="hint">Qual a sua nota?</p><div class="chead">${pp ? `<img src="https://image.tmdb.org/t/p/w185${pp}" alt="" width="72" height="108">` : ""}<div><h2>${esc(t)}</h2>${en && en.rating != null ? `<p class="hint">Nota atual: ${fmtR(en.rating)}</p>` : ""}</div></div>${rateGrid(id, en && en.rating, "big")}<div class="btns"><button class="sec" id="cl">Fechar</button></div></div>`);
+  o.querySelector("#cl").onclick = closeSheet;
+  o.querySelectorAll("[data-rv]").forEach(b => b.onclick = async () => { closeSheet(); await setRating(id, b.dataset.rv); });
+}
 const TIER_LABEL = Object.fromEntries(TIERS.map(t => [t[0], t[1]]));
 const TAGS = ["Maratonei","Reveria","Indico","Começo lento","Melhora depois","Final fraco"];
 const SHELVES = [["vendo","Assistindo"],["vi","Vistos"],["quero","Na fila"],["abandonei","Largados"]];
@@ -1336,17 +1372,17 @@ const KIND_PLURAL = {serie:"Séries", filme:"Filmes", minisserie:"Minis", doc:"D
 const KIND_ORDER = ["serie","minisserie","filme","doc","anime","outro"];
 function art(e, w){ return e.poster ? `<img src="https://image.tmdb.org/t/p/${w||"w185"}${e.poster}" alt="" loading="lazy">` : `<span class="ph">${esc(e.title.charAt(0))}</span>`; }
 function tile(e, ro){
-  const inner = `<span class="tp">${art(e)}${e.tags && e.tags.includes("Reveria") ? '<span class="rev" title="Reveria">↻</span>' : ""}</span><span class="tt">${esc(e.title)}</span>`;
+  const inner = `<span class="tp">${art(e)}${e.rating != null ? `<span class="rbadge t-${tierOf(e.rating)}">${fmtR(e.rating)}</span>` : ""}${e.tags && e.tags.includes("Reveria") ? '<span class="rev" title="Reveria">↻</span>' : ""}</span><span class="tt">${esc(e.title)}</span>`;
   return ro ? `<button class="tile" data-pub="${esc(e.key)}">${inner}</button>` : `<button class="tile" data-open="${esc(e.key)}">${inner}</button>`;
 }
 function tierBoard(A, ro){
   const rows = TIERS.map(([k,l,d]) => {
-    const R = A.filter(e => e.verdict === k);
+    const R = A.filter(e => e.verdict === k).sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
     if (!R.length && ro) return "";
-    return `<section class="tier t-${k}${R.length ? "" : " empty"}"><div class="th"><span class="tb">${k}</span><div><b>${l}</b><small>${d}</small></div><i>${R.length}</i></div>${R.length ? `<div class="tiles">${R.map(e => tile(e, ro)).join("")}</div>` : ""}</section>`;
+    return `<section class="tier t-${k}${R.length ? "" : " empty"}"><div class="th"><span class="tb">${TBS[k]}</span><div><b>${l}</b><small>${d}</small></div><i>${R.length}</i></div>${R.length ? `<div class="tiles">${R.map(e => tile(e, ro)).join("")}</div>` : ""}</section>`;
   }).join("");
   const U = A.filter(e => !e.verdict);
-  const un = U.length && !ro ? `<section class="tier t-U"><div class="th"><span class="tb">?</span><div><b>Sem veredito</b><small>Toque num cartaz ou classifique em sequência</small></div><i>${U.length}</i></div><div class="tiles">${U.map(e => tile(e, false)).join("")}</div></section>` : "";
+  const un = U.length && !ro ? `<section class="tier t-U"><div class="th"><span class="tb">?</span><div><b>Sem nota</b><small>Toque num cartaz ou dê notas em sequência</small></div><i>${U.length}</i></div><div class="tiles">${U.map(e => tile(e, false)).join("")}</div></section>` : "";
   return rows + un;
 }
 function kindChips(A){
@@ -1406,7 +1442,7 @@ function renderDiary(){
   document.getElementById("count").textContent = "";
   let html = `<li class="dx-hero"><div class="dx-top"><div><small>Cinemateca</small><b>${esc(name || "Minha cinemateca")}</b></div><div class="dx-btns"><button data-act="add" class="dx-add">+ Adicionar</button><button data-act="share" class="dx-share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div></div>
     <div class="dx-stats">${SHELVES.map(([k,l]) => `<button data-shelf="${k}" aria-pressed="${dstate.shelf===k}"><b>${G[k].length}</b><span>${l}</span></button>`).join("")}</div>
-    ${S ? `<p class="dx-foot">${S} obra${S > 1 ? "s" : ""}-prima${S > 1 ? "s" : ""} no seu topo</p>` : ""}</li>`;
+    ${S ? `<p class="dx-foot">${S} obra${S > 1 ? "s" : ""} com nota 9 ou mais</p>` : ""}</li>`;
   const NW = newsOf();
   if (NW.length) html += `<li class="news"><h3>Novidades nas suas séries</h3>${NW.map(n => `<div class="nrow"><button class="nb" data-news="${esc(n.e.key)}">${art(n.e, "w92")}<span><b>${esc(n.e.title)}</b><small class="${n.back ? "hot" : ""}">${esc(n.txt)}</small></span></button>${n.back ? `<button class="pri sm" data-nback="${esc(n.e.key)}">Voltar a assistir</button>` : ""}</div>`).join("")}</li>`;
   const sh = dstate.shelf;
@@ -1419,8 +1455,8 @@ function renderDiary(){
   } else if (sh === "vi") {
     const base = G.vi.filter(match), L = byKind(base);
     const U = L.filter(e => !e.verdict).length;
-    html += `<li class="shead"><h3>Sua tier list</h3><p>Cada obra vista ganha um veredito em um toque, sem nota quebrada.</p>${kindChips(base)}${genreChips(dstate.kind === "all" ? base : base.filter(e => e.kind === dstate.kind))}</li>`;
-    if (U) html += `<li class="classify"><div><b>${U} sem veredito</b><small>Vá passando um por um, leva segundos</small></div><button class="pri" data-act="classify">Classificar agora</button></li>`;
+    html += `<li class="shead"><h3>Suas notas</h3><p>As obras que você viu, agrupadas por faixa de nota.</p>${kindChips(base)}${genreChips(dstate.kind === "all" ? base : base.filter(e => e.kind === dstate.kind))}</li>`;
+    if (U) html += `<li class="classify"><div><b>${U} sem nota</b><small>Vá passando uma por uma, leva segundos</small></div><button class="pri" data-act="classify">Dar notas agora</button></li>`;
     html += L.length ? `<li class="board">${tierBoard(L, false)}</li>` : `<li class="empty">Nenhuma obra vista aqui ainda.</li>`;
   } else if (sh === "quero") {
     const base = G.quero.filter(match), L = byKind(base);
@@ -1442,28 +1478,29 @@ async function bumpSeason(key, d){
   if (finished) upd.status = "vi";
   const ok = await saveEntry(upd); if (!ok) return;
   all();
-  if (finished) openClassify([key], 0, "Última temporada vista. Qual o veredito?");
+  if (finished) openClassify([key], 0, "Última temporada vista. Qual a sua nota?");
 }
 async function finish(key){
   const e = ENT.get(key); if (!e) return;
   const ok = await saveEntry({ ...e, status: "vi", seasons_watched: e.seasons_total || e.seasons_watched });
-  if (!ok) return; all(); openClassify([key], 0, "Terminou. Qual o veredito?");
+  if (!ok) return; all(); openClassify([key], 0, "Terminou. Qual a sua nota?");
 }
 function openClassify(queue, i, title){
   if (i >= queue.length) { closeSheet(); all(); if (queue.length > 1) toast("Pronto, tier list atualizada."); return; }
   const e = ENT.get(queue[i]); if (!e) return openClassify(queue, i + 1, title);
   const multi = queue.length > 1;
-  const o = sheet(`<div class="cls"><p class="hint">${multi ? `${i + 1} de ${queue.length}` : esc(title || "Qual o veredito?")}</p>
+  const o = sheet(`<div class="cls"><p class="hint">${multi ? `${i + 1} de ${queue.length}` : esc(title || "Qual a sua nota?")}</p>
     ${multi ? `<div class="cbar"><i style="width:${Math.round(i / queue.length * 100)}%"></i></div>` : ""}
     <div class="chead">${e.poster ? `<img src="https://image.tmdb.org/t/p/w185${e.poster}" alt="" width="72" height="108">` : ""}<div><h2>${esc(e.title)}</h2><p class="hint">${esc([KIND_LABEL[e.kind], e.year].filter(Boolean).join(", "))}</p></div></div>
-    <div class="tierbtns">${TIERS.map(([k,l,d]) => `<button data-t="${k}" class="t-${k}${e.verdict===k ? " on" : ""}"><span class="tb">${k}</span><span><b>${l}</b><small>${d}</small></span></button>`).join("")}</div>
+    ${rateGrid(e.key, e.rating, "big").replace(/data-rv=/g, "data-t=")}
     <div class="btns"><button class="sec" id="skip">${multi ? "Pular" : "Depois"}</button>${multi ? '<button class="sec" id="stop">Parar por aqui</button>' : ""}</div></div>`);
   o.querySelectorAll("[data-t]").forEach(b => b.onclick = async () => {
     o.querySelectorAll("[data-t]").forEach(x => x.disabled = true);
     b.classList.add("on");
-    const ok = await saveEntry({ ...ENT.get(e.key), verdict: b.dataset.t });
+    if (b.dataset.t === "x") { await saveEntry({ ...ENT.get(e.key), rating: null, verdict: null }); closeSheet(); all(); return; }
+    const nv = Number(b.dataset.t); const ok = await saveEntry({ ...ENT.get(e.key), rating: nv, verdict: tierOf(nv) });
     if (!ok) return;
-    if (!multi) { closeSheet(); all(); toast(`${TIER_LABEL[b.dataset.t]}. Foi para a tier ${b.dataset.t}.`); return; }
+    if (!multi) { closeSheet(); all(); toast(`Nota ${fmtR(b.dataset.t)} salva.`); return; }
     setTimeout(() => openClassify(queue, i + 1, title), 180);
   });
   o.querySelector("#skip").onclick = () => multi ? openClassify(queue, i + 1, title) : (closeSheet(), all());
@@ -1504,7 +1541,7 @@ const IDF = (() => { const df = new Map(); POOL.forEach(x => featsOf(x).forEach(
 const idf = k => IDF.get(k) || Math.log(1 + POOL.length);
 const VW = {S: 3, A: 2, B: 1, C: -0.5, D: -2};
 function weightOf(e){
-  let w = e.verdict ? VW[e.verdict] : ({vi: 0.6, vendo: 0.8, quero: 0.35, abandonei: -1.5})[e.status] || 0;
+  let w = e.rating != null ? (Number(e.rating) - 6.5) * 0.9 : e.verdict ? VW[e.verdict] : ({vi: 0.6, vendo: 0.8, quero: 0.35, abandonei: -1.5})[e.status] || 0;
   const t = e.tags || [];
   if (t.includes("Reveria")) w += 0.7; if (t.includes("Indico")) w += 0.5; if (t.includes("Final fraco")) w -= 0.3;
   return w;
@@ -1605,7 +1642,7 @@ async function recAction(id, act){
   if (act === "info") return openDetails({ ...rowFromItem(x) });
   if (act === "hide") { hideRec(id); render(); toast("Tudo bem, não sugiro mais essa."); return; }
   if (act === "want") { const ok = await saveEntry({ ...rowFromItem(x), status: "quero" }); if (ok) { all(); toast("Foi para a sua fila."); } return; }
-  if (act === "seen") { const ok = await saveEntry({ ...rowFromItem(x), status: "vi", seasons_watched: x.ns || null }); if (ok) { all(); openClassify([id], 0, "Você já viu. Qual o veredito?"); } }
+  if (act === "seen") { const ok = await saveEntry({ ...rowFromItem(x), status: "vi", seasons_watched: x.ns || null }); if (ok) { all(); openClassify([id], 0, "Você já viu. Qual a sua nota?"); } }
 }
 
 /* ---------- página própria de cada obra ---------- */
@@ -1674,7 +1711,7 @@ function renderPage(){
   let aw = awardsHtml(base);
   if (x && x.os && x.os[2].length) aw += `<p class="pgaw">Oscar, venceu: ${esc(oc(x.os[2]))}.</p>`;
   if (x && x.em && x.em[1] && x.em[2].length) aw += `<p class="pgaw">Emmy, venceu: ${esc(x.em[2].map(([i,k]) => EMY_CATS[i] + (k > 1 ? ` (${k}×)` : "")).join(", "))}${x.em[3] ? ` e mais ${x.em[3]} técnicas` : ""}.</p>`;
-  const st = en ? `<div class="pgme t-${v || "U"}">${v ? `<span class="tb">${v}</span><div><b>${TIER_LABEL[v]}</b><small>${STATUS_LABEL[en.status]}${en.seasons_total > 1 && en.seasons_watched != null ? ` · ${en.seasons_watched} de ${en.seasons_total} temp.` : ""}</small></div>` : `<div><b>Na sua cinemateca: ${STATUS_LABEL[en.status]}</b>${en.note ? `<small>${esc(en.note)}</small>` : ""}</div>`}</div>` : "";
+  const st = en ? `<div class="pgme t-${v || "U"}">${v && en.rating != null ? `<span class="tb">${fmtR(en.rating)}</span><div><b>Sua nota: ${fmtR(en.rating)}</b><small>${STATUS_LABEL[en.status]}${en.seasons_total > 1 && en.seasons_watched != null ? ` · ${en.seasons_watched} de ${en.seasons_total} temp.` : ""}</small></div>` : `<div><b>Na sua cinemateca: ${STATUS_LABEL[en.status]}</b>${en.note ? `<small>${esc(en.note)}</small>` : ""}</div>`}</div>` : "";
   const pv = I.prov.length ? I.prov.map(p => `<span class="pchip">${esc(p)}</span>`).join("") : `<span class="muted">${I.rent ? "Só aluguel ou compra" : "Não está em streaming no Brasil agora"}</span>`;
   const tr = d && d.trailer ? `<section class="pgsec"><h3>Trailer</h3><button class="trl" data-yt="${esc(d.trailer.key)}" aria-label="Assistir ao trailer"><img src="https://i.ytimg.com/vi/${esc(d.trailer.key)}/hqdefault.jpg" alt="" loading="lazy"><span class="play">▶</span><small>${esc(d.trailer.name || "Trailer")}</small></button></section>` : (d ? "" : `<section class="pgsec"><h3>Trailer</h3><p class="muted">Carregando…</p></section>`);
   const cx = d && d.castx && d.castx.length ? `<section class="pgsec"><h3>Elenco</h3><div class="cast">${d.castx.map(c => `<div class="cp">${c.p ? `<img src="https://image.tmdb.org/t/p/w185${c.p}" alt="" loading="lazy">` : `<span class="noph">${esc(c.n.charAt(0))}</span>`}<b>${esc(c.n)}</b>${c.c ? `<small>${esc(c.c)}</small>` : ""}</div>`).join("")}</div></section>` : "";
@@ -1693,7 +1730,7 @@ function renderPage(){
     <div class="pgbody">
       ${I.g.length ? `<div class="gl pgg">${I.g.map(g => `<span>${esc(g)}</span>`).join("")}</div>` : ""}
       ${scores ? `<div class="stats pgs">${scores}</div>` : ""}${aw}
-      ${st}${ME ? `<div class="pgvl">Seu veredito</div>${quickPick(key, v).replace(" hidden", "").replace('class="vpick"', 'class="vpick pgv"')}` : ""}${acts}
+      ${st}${ME ? `<div class="pgvl">Sua nota${en && en.rating != null ? `: <b>${fmtR(en.rating)}</b>` : ""}</div>${rateGrid(key, en && en.rating, "pgr")}` : ""}${acts}
       ${I.tag ? `<p class="dtag">${esc(I.tag)}</p>` : ""}${I.sy ? `<p class="dsy">${esc(I.sy)}</p>` : ""}
       ${I.dir.length ? `<p class="dcr"><b>${base.kind === "filme" || (base.kind === "doc" && !tot) ? "Direção" : "Criação"}:</b> ${esc(I.dir.join(", "))}</p>` : ""}
       <section class="pgsec"><h3>Onde assistir no Brasil</h3><div class="pchips">${pv}</div>${I.link ? `<a class="pglink" href="${esc(I.link)}" target="_blank" rel="noopener">Ver todas as opções, inclusive aluguel</a>` : ""}</section>
@@ -1720,7 +1757,7 @@ async function pageAction(a){
   if (a === "unqueue" && en) { await unqueue(key); render(); return; }
   if (!row) return;
   if (a === "want") { const ok = await saveEntry({ ...row, status: "quero" }); if (ok) { render(); toast("Foi para a sua fila."); } }
-  if (a === "seen") { const ok = await saveEntry({ ...row, status: "vi", seasons_watched: row.seasons_total || null }); if (ok) { render(); openClassify([key], 0, "Você já viu. Qual o veredito?"); } }
+  if (a === "seen") { const ok = await saveEntry({ ...row, status: "vi", seasons_watched: row.seasons_total || null }); if (ok) { render(); openClassify([key], 0, "Você já viu. Qual a sua nota?"); } }
 }
 
 /* ---------- assistente (Gemini) ---------- */
@@ -1790,7 +1827,7 @@ function renderProfile(){
   const mine = ME && PUB.prof.id === ME.id;
   const S = vi.filter(e => e.verdict === "S").length;
   let html = `<li class="dx-hero"><div class="dx-top"><div><small>Cinemateca de</small><b>${esc(name)}</b></div>${mine ? `<div class="dx-btns"><button data-act="share" class="dx-share" aria-label="Compartilhar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg></button></div>` : ""}</div>
-    <div class="dx-stats ro"><div><b>${vi.length}</b><span>Vistos</span></div><div><b>${vendo.length}</b><span>Assistindo</span></div><div><b>${S}</b><span>Tier S</span></div><div><b>${quero.length}</b><span>Na fila</span></div></div>
+    <div class="dx-stats ro"><div><b>${vi.length}</b><span>Vistos</span></div><div><b>${vendo.length}</b><span>Assistindo</span></div><div><b>${S}</b><span>Nota 9+</span></div><div><b>${quero.length}</b><span>Na fila</span></div></div>
     <p class="dx-foot">${mine ? "É assim que os outros veem a sua cinemateca." : "Cinemateca pessoal, feita no Ranking 2000–2026."} <a href="#filmes" data-go="filmes">Ver o ranking</a></p></li>`;
   if (vendo.length) html += `<li class="shead"><h3>Assistindo agora</h3></li><li class="rail">${vendo.map(e => tile(e, true)).join("")}</li>`;
   if (vi.some(e => e.verdict)) html += `<li class="shead"><h3>Tier list</h3></li><li class="board">${tierBoard(vi.filter(e => e.verdict), true)}</li>`;
@@ -1824,6 +1861,8 @@ document.getElementById("list").addEventListener("click", e => {
   const yt = e.target.closest("[data-yt]"); if (yt) { yt.outerHTML = `<div class="trl on"><iframe src="https://www.youtube-nocookie.com/embed/${yt.dataset.yt}?autoplay=1&rel=0" title="Trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>`; return; }
   const vb = e.target.closest(".vbtn"); if (vb) { e.stopPropagation(); if (!ME) { openAccount("login"); return; }
     const li = vb.closest("li.item"), pk = li && li.querySelector(".vpick"); if (pk) { pk.hidden = !pk.hidden; vb.setAttribute("aria-expanded", !pk.hidden); } return; }
+  const rt = e.target.closest("[data-rate]"); if (rt) { e.stopPropagation(); const q = rt.closest("[data-qid]"); if (q) openRate(q.dataset.qid); return; }
+  const rvb = e.target.closest("[data-rv]"); if (rvb) { e.stopPropagation(); const q = rvb.closest("[data-qid]"); if (q) setRating(q.dataset.qid, rvb.dataset.rv); return; }
   const vo = e.target.closest("[data-vopen]"); if (vo) { e.stopPropagation(); if (!ME) { openAccount("login"); return; } document.querySelectorAll(".vq.open").forEach(q => q.classList.remove("open")); vo.closest(".vq").classList.add("open"); return; }
   const vx = e.target.closest("[data-qx]"); if (vx) { e.stopPropagation(); vx.closest(".vq").classList.remove("open"); return; }
   const qv = e.target.closest("[data-qv]"); if (qv) { e.stopPropagation(); const q = qv.closest("[data-qid]"); if (q) quickVerdict(q.dataset.qid, qv.dataset.qv); return; }
