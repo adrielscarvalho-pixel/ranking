@@ -602,6 +602,11 @@ li.item{position:relative}
 .mybadge:active,.myrate:active{transform:scale(.95)}
 .mybadge:focus-visible,.myrate:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 li.item .main .ttl,li.item .main .sub{padding-right:56px}
+
+/* selos de prêmio: espaçados e alinhados lado a lado (tablet) ou um por linha (celular) */
+li.item .main .nyt,li.item .main .osc{display:inline-flex;align-items:center;vertical-align:middle;margin:6px 16px 0 0;line-height:1.3}
+li.item .main .osc svg{flex:none}
+li.item .main .osc .osep{margin:0 3px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
