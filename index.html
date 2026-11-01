@@ -570,6 +570,11 @@ body.mode-ia footer,body.mode-ia .status{display:none}
 .pgny b{font-family:Georgia,"Times New Roman",serif;background:#F4F1EA;color:#141C26;padding:0 5px;border-radius:3px;margin-right:4px}
 .chips button.nytchip{font-family:Georgia,"Times New Roman",serif;font-weight:700;border-color:var(--ink)}
 .chips button.nytchip[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+
+.qact{gap:8px}
+.qrm{color:var(--muted)}
+#toast.act{pointer-events:auto;display:flex;align-items:center;gap:14px;padding:8px 8px 8px 16px}
+#toast .tact{appearance:none;border:0;background:#F2C14E;color:#141C26;font:inherit;font-weight:800;font-size:.84rem;padding:7px 12px;border-radius:8px;cursor:pointer}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -934,11 +939,13 @@ const nota = r => r == null ? "" : Number(r).toFixed(1).replace(".", ",").replac
 const posterUrl = p => p ? `https://image.tmdb.org/t/p/w185${p}` : "";
 const pencil = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13.5 3.5l3 3L7 16H4v-3z"/></svg>';
 
-function toast(msg){
+function toast(msg, action){
   let t = document.getElementById("toast");
   if (!t) { t = document.createElement("div"); t.id = "toast"; t.setAttribute("role","status"); document.body.appendChild(t); }
-  t.textContent = msg; t.classList.add("on");
-  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("on"), 2600);
+  t.innerHTML = ""; t.appendChild(document.createTextNode(msg));
+  if (action) { const b = document.createElement("button"); b.textContent = action.label; b.className = "tact"; b.onclick = () => { t.classList.remove("on", "act"); action.fn(); }; t.appendChild(b); }
+  t.classList.toggle("act", !!action); t.classList.add("on");
+  clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove("on", "act"), action ? 5000 : 2600);
 }
 function isSeenId(id){ return ME ? (ENT.get(id) || {}).status === "vi" : seen.has(id); }
 function inWl(id){ return ME ? (ENT.get(id) || {}).status === "quero" : wl.includes(id); }
@@ -1209,7 +1216,7 @@ function genresOf(e){
 }
 function infoOf(e){
   const x = rk(e), ex = e.extra || {};
-  const prov = (ex.prov && ex.at) ? ex.prov : (x ? x.s : []);
+  const prov = x ? (x.s || []) : ((ex.prov && ex.at) ? ex.prov : []);
   const link = x && x.p ? "https://www.justwatch.com" + x.p : (ex.wl || null);
   return { sy: (ex.sy && ex.syl === "pt") ? ex.sy : ((x && x.sy) || ex.sy || ""), prov: prov || [], rent: ex.rent || (x && x.sn === "rent"), link,
     g: genresOf(e), rt: ex.rt || null, dir: ex.dir || (x && x.d ? x.d.split(", ") : []), cast: ex.cast || [], vote: ex.vote || null, votes: ex.votes || 0, tag: ex.tag || "", x };
@@ -1370,12 +1377,18 @@ function watchCard(e){
       <button class="wmore" data-act="edit" aria-label="Mais opções">⋯</button>
     </div></li>`;
 }
+async function unqueue(key){
+  const en = ENT.get(key); if (!en) return;
+  const back = { ...en };
+  await removeEntry(key); all();
+  toast("Tirado da fila.", { label: "Desfazer", fn: async () => { const r = await saveEntry(back); if (r) { all(); toast("Voltou para a fila."); } } });
+}
 function queueCard(e){
   const I = infoOf(e), tot = e.seasons_total || 0;
   const meta = [KIND_LABEL[e.kind], e.year, tot > 1 ? `${tot} temp.` : (I.rt ? `${I.rt} min` : ""), I.g.slice(0,2).join(", ")].filter(Boolean).join(" · ");
   return `<li class="qcard" data-key="${esc(e.key)}"><button class="qp" data-act="info" aria-label="Detalhes de ${esc(e.title)}">${art(e)}</button>
     <div class="qb" data-act="info"><b>${esc(e.title)}</b><small>${esc(meta)}</small>${scoreBits(e) ? `<div class="stats qs">${scoreBits(e)}</div>` : ""}${awardsHtml(e)}${I.sy ? `<p class="qsy">${esc(I.sy)}</p>` : ""}${provLine(e)}</div>
-    <div class="qact"><button class="pri sm" data-act="start">Começar</button></div></li>`;
+    <div class="qact"><button class="sec sm qrm" data-act="unqueue" aria-label="Tirar ${esc(e.title)} da fila">✕ Tirar</button><button class="pri sm" data-act="start">Começar</button></div></li>`;
 }
 function rowCard(e, label, act, extra){
   return `<li class="rcard" data-key="${esc(e.key)}"><button class="rp" data-act="info" aria-label="Detalhes">${art(e, "w92")}</button>
@@ -1667,7 +1680,7 @@ function renderPage(){
   const cx = d && d.castx && d.castx.length ? `<section class="pgsec"><h3>Elenco</h3><div class="cast">${d.castx.map(c => `<div class="cp">${c.p ? `<img src="https://image.tmdb.org/t/p/w185${c.p}" alt="" loading="lazy">` : `<span class="noph">${esc(c.n.charAt(0))}</span>`}<b>${esc(c.n)}</b>${c.c ? `<small>${esc(c.c)}</small>` : ""}</div>`).join("")}</div></section>` : "";
   const sim = similarTo(x || base, 10);
   const simH = sim.length ? `<section class="pgsec"><h3>Parecidos no ranking</h3><div class="rail2">${sim.map(s => `<button class="tile" data-page="${s.id}"><span class="tp">${s.pp ? `<img src="https://image.tmdb.org/t/p/w185${s.pp}" alt="" loading="lazy">` : `<span class="ph">${esc(s.t.charAt(0))}</span>`}</span><span class="tt">${esc(s.t)}</span></button>`).join("")}</div></section>` : "";
-  const acts = ME ? `<div class="pgact">${en ? `<button class="pri" data-pg="edit">Editar na cinemateca</button>` : `<button class="pri" data-pg="want">Quero ver</button><button class="sec" data-pg="seen">Já vi</button>`}<button class="sec ic" data-pg="share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div>`
+  const acts = ME ? `<div class="pgact">${en ? `${en.status === "quero" ? `<button class="sec" data-pg="unqueue">✕ Tirar da fila</button>` : ""}<button class="pri" data-pg="edit">Editar na cinemateca</button>` : `<button class="pri" data-pg="want">Quero ver</button><button class="sec" data-pg="seen">Já vi</button>`}<button class="sec ic" data-pg="share" aria-label="Compartilhar">${'<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg>'}</button></div>`
     : `<div class="pgact"><button class="pri" data-pg="login">Entrar para salvar</button><button class="sec ic" data-pg="share" aria-label="Compartilhar"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13V3M6 7l4-4 4 4M4 11v5a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-5"/></svg></button></div>`;
   const scores = scoreBits(base);
   list.innerHTML = `<li class="pg">
@@ -1704,6 +1717,7 @@ async function pageAction(a){
   }
   if (a === "login") return openAccount("login");
   if (a === "edit" && en) return openEditor(en);
+  if (a === "unqueue" && en) { await unqueue(key); render(); return; }
   if (!row) return;
   if (a === "want") { const ok = await saveEntry({ ...row, status: "quero" }); if (ok) { render(); toast("Foi para a sua fila."); } }
   if (a === "seen") { const ok = await saveEntry({ ...row, status: "vi", seasons_watched: row.seasons_total || null }); if (ok) { render(); openClassify([key], 0, "Você já viu. Qual o veredito?"); } }
@@ -1839,6 +1853,7 @@ document.getElementById("list").addEventListener("click", e => {
     if (li) { e.stopPropagation(); const k = li.dataset.key, en = ENT.get(k);
       if (a === "edit") openEditor(en);
       if (a === "info") openDetails(en);
+      if (a === "unqueue") unqueue(k);
       if (a === "plus") bumpSeason(k, 1);
       if (a === "done") finish(k);
       if (a === "start") saveEntry({ ...en, status: "vendo" }).then(r => { if (r) { dstate.shelf = "vendo"; all(); toast("Foi para Assistindo."); } });
