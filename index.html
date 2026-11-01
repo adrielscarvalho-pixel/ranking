@@ -899,7 +899,7 @@ ${gl}<div class="stats">${stats}</div>
 ${x.ny ? `<div class="nyt" title="${x.ny}º entre os 100 melhores filmes do século 21, segundo o New York Times"><b>NYT</b>${x.ny}º dos 100 do século</div>` : ""}${x.os ? `<div class="osc${x.os[1] ? " won" : ""}${state.sort === "o" ? " hlo" : ""}">${statue}${x.os[1] ? `<b>${x.os[1]} Oscar${x.os[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.os[0]} indicaç${x.os[0] > 1 ? "ões" : "ão"}</div>` : ""}
 ${x.em ? `<div class="osc emy${x.em[1] ? " won" : ""}${state.sort === "o" ? " hlo" : ""}">${emmyIcon}${x.em[1] ? `<b>${x.em[1]} Emmy${x.em[1] > 1 ? "s" : ""}</b><span class="osep">de</span>` : ""}${x.em[0]} indicaç${x.em[0] > 1 ? "ões" : "ão"}</div>` : ""}
 ${state.svc === "_rec" && REC.map.get(x.id) ? `<div class="mline"><b>✦ ${REC.map.get(x.id).pct}% a sua cara</b> ${esc(REC.map.get(x.id).why)}</div>` : ""}
-${v ? "" : isSeen ? `<div class="vline seenl">Visto</div>` : ""}
+
 </div>
 <div class="bar"><a class="where" href="${href}" target="_blank" rel="noopener" aria-label="Onde assistir ${esc(x.t)}"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6.5h14v9H3zM7.5 3.5l2.5 3 2.5-3"/></svg><span>${svc}</span></a>
 <div class="acts"><button class="seenbtn" aria-pressed="${isSeen}" aria-label="${isSeen?"Desmarcar como visto":"Marcar como visto"}">${tick}</button><button class="wlbtn" aria-pressed="${wlOn}" aria-label="${wlOn?"Tirar de Quero ver":"Pôr em Quero ver"}">${wlOn?bmkOn:bmk}</button></div></div>
