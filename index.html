@@ -588,6 +588,20 @@ body.mode-ia footer,body.mode-ia .status{display:none}
 .rbadge{position:absolute;left:4px;bottom:4px;background:var(--tc);color:#fff;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:.74rem;padding:1px 6px;border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .rbadge.t-S{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
 .tier .tb{font-size:.82rem}
+
+li.item{position:relative}
+.myr{position:absolute;top:10px;right:10px;z-index:2}
+.mybadge,.myrate{appearance:none;width:50px;height:46px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0;cursor:pointer;font:inherit}
+.mybadge{border:0;background:var(--tc);color:#fff;box-shadow:0 3px 10px color-mix(in srgb,var(--tc) 35%,transparent)}
+.mybadge.t-S{background:linear-gradient(135deg,#FBE38E 0%,#E9B23A 55%,#C98B12 100%);color:#3A2600}
+.mybadge b{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:1.12rem;line-height:1}
+.mybadge small{font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;opacity:.9}
+.myrate{border:1.5px dashed color-mix(in srgb,var(--muted) 55%,transparent);background:var(--surface);color:var(--muted)}
+.myrate svg{width:16px;height:16px}
+.myrate small{font-size:.54rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mybadge:active,.myrate:active{transform:scale(.95)}
+.mybadge:focus-visible,.myrate:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+li.item .main .ttl,li.item .main .sub{padding-right:56px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 </head>
@@ -872,8 +886,8 @@ const stats = x.c==="anime"
   ? `<span${hl("ma")}>MAL <b>${x.ma.toFixed(2).replace(".",",")}</b></span><span${hl("al")}>AniList <b>${x.al}%</b></span><span${hl("i")}>IMDb <b>${fmt(x.i)}</b></span>`
   : `<span${hl("i")}>IMDb <b>${fmt(x.i)}</b></span><span${hl("rt")}>RT <b>${x.rt}%</b></span>${x.mc!=null ? `<span${hl("mc")}>MC <b>${x.mc}</b></span>` : ""}${x.au!=null ? `<span${hl("au")}>Pipoca <b>${x.au}%</b></span>` : ""}`;
 return `<li class="item${isSeen?" seen":""}${v ? ` vt t-${v}` : ""}${v==="S"?" top":""}" data-id="${x.id}">
-<div class="lcol"><div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${!v && isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div>${x.c !== "extra" ? `<div class="vq" data-qid="${x.id}">${myR != null ? `<button class="vbadge t-${tierOf(myR)}" data-rate aria-label="Sua nota: ${fmtR(myR)}. Toque para trocar"><b>${fmtR(myR)}</b><small>sua nota</small></button>` : `<button class="vrate" data-rate aria-label="Dar nota">${starI}<span>Dar nota</span></button>`}</div>` : ""}</div>
-<div class="main" tabindex="0" role="button" aria-expanded="false">
+<div class="lcol"><div class="art">${x.pp ? `<img src="https://image.tmdb.org/t/p/w185${x.pp}" alt="Cartaz de ${esc(x.t)}" loading="lazy" width="76" height="114">` : `<span class="ph" aria-hidden="true">${esc(x.t.charAt(0))}</span>`}${x.c==="extra" ? `<div class="score out">Fora do ranking</div>` : `<span class="rkp">${x.r}º</span><div class="score" aria-label="Posição ${x.r}, nota ${fmt(x.n)}"><span class="n">${fmt(x.n)}</span></div>`}${!v && isSeen ? `<span class="vb vs" title="Você já viu">${tick}</span>` : ""}</div></div>
+${x.c !== "extra" ? `<div class="myr" data-qid="${x.id}">${myR != null ? `<button class="mybadge t-${tierOf(myR)}" data-rate aria-label="Sua nota: ${fmtR(myR)}. Toque para trocar"><b>${fmtR(myR)}</b><small>você</small></button>` : `<button class="myrate" data-rate aria-label="Dar sua nota">${starI}<small>sua nota</small></button>`}</div>` : ""}<div class="main" tabindex="0" role="button" aria-expanded="false">
 <p class="ttl">${esc(x.t)}</p>
 <div class="sub">${sub}</div>
 ${gl}<div class="stats">${stats}</div>
